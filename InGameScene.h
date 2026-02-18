@@ -6,6 +6,9 @@
 class InGameScene : public SceneBase
 {
 private:
+	int ch_image;
+
+private:
 	eSceneType next_scene; // ‘JˆÚæ‚ÌƒV[ƒ“
 public:
 	InGameScene();
