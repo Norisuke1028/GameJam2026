@@ -9,6 +9,7 @@
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SceneBase.cpp" />
     <ClCompile Include="InGameScene.cpp" />
+    <ClCompile Include="Title.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Resource">
@@ -24,5 +25,6 @@
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="SceneBase.h" />
     <ClInclude Include="InGameScene.h" />
+    <ClInclude Include="Title.h" />
   </ItemGroup>
 </Project>
