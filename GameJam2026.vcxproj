@@ -133,6 +133,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Objects\Item.cpp" />
     <ClCompile Include="Objects\GameObject.cpp" />
     <ClCompile Include="Scenes\InGameScene.cpp" />
     <ClCompile Include="Scenes\SceneBase.cpp" />
@@ -144,6 +145,7 @@
     <ClCompile Include="Utility\Vector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Objects\Item.h" />
     <ClInclude Include="Objects\GameObject.h" />
     <ClInclude Include="Scenes\InGameScene.h" />
     <ClInclude Include="Scenes\SceneBase.h" />

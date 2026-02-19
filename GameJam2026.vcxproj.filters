@@ -10,6 +10,7 @@
     <ClCompile Include="Utility\ResourceManager.cpp" />
     <ClCompile Include="Utility\Vector2D.cpp" />
     <ClCompile Include="Objects\GameObject.cpp" />
+    <ClCompile Include="Objects\Item.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Resource">
@@ -35,5 +36,6 @@
     <ClInclude Include="Utility\UserTemplate.h" />
     <ClInclude Include="Utility\Vector2D.h" />
     <ClInclude Include="Objects\GameObject.h" />
+    <ClInclude Include="Objects\Item.h" />
   </ItemGroup>
 </Project>
