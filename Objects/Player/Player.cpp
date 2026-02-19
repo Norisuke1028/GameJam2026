@@ -1,9 +1,11 @@
 #include "Player.h"
 #include "DxLib.h"
 
-Player::Player()
+Player::Player():
+	input(nullptr)
 {
 	location = Vector2D(200, 240);
+	velocity = 0;
 }
 
 Player::~Player()
@@ -13,19 +15,23 @@ Player::~Player()
 
 void Player::Initialize()
 {
-
+	input = InputControl::GetInstance();
 }
 
 void Player::Update()
 {
-	if (CheckHitKey(KEY_INPUT_A) == true)
+	if (input->GetButtonInputState(XINPUT_BUTTON_DPAD_LEFT) == ePadInputState::ePress || 
+		input->GetButtonInputState(XINPUT_BUTTON_DPAD_LEFT) == ePadInputState::eHeld)
 	{
-		location += -5;
+		location.x -= 5;
 	}
-	if (CheckHitKey(KEY_INPUT_D) == true)
+	if (input->GetButtonInputState(XINPUT_BUTTON_DPAD_RIGHT) == ePadInputState::ePress ||
+		input->GetButtonInputState(XINPUT_BUTTON_DPAD_RIGHT) == ePadInputState::eHeld)
 	{
-		location += 5;
+		location.x += 5;
 	}
+
+	location += velocity;
 }
 
 void Player::Draw() const

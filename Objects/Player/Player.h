@@ -1,11 +1,14 @@
 #pragma once
 
 #include "../GameObject.h"
+#include "../../Utility/InputControl.h"
 #include <vector>
 
 class Player : public GameObject
 {
-	
+private:
+	InputControl* input;
+
 public:
 	Player();
 	virtual ~Player();

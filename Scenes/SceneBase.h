@@ -55,6 +55,7 @@ protected:
 		{
 			delete new_object;
 			throw("ゲームオブジェクトが生成できませんでした\n");
+			return nullptr;
 		}
 
 		// ゲームオブジェクトの生成時座標を設定
