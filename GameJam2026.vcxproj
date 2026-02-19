@@ -135,6 +135,7 @@
   <ItemGroup>
     <ClCompile Include="Objects\Item.cpp" />
     <ClCompile Include="Objects\GameObject.cpp" />
+    <ClCompile Include="Utility\ProjectConfig.cpp" />
     <ClCompile Include="Scenes\InGameScene.cpp" />
     <ClCompile Include="Scenes\SceneBase.cpp" />
     <ClCompile Include="Scenes\SceneManager.cpp" />
@@ -147,6 +148,7 @@
   <ItemGroup>
     <ClInclude Include="Objects\Item.h" />
     <ClInclude Include="Objects\GameObject.h" />
+    <ClInclude Include="Utility\ProjectConfig.h" />
     <ClInclude Include="Scenes\InGameScene.h" />
     <ClInclude Include="Scenes\SceneBase.h" />
     <ClInclude Include="Scenes\SceneManager.h" />
