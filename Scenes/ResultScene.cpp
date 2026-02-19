@@ -24,10 +24,10 @@ eSceneType ResultScene::Update()
 	// 入力情報を取得
 	InputControl* pad_input = InputControl::GetInstance();
 
-	// タイトル画面に遷移する
+	// エンドシーンに遷移する
 	if (pad_input->GetButtonInputState(XINPUT_BUTTON_B) == ePadInputState::ePress)
 	{
-		return eSceneType::eTitle;
+		return eSceneType::eEnd;
 	}
 
 	Draw();
