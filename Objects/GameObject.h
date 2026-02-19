@@ -6,6 +6,7 @@ class GameObject
 {
 protected:
 	Vector2D location;			// 座標
+	Vector2D velocity;          // 移動量
 	int graphic_images;			// 描画する画像
 	int flip_flag;				// 画像反転フラグ
 	bool delete_flag;			// 削除フラグ
