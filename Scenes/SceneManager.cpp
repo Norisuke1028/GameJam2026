@@ -2,6 +2,7 @@
 
 #include "Title.h"
 #include "InGameScene.h"
+#include "ResultScene.h"
 
 SceneManager::SceneManager()
 	: current_scene(nullptr)
@@ -98,6 +99,8 @@ SceneBase* SceneManager::CreateScene(eSceneType new_scene_type)
 		return dynamic_cast<SceneBase*>(new TitleScene());
 	case eSceneType::eInGame:
 		return dynamic_cast<SceneBase*>(new InGameScene());
+	case eSceneType::eResult:
+		return dynamic_cast<SceneBase*>(new ResultScene());
 	default:
 		return nullptr;
 	}
