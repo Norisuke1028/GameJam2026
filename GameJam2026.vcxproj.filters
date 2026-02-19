@@ -1,30 +1,75 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="AppMain.cpp" />
-    <ClCompile Include="ResourceManager.cpp" />
-    <ClCompile Include="InputControl.cpp" />
-    <ClCompile Include="Vector2D.cpp" />
-    <ClCompile Include="GameObject.cpp" />
-    <ClCompile Include="SceneManager.cpp" />
-    <ClCompile Include="SceneBase.cpp" />
-    <ClCompile Include="InGameScene.cpp" />
-    <ClCompile Include="Title.cpp" />
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneBase.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="InGameScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Title.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector2D.cpp">
+      <Filter>Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceManager.cpp">
+      <Filter>Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="AppMain.cpp">
+      <Filter>Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="InputControl.cpp">
+      <Filter>Utility</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Resource">
       <UniqueIdentifier>{adc8a8a2-48e2-4fb1-b717-cdd9727e1353}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{f92d8faf-88c4-4532-a44a-a7c889a549f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects">
+      <UniqueIdentifier>{3ef65006-eeb9-4160-a17c-6c54bf93fbb5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utility">
+      <UniqueIdentifier>{fe0b315d-07cf-4f03-903e-69ca8fbe5b42}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ResourceManager.h" />
-    <ClInclude Include="InputControl.h" />
-    <ClInclude Include="Vector2D.h" />
-    <ClInclude Include="UserTemplate.h" />
-    <ClInclude Include="GameObject.h" />
-    <ClInclude Include="SceneManager.h" />
-    <ClInclude Include="SceneBase.h" />
-    <ClInclude Include="InGameScene.h" />
-    <ClInclude Include="Title.h" />
+    <ClInclude Include="SceneManager.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneBase.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="InGameScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Title.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector2D.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="UserTemplate.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceManager.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="InputControl.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
