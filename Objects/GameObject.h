@@ -18,7 +18,7 @@ public:
 public:
 	virtual void Initialize();
 	virtual void Update();
-	virtual void Draw() const;
+	virtual void Draw(const Vector2D& screen_offset) const;
 	virtual void Finalize();
 
 public:

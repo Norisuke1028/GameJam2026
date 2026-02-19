@@ -20,21 +20,34 @@ void Player::Initialize()
 
 void Player::Update()
 {
+	velocity.x = 0;
+
 	if (input->GetButtonInputState(XINPUT_BUTTON_DPAD_LEFT) == ePadInputState::ePress || 
 		input->GetButtonInputState(XINPUT_BUTTON_DPAD_LEFT) == ePadInputState::eHeld)
 	{
-		location.x -= 5;
+		velocity.x = -5;
 	}
 	if (input->GetButtonInputState(XINPUT_BUTTON_DPAD_RIGHT) == ePadInputState::ePress ||
 		input->GetButtonInputState(XINPUT_BUTTON_DPAD_RIGHT) == ePadInputState::eHeld)
 	{
-		location.x += 5;
+		velocity.x = 5;;
 	}
 
 	location += velocity;
+
+	if (location.x >= 1280.0f / 2 && velocity.x > 0)
+	{
+		location.x = 1280.0f / 2;
+	}
+
+	if (location.x <= 20.0f)
+	{
+		location.x = 20.0f;
+	}
+	
 }
 
-void Player::Draw() const
+void Player::Draw(const Vector2D& screen_offset) const
 {
 	DrawBox(location.x + 10, location.y + 10,
 		location.x - 10, location.y - 10,
@@ -44,5 +57,15 @@ void Player::Draw() const
 
 void Player::Finalize()
 {
+}
+
+const Vector2D& Player::GetLocation() const
+{
+	return location;
+}
+
+const Vector2D& Player::GetVelocity() const
+{
+	return velocity;
 }
 
