@@ -1,5 +1,6 @@
 #include "SceneManager.h"
 
+#include "Title.h"
 #include "InGameScene.h"
 
 SceneManager::SceneManager()
@@ -18,7 +19,8 @@ SceneManager::~SceneManager()
 void SceneManager::Initialize()
 {
 	//SceneManagerが生成されたときのScene（ゲーム開始時のScene）
-	ChangeScene(eSceneType::eInGame);
+	ChangeScene(eSceneType::eTitle);
+	//ChangeScene(eSceneType::eInGame);
 }
 
 void SceneManager::Update()
@@ -92,6 +94,8 @@ SceneBase* SceneManager::CreateScene(eSceneType new_scene_type)
 	// 生成したSceneのポインタを返す
 	switch (new_scene_type)
 	{
+	case eSceneType::eTitle:
+		return dynamic_cast<SceneBase*>(new TitleScene());
 	case eSceneType::eInGame:
 		return dynamic_cast<SceneBase*>(new InGameScene());
 	default:

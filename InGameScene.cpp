@@ -1,4 +1,5 @@
 #include "InGameScene.h"
+#include "InputControl.h"
 #include "DxLib.h"
 
 #include <string>
@@ -20,6 +21,15 @@ void InGameScene::Initialize()
 
 eSceneType InGameScene::Update()
 {
+	// 入力情報を取得
+	InputControl* pad_input = InputControl::GetInstance();
+
+	// タイトルシーンに遷移する
+	if (pad_input->GetButtonInputState(XINPUT_BUTTON_B) == ePadInputState::ePress)
+	{
+		return eSceneType::eTitle;
+	}
+
 	Draw();
 	return eSceneType::eInGame;
 }
@@ -29,6 +39,7 @@ void InGameScene::Draw() const
 {
 	// カーソル画像の描画
 	DrawRotaGraph(320, 240, 0.25, 0, ch_image, TRUE, FALSE);
+	DrawFormatString(120, 140, GetColor(255, 255, 0), "インゲームシーンです");
 }
 
 void InGameScene::Finalize()
