@@ -133,26 +133,26 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="GameObject.cpp" />
-    <ClCompile Include="InGameScene.cpp" />
-    <ClCompile Include="InputControl.cpp" />
-    <ClCompile Include="AppMain.cpp" />
-    <ClCompile Include="ResourceManager.cpp" />
-    <ClCompile Include="SceneBase.cpp" />
-    <ClCompile Include="SceneManager.cpp" />
-    <ClCompile Include="Title.cpp" />
-    <ClCompile Include="Vector2D.cpp" />
+    <ClCompile Include="Objects\GameObject.cpp" />
+    <ClCompile Include="Scenes\InGameScene.cpp" />
+    <ClCompile Include="Scenes\SceneBase.cpp" />
+    <ClCompile Include="Scenes\SceneManager.cpp" />
+    <ClCompile Include="Scenes\Title.cpp" />
+    <ClCompile Include="Utility\AppMain.cpp" />
+    <ClCompile Include="Utility\InputControl.cpp" />
+    <ClCompile Include="Utility\ResourceManager.cpp" />
+    <ClCompile Include="Utility\Vector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GameObject.h" />
-    <ClInclude Include="InGameScene.h" />
-    <ClInclude Include="InputControl.h" />
-    <ClInclude Include="ResourceManager.h" />
-    <ClInclude Include="SceneBase.h" />
-    <ClInclude Include="SceneManager.h" />
-    <ClInclude Include="Title.h" />
-    <ClInclude Include="UserTemplate.h" />
-    <ClInclude Include="Vector2D.h" />
+    <ClInclude Include="Objects\GameObject.h" />
+    <ClInclude Include="Scenes\InGameScene.h" />
+    <ClInclude Include="Scenes\SceneBase.h" />
+    <ClInclude Include="Scenes\SceneManager.h" />
+    <ClInclude Include="Scenes\Title.h" />
+    <ClInclude Include="Utility\InputControl.h" />
+    <ClInclude Include="Utility\ResourceManager.h" />
+    <ClInclude Include="Utility\UserTemplate.h" />
+    <ClInclude Include="Utility\Vector2D.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Vector2D.h"
-#include "GameObject.h"
+#include "../Utility/Vector2D.h"
+#include "../Objects/GameObject.h"
 #include <vector>
 
 // ƒV[ƒ“‚Ìí—Ş

@@ -1,7 +1,7 @@
 #include "DxLib.h"
 #include "InputControl.h"
 #include "ResourceManager.h"
-#include "SceneManager.h"
+#include "../Scenes/SceneManager.h"
 #include <string>
 
 // ƒvƒƒOƒ‰ƒ€‚Í WinMain ‚©‚çn‚Ü‚è‚Ü‚·

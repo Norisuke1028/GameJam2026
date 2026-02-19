@@ -1,5 +1,5 @@
 #include "Title.h"
-#include "InputControl.h"
+#include "../Utility/InputControl.h"
 #include "DxLib.h"
 
 #include <string>
