@@ -19,6 +19,7 @@ InGameScene::~InGameScene()
 void InGameScene::Initialize()
 {
 	ch_image = LoadGraph("Resource/b.png");
+	background_image = LoadGraph("Resource/image/sky.png");
 
 	player = CreateObject<Player>(Vector2D(100, 100));
 
@@ -72,6 +73,7 @@ eSceneType InGameScene::Update()
 //ï`âÊèàóù
 void InGameScene::Draw() const
 {
+	DrawGraph(0,0,background_image,true);
 	__super::Draw();
 
 	StageData* stage = StageData::GetInstance();

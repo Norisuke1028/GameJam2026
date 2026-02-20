@@ -10,6 +10,7 @@ private:
 
 
 	int ch_image;
+	int background_image;
 
 private:
 	eSceneType next_scene; // ‘JˆÚæ‚ÌƒV[ƒ“

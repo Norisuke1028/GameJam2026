@@ -53,12 +53,12 @@ void StageData::Load()
 			Vector2D generate_location = Vector2D((float)x, (float)y) * block_size;
 			//対象の文字があるか確認
 			//夜空
-			if (*p == 'y')
-			{
-				//対象の文字があれば「２次元座標」と「画像情報」を覚える
-				int image_sora = rm->GetImages("Resource/image/Block/sky.png").at(0);
-				DrawGraph((int)generate_location.x + velocity.x, (int)generate_location.y, image_sora, TRUE);
-			}
+			//if (*p == 'y')
+			//{
+			//	//対象の文字があれば「２次元座標」と「画像情報」を覚える
+			//	int image_sora = rm->GetImages("Resource/image/Block/sky.png").at(0);
+			//	DrawGraph((int)generate_location.x + velocity.x, (int)generate_location.y, image_sora, TRUE);
+			//}
 
 			//土
 			if (*p == 't')
@@ -71,7 +71,7 @@ void StageData::Load()
 			if (*p == 's')
 			{
 				//対象の文字があれば「２次元座標」と「画像情報」を覚える
-				int image_sora = rm->GetImages("Resource/image/Block/sky.png").at(0);
+				int image_sora = rm->GetImages("Resource/image/Block/snow.png").at(0);
 				DrawGraph((int)generate_location.x + velocity.x, (int)generate_location.y, image_sora, TRUE);
 			}
 
