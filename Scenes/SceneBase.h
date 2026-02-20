@@ -25,6 +25,8 @@ protected:
 	std::vector<GameObject*> objects;
 	int background_image;
 
+	Vector2D screen_offset;   //ƒJƒƒ‰ˆÊ’u
+
 public:
 	SceneBase();
 	virtual ~SceneBase();

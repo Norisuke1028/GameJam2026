@@ -26,7 +26,7 @@ void GameObject::Update()
 
 }
 
-void GameObject::Draw() const
+void GameObject::Draw(const Vector2D& screen_offset) const
 {
 	// ‰æ‘œ•`‰æ
 	DrawRotaGraphF(location.x, location.y, 1.0, 0.0, graphic_images, TRUE, flip_flag);

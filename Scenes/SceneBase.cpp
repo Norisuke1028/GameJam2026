@@ -20,6 +20,7 @@ void SceneBase::Initialize()
 
 eSceneType SceneBase::Update()
 {
+
 	// 範囲for文でobjectsの要素を順番にobjに代入
 	for (GameObject* obj : objects)
 	{
@@ -45,14 +46,23 @@ eSceneType SceneBase::Update()
 void SceneBase::Draw() const
 {
 
-	//DrawBox(1080, 550, 1250, 700, 0x000000, TRUE);
-
 	// 範囲for文でobjectsの要素を順番にobjに代入
 	for (GameObject* obj : objects)
 	{
 		// オブジェクトの描画処理
-		obj->Draw();
+		obj->Draw(screen_offset);
 	}
+
+	// テストボックス
+	DrawBox(
+		1000 + screen_offset.x,
+		300 + screen_offset.y,
+		900 + screen_offset.x,
+		400 + screen_offset.y,
+		GetColor(255, 0, 0),
+		TRUE
+	);
+
 }
 
 void SceneBase::Finalize()

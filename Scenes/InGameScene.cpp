@@ -1,4 +1,5 @@
 #include "InGameScene.h"
+#include "../StageData.h"
 #include "../Utility/InputControl.h"
 #include "../Objects/Player/Player.h"
 #include "DxLib.h"
@@ -19,15 +20,26 @@ void InGameScene::Initialize()
 {
 	ch_image = LoadGraph("Resource/b.png");
 
-	CreateObject<Player>(Vector2D(100, 100));
+	player = CreateObject<Player>(Vector2D(100, 100));
+
+	screen_offset = Vector2D(0, 0);
 }
 
 eSceneType InGameScene::Update()
 {
+	StageData* Stage = StageData::GetInstance();
+	Stage->Update();
+
 	// 入力情報を取得
 	InputControl* pad_input = InputControl::GetInstance();
 
 	__super::Update();
+
+	if (player->GetLocation().x >= 1280 / 2)
+	{
+		screen_offset.x -= player->GetVelocity().x;
+	}
+
 
 	// リザルト画面に遷移する
 	if (pad_input->GetButtonInputState(XINPUT_BUTTON_B) == ePadInputState::ePress)
@@ -36,13 +48,28 @@ eSceneType InGameScene::Update()
 	}
 
 	Draw();
-	return eSceneType::eInGame;
+	// 親クラスの更新処理を呼び出す
+	return __super::Update();
 }
 
 //描画処理
 void InGameScene::Draw() const
 {
 	__super::Draw();
+
+	StageData* stage = StageData::GetInstance();
+	float s_location = stage->GetLocation();
+
+	//デバッグ用
+	DrawFormatString(10, 50, GetColor(255, 255, 255),
+		"offset.x = %.2f", screen_offset.x);
+
+	DrawFormatString(0, 0, GetColor(255, 255, 255),
+		"PlayerLocationX: %.2f", player->GetLocation().x);
+
+	DrawFormatString(0, 20, GetColor(255, 255, 255),
+		"PlayerVelocityX: %.2f", player->GetVelocity().x);
+
 
 	// カーソル画像の描画
 	DrawRotaGraph(320, 240, 0.25, 0, ch_image, TRUE, FALSE);
