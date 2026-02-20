@@ -2,7 +2,7 @@
 #include "../StageData.h"
 #include "../Utility/InputControl.h"
 #include "../Objects/Player/Player.h"
-#include "../Objects/Item/Item.h"
+#include"../Objects/Enemy/Enemy.h"
 #include "DxLib.h"
 
 #include <string>
@@ -23,6 +23,8 @@ void InGameScene::Initialize()
 	background_image = LoadGraph("Resource/image/sky.png");
 
 	player = CreateObject<Player>(Vector2D(100, 100));
+
+	enemy = CreateObject<Enemy>(Vector2D(1000, 588));
 
 	screen_offset = Vector2D(0, 0);
 }
@@ -54,13 +56,6 @@ eSceneType InGameScene::Update()
 	if (screen_offset.x > 0)
 	{
 		screen_offset.x = 0;
-		velocity = 0;
-	}
-
-	// âEí[êßå¿
-	if (screen_offset.x <= -4550)
-	{
-		screen_offset.x = -4550;
 		velocity = 0;
 	}
 
