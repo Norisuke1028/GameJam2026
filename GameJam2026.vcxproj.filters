@@ -10,7 +10,7 @@
     <ClCompile Include="Utility\ResourceManager.cpp" />
     <ClCompile Include="Utility\Vector2D.cpp" />
     <ClCompile Include="Objects\GameObject.cpp" />
-    <ClCompile Include="Objects\Item.cpp" />
+    <ClCompile Include="Objects\Item\Item.cpp" />
     <ClCompile Include="Utility\ProjectConfig.cpp" />
     <ClCompile Include="Scenes\EndScene.cpp" />
     <ClCompile Include="Scenes\ResultScene.cpp" />
@@ -41,7 +41,7 @@
     <ClInclude Include="Utility\UserTemplate.h" />
     <ClInclude Include="Utility\Vector2D.h" />
     <ClInclude Include="Objects\GameObject.h" />
-    <ClInclude Include="Objects\Item.h" />
+    <ClInclude Include="Objects\Item\Item.h" />
     <ClInclude Include="Utility\ProjectConfig.h" />
     <ClInclude Include="Scenes\EndScene.h" />
     <ClInclude Include="Scenes\ResultScene.h" />

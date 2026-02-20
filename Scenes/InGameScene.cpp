@@ -2,6 +2,7 @@
 #include "../StageData.h"
 #include "../Utility/InputControl.h"
 #include "../Objects/Player/Player.h"
+#include "../Objects/Item/Item.h"
 #include "DxLib.h"
 
 #include <string>
@@ -21,6 +22,10 @@ void InGameScene::Initialize()
 	ch_image = LoadGraph("Resource/b.png");
 
 	player = CreateObject<Player>(Vector2D(100, 100));
+
+	item = CreateObject<Item>(Vector2D(400, 240));
+
+	item2 = CreateObject<Item>(Vector2D(600, 240));
 
 	screen_offset = Vector2D(0, 0);
 }
@@ -70,6 +75,10 @@ void InGameScene::Draw() const
 	DrawFormatString(0, 20, GetColor(255, 255, 255),
 		"PlayerVelocityX: %.2f", player->GetVelocity().x);
 
+	DrawFormatString(0, 40, GetColor(255, 255, 255),
+		"PlayerLocationX: %.2f", item->GetLocation().x);
+	DrawFormatString(0, 60, GetColor(255, 255, 255),
+		"PlayerLocationY: %.2f", item->GetLocation().y);
 
 	// ƒJ[ƒ\ƒ‹‰æ‘œ‚Ì•`‰æ
 	DrawRotaGraph(320, 240, 0.25, 0, ch_image, TRUE, FALSE);

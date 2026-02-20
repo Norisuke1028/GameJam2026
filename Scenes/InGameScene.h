@@ -7,7 +7,8 @@ class InGameScene : public SceneBase
 {
 private:
 	class Player* player;
-
+	class Item* item;
+	class Item* item2;
 
 	int ch_image;
 
