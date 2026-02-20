@@ -60,11 +60,11 @@ protected:
 			return nullptr;
 		}
 
-		// ゲームオブジェクトの生成時座標を設定
-		new_object->SetLocation(location);
-
 		// ゲームオブジェクトの初期化
 		new_object->Initialize();
+
+		// ゲームオブジェクトの生成時座標を設定
+		new_object->SetLocation(location);
 
 		// objectsの末尾にゲームオブジェクトを追加
 		objects.push_back(new_object);

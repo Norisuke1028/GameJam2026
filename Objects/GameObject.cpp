@@ -6,6 +6,8 @@ GameObject::GameObject()
 	, graphic_images(NULL)
 	, flip_flag(false)
 	, delete_flag(false)
+	, mobility(eMobilityType::Stationary) // mobility を初期化
+	, z_layer(0)               // z_layer を初期化
 {
 
 }
@@ -35,4 +37,40 @@ void GameObject::Draw(const Vector2D& screen_offset) const
 void GameObject::Finalize()
 {
 
+}
+
+void GameObject::OnHitCollision(const GameObject& hit_object)
+{
+}
+
+const Vector2D& GameObject::GetLocation()
+{
+	// TODO: return ステートメントをここに挿入します
+	return location;
+}
+
+const CapsuleCollision& GameObject::GetCollision() const
+{
+	// TODO: return ステートメントをここに挿入します
+	return collision;
+}
+
+const int GameObject::GetZLayer() const
+{
+	return 0;
+}
+
+const eMobilityType GameObject::GetMobility() const
+{
+	return eMobilityType();
+}
+
+void GameObject::SetLocation(const Vector2D& location)
+{
+	this->location = location;
+}
+
+const bool GameObject::GetDeleteFlag() const
+{
+	return false;
 }

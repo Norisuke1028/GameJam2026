@@ -1,11 +1,10 @@
 #include "Player.h"
 #include "DxLib.h"
 
-Player::Player():
+Player::Player() :
 	input(nullptr)
 {
-	location = Vector2D(200, 240);
-	velocity = 0;
+	
 }
 
 Player::~Player()
@@ -30,7 +29,7 @@ void Player::Update()
 	if (input->GetButtonInputState(XINPUT_BUTTON_DPAD_RIGHT) == ePadInputState::ePress ||
 		input->GetButtonInputState(XINPUT_BUTTON_DPAD_RIGHT) == ePadInputState::eHeld)
 	{
-		velocity.x = 5;;
+		velocity.x = 5;
 	}
 
 	location += velocity;
@@ -52,7 +51,8 @@ void Player::Draw(const Vector2D& screen_offset) const
 	DrawBox(location.x + 10, location.y + 10,
 		location.x - 10, location.y - 10,
 		GetColor(255, 255, 255), TRUE);
-
+	
+	DrawFormatString(400, 50, GetColor(255, 255, 255), "PlayerLocationY: %f", location.y);
 }
 
 void Player::Finalize()

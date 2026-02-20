@@ -5,7 +5,7 @@ CapsuleCollision::CapsuleCollision() :
 	is_blocking(false),
 	object_type(eObjectType::none),
 	hit_object_type(),
-	radius(0.0f, 0.0f)
+	radius(0.0f)
 {
 	point[0] = Vector2D(0.0f, 0.0f);
 	point[1] = Vector2D(0.0f, 0.0f);
@@ -129,7 +129,7 @@ Vector2D NearPointCheck(const CapsuleCollision& cap, const Vector2D& point)
 	// 線分の始点から点にベクトルを計算する
 	Vector2D a1 = point - cap.point[0];
 	// 線分の終点から点にベクトルを計算する
-	Vector2D　a2 = point - cap.point[1];
+	Vector2D a2 = point - cap.point[1];
 
 	// 点とカプセルの線分の最近傍点を求める
 	if(Vector2D::Dot(line, a1) <= 0.0f)
@@ -145,4 +145,13 @@ Vector2D NearPointCheck(const CapsuleCollision& cap, const Vector2D& point)
 	Vector2D n = line.Normalize();
 	float dot = Vector2D::Dot(n, a1);
 	return (cap.point[0] + n * dot);
+}
+
+CircleCollision::CircleCollision() :
+	point(0.0f), radius(0.0f)
+{
+}
+
+CircleCollision::~CircleCollision()
+{
 }

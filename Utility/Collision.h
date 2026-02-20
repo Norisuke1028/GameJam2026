@@ -21,7 +21,7 @@ public:
 	bool                     is_blocking;     // すり抜けフラグ
 	eObjectType              object_type;     // 自身のオブジェクトタイプ
 	std::vector<eObjectType> hit_object_type; // 当たり判定を適用するオブジェクトタイプ
-	Vector2D                 radius;          // 円の半径(横半径と縦半径)
+	float                 radius;          // 円の半径(横半径と縦半径)
 	Vector2D                 point[2];        // 視点と終点
 
 public:
