@@ -12,6 +12,7 @@ enum class eSceneType
 	eInGame,				// インゲーム画面
 	eResult,				// リザルト画面
 	eRanking,				// ランキング画面
+	eHelp,					// ヘルプ画面
 	eEnd,					// エンド画面
 	eCredit,				//クレジット画面
 };
