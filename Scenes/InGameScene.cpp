@@ -35,11 +35,28 @@ eSceneType InGameScene::Update()
 
 	__super::Update();
 
-	if (player->GetLocation().x >= 1280 / 2)
+	float velocity = player->GetVelocity().x;
+
+	// スクロール条件
+	if (player->GetLocation().x >= 1280 / 2 ||
+		player->GetLocation().x <= 30)
 	{
-		screen_offset.x -= player->GetVelocity().x;
+		screen_offset.x -= velocity;
+	}
+	else
+	{
+		velocity = 0;
 	}
 
+	// 左端制限
+	if (screen_offset.x > 0)
+	{
+		screen_offset.x = 0;
+		velocity = 0;
+	}
+
+	// 最後に一度だけ設定（重要）
+	Stage->SetVelocity(velocity);
 
 	// リザルト画面に遷移する
 	if (pad_input->GetButtonInputState(XINPUT_BUTTON_B) == ePadInputState::ePress)
@@ -58,6 +75,7 @@ void InGameScene::Draw() const
 	__super::Draw();
 
 	StageData* stage = StageData::GetInstance();
+	stage->Load();
 	float s_location = stage->GetLocation();
 
 	//デバッグ用
