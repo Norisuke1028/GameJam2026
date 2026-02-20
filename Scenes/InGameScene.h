@@ -8,7 +8,6 @@ class InGameScene : public SceneBase
 private:
 	class Player* player;
 
-
 	int ch_image;
 
 private:

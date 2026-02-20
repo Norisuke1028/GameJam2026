@@ -16,6 +16,7 @@
     <ClCompile Include="Scenes\ResultScene.cpp" />
     <ClCompile Include="Objects\Player\Player.cpp" />
     <ClCompile Include="StageData.cpp" />
+    <ClCompile Include="Utility\Collision.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Resource">
@@ -47,5 +48,6 @@
     <ClInclude Include="Scenes\ResultScene.h" />
     <ClInclude Include="Objects\Player\Player.h" />
     <ClInclude Include="StageData.h" />
+    <ClInclude Include="Utility\Collision.h" />
   </ItemGroup>
 </Project>

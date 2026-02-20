@@ -139,6 +139,7 @@
     <ClCompile Include="Objects\GameObject.cpp" />
     <ClCompile Include="Objects\Player\Player.cpp" />
     <ClCompile Include="StageData.cpp" />
+    <ClCompile Include="Utility\Collision.cpp" />
     <ClCompile Include="Utility\ProjectConfig.cpp" />
     <ClCompile Include="Scenes\InGameScene.cpp" />
     <ClCompile Include="Scenes\SceneBase.cpp" />
@@ -156,6 +157,7 @@
     <ClInclude Include="Objects\GameObject.h" />
     <ClInclude Include="Objects\Player\Player.h" />
     <ClInclude Include="StageData.h" />
+    <ClInclude Include="Utility\Collision.h" />
     <ClInclude Include="Utility\ProjectConfig.h" />
     <ClInclude Include="Scenes\InGameScene.h" />
     <ClInclude Include="Scenes\SceneBase.h" />

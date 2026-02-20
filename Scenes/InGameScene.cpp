@@ -88,6 +88,9 @@ void InGameScene::Draw() const
 	DrawFormatString(0, 20, GetColor(255, 255, 255),
 		"PlayerVelocityX: %.2f", player->GetVelocity().x);
 
+	DrawFormatString(0, 40, GetColor(255, 255, 255),
+		"PlayerLocationY: %.2f", player->GetLocation().y);
+
 
 	// ƒJ[ƒ\ƒ‹‰æ‘œ‚Ì•`‰æ
 	DrawRotaGraph(320, 240, 0.25, 0, ch_image, TRUE, FALSE);
