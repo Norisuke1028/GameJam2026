@@ -19,7 +19,7 @@ void Enemy::Initialize() {
     velocity = Vector2D(1, 0);
 }
 
-void Enemy::Update()
+void Enemy::Update(float delta_second)
 {
     location += velocity;
     if (location.x > 1280|| location.x<700)

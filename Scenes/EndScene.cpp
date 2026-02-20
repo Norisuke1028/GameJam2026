@@ -19,7 +19,7 @@ void EndScene::Initialize()
 	printf("エンドシーン");
 }
 
-eSceneType EndScene::Update()
+eSceneType EndScene::Update(const float& delta_second)
 {
 	// 入力情報を取得
 	InputControl* pad_input = InputControl::GetInstance();
@@ -46,7 +46,7 @@ void EndScene::Finalize()
 
 }
 
-eSceneType EndScene::GetNowSceneType() const
+const eSceneType EndScene::GetNowSceneType() const
 {
 	return eSceneType::eEnd;
 }

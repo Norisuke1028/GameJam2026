@@ -110,7 +110,7 @@ void StageData::Initialize()
 	s_location = 0;
 }
 
-void StageData::Update()
+void StageData::Update(float delta_second)
 {
 	s_location += velocity.x;
 }

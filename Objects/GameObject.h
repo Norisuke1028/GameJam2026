@@ -13,6 +13,7 @@ enum eMobilityType
 class GameObject
 {
 protected:
+	class SceneBase* owner_scene; //所有するシーン情報
 	Vector2D location;			// 座標
 	Vector2D velocity;          // 移動量	
 	Vector2D box_size;			// 当たり判定の大きさ
@@ -33,7 +34,7 @@ public:
 
 public:
 	virtual void Initialize();
-	virtual void Update();
+	virtual void Update(float delta_second);
 	virtual void Draw(const Vector2D& screen_offset) const;
 	virtual void Finalize();
 
@@ -52,6 +53,9 @@ public:
 
 	// 座標を設定
 	void SetLocation(const Vector2D& location);
+	// 所有シーン情報設定
+	void SetOwnerScene(class SceneBase* scene);
+
 	// 削除フラグを取得
 	const bool GetDeleteFlag() const;
 };

@@ -21,7 +21,7 @@ void TitleScene::Initialize()
 	printf("タイトルシーンです");
 }
 
-eSceneType TitleScene::Update()
+eSceneType TitleScene::Update(const float& delta_second)
 {
 	// 入力情報を取得
 	InputControl* pad_input = InputControl::GetInstance();
@@ -81,7 +81,7 @@ void TitleScene::Finalize()
 
 }
 
-eSceneType TitleScene::GetNowSceneType() const
+const eSceneType TitleScene::GetNowSceneType() const
 {
 	return eSceneType::eTitle;
 }

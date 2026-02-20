@@ -1,107 +1,182 @@
 #include "SceneManager.h"
+#include "../Utility/InputControl.h"
+#include "../Utility/ResourceManager.h"
+#include "../Utility/ProjectConfig.h"
+#include "DxLib.h"
 
-#include "Title.h"
-#include "InGameScene.h"
-#include "ResultScene.h"
-#include "EndScene.h"
+#include "../Scenes/Title.h"
+#include "../Scenes/InGameScene.h"
+#include "../Scenes/HelpScene.h"
+#include "../Scenes/EndScene.h"
 
-SceneManager::SceneManager()
-	: current_scene(nullptr)
-	, loop_flag(true)
+SceneManager::SceneManager() :
+	current_scene(nullptr)
 {
 
 }
 
 SceneManager::~SceneManager()
 {
-	// 自身の終了処理を呼ぶ
-	this->Finalize();
+	Shutdown();
 }
 
-void SceneManager::Initialize()
+void SceneManager::WakeUp()
 {
-	//SceneManagerが生成されたときのScene（ゲーム開始時のScene）
-	//ChangeScene(eSceneType::eTitle);
-	ChangeScene(eSceneType::eInGame);
+	//ウィンドウモードで起動する
+	ChangeWindowMode(TRUE);
+
+	//ウィンドウサイズの設定
+	SetGraphMode(D_WIN_MAX_X, D_WIN_MAX_Y, D_COLOR_BIT);
+
+	//ウィンドウタイルの設定
+	SetWindowText("Game Development Super-Mario 2024");
+
+	//垂直同期を行わない
+	SetWaitVSyncFlag(FALSE);
+
+	//Log.txtファイルの生成制御(Debugモードのみ生成する)
+#if _DEBUG
+	SetOutApplicationLogValidFlag(TRUE);
+#else
+	SetOutApplicationLogValidFlag(FALSE);
+#endif // _DEBUG
+
+	//Dxライブラリの初期化
+	if (DxLib_Init() == D_FAILURE)
+	{
+		throw std::string("Dxライブラリの初期化に失敗しました\n");
+	}
+
+	//描画先を表画面に反映する
+	SetDrawScreen(DX_SCREEN_BACK);
+
+	//最初のシーンをタイトル画面にする
+	ChangeScene(eSceneType::eTitle);
+
+	//非アクティブ状態でも動作させる
+	SetAlwaysRunFlag(TRUE);
 }
 
-void SceneManager::Update()
+/// <summary>
+/// 実行処理
+/// </summary>
+void SceneManager::Run()
 {
-	// シーンの更新処理
-	// current_sceneのUpdateで返されたシーンタイプを代入
-	// （次に処理を行うシーンタイプを保持）
-	eSceneType next_scene_type = current_scene->Update();
+	//入力情報を取得する
+	InputControl* input = InputControl::GetInstance();
+
+	//メインループ
+	while (ProcessMessage() == D_SUCCESS)
+	{
+		//入力情報の更新
+		input->Update();
+
+		//フレームレートの制御
+		FreamControl();
+
+		//シーンの更新
+		eSceneType next_scene_type = current_scene->Update(GetDeltaSecond());
+
+		//描画処理
+		Graph();
+
+		// ゲームを終了するか確認する
+		if ((next_scene_type == eSceneType::eEnd) ||
+			(input->GetButtonInputState(XINPUT_BUTTON_BACK) == ePadInputState::ePress))
+		{
+			break;
+		}
+
+		// 現在のシーンタイプが次のシーンタイプと違っているか？
+		if (current_scene->GetNowSceneType() != next_scene_type)
+		{
+			// シーン切り替え処理
+			ChangeScene(next_scene_type);
+		}
+	}
+}
+
+/// <summary>
+/// 終了時処理
+/// </summary>
+void SceneManager::Shutdown()
+{
+	// シーン情報が生成されていれば、削除する
+	if (current_scene != nullptr)
+	{
+		current_scene->Finalize();
+		delete current_scene;
+		current_scene = nullptr;
+	}
+
+	// Singletonのインスタンスを解放する
+	InputControl::DeleteInstance();
+	ResourceManager::DeleteInstance();
+
+	// Dxライブラリの使用を終了する
+	DxLib_End();
+}
+
+/// <summary>
+/// 描画処理
+/// </summary>
+void SceneManager::Graph() const
+{
+	// 画面の初期化
+	ClearDrawScreen();
 
 	// シーンの描画処理
 	current_scene->Draw();
 
-	if (next_scene_type != current_scene->GetNowSceneType())
-	{
-		// シーン変更
-		ChangeScene(next_scene_type);
-	}
+	// 裏画面の内容を表画面に反映する
+	ScreenFlip();
 }
 
-void SceneManager::Finalize()
+/// <summary>
+/// シーン切り替え処理
+/// </summary>
+/// <param name="next_type">次のシーンタイプ</param>
+void SceneManager::ChangeScene(eSceneType next_type)
 {
+	// 次のシーンを生成する
+	SceneBase* next_scene = CreateScene(next_type);
+
+	// エラーチェック
+	if (next_scene == nullptr)
+	{
+		throw ("シーンが生成できませんでした\n");
+	}
+
+	// シーン情報が格納されていたら、削除する
 	if (current_scene != nullptr)
 	{
-		// current_sceneの終了処理
 		current_scene->Finalize();
-
-		// current_sceneが確保したメモリを解放
-		delete current_scene;
-		// current_sceneのポインタを無効化
-		current_scene = nullptr;
-	}
-}
-
-bool SceneManager::LoopCheck() const
-{
-	return loop_flag;
-}
-
-// シーン切り替え処理
-void SceneManager::ChangeScene(eSceneType new_scene_type)
-{
-
-	// シーンの生成で返ってきたポインタをnew_sceneに代入
-	SceneBase* new_scene = CreateScene(new_scene_type);
-
-	// 上のCreateScene(new_scene_type)でキャストが失敗した場合
-	if (new_scene == nullptr)
-	{
-		throw("\n新しいシーンの生成ができませんでした\n");
-	}
-
-	if (current_scene != nullptr)
-	{
-		// current_sceneの終了処理
-		current_scene->Finalize();
-
-		// current_sceneが確保したメモリを解放
 		delete current_scene;
 	}
 
-	// 新しいSceneの初期化関数
-	new_scene->Initialize();
+	// 次のシーンの初期化
+	next_scene->Initialize();
 
-	current_scene = new_scene;
+	// 現在シーンの上書き
+	current_scene = next_scene;
 }
 
-// シーンの生成
-SceneBase* SceneManager::CreateScene(eSceneType new_scene_type)
+/// <summary>
+/// シーン生成処理
+/// </summary>
+/// <param name="next_type">次のシーンタイプ</param>
+/// <returns>生成したシーン情報のポインタ</returns>
+SceneBase* SceneManager::CreateScene(eSceneType next_type)
 {
-	// dynamic_castで、生成したSceneがSceneBaseを継承しているかチェック
-	// 生成したSceneのポインタを返す
-	switch (new_scene_type)
+	// シーンタイプによって、生成するシーンを切り替える
+	switch (next_type)
 	{
 	case eSceneType::eTitle:
 		return dynamic_cast<SceneBase*>(new TitleScene());
 	case eSceneType::eInGame:
 		return dynamic_cast<SceneBase*>(new InGameScene());
-	case eSceneType::eResult:
-		return dynamic_cast<SceneBase*>(new ResultScene());
+	case eSceneType::eHelp:
+		return dynamic_cast<SceneBase*>(new HelpScene());
 	case eSceneType::eEnd:
 		return dynamic_cast<SceneBase*>(new EndScene());
 	default:

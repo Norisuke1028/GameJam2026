@@ -43,7 +43,7 @@ public:
 	void Load();
 
 	void Initialize() override;
-	void Update() override;
+	void Update(float delta_second) override;
 	void Draw(const Vector2D& screen_offset) const override;
 	void Finalize() override;
 

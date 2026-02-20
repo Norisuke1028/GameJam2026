@@ -19,7 +19,7 @@ void ResultScene::Initialize()
 	printf("リザルト画面");
 }
 
-eSceneType ResultScene::Update()
+eSceneType ResultScene::Update(const float& delta_second)
 {
 	// 入力情報を取得
 	InputControl* pad_input = InputControl::GetInstance();
@@ -38,7 +38,6 @@ eSceneType ResultScene::Update()
 void ResultScene::Draw() const
 {
 	DrawFormatString(120, 140, GetColor(255, 255, 0), "リザルト画面");
-
 }
 
 void ResultScene::Finalize()
@@ -46,7 +45,7 @@ void ResultScene::Finalize()
 
 }
 
-eSceneType ResultScene::GetNowSceneType() const
+const eSceneType ResultScene::GetNowSceneType() const
 {
 	return eSceneType::eResult;
 }

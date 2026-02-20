@@ -17,7 +17,7 @@ void Player::Initialize()
 	input = InputControl::GetInstance();
 }
 
-void Player::Update()
+void Player::Update(float delta_second)
 {
 	velocity.x = 0;
 
