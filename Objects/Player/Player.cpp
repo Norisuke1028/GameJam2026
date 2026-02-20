@@ -29,7 +29,7 @@ void Player::Update()
 	if (input->GetButtonInputState(XINPUT_BUTTON_DPAD_RIGHT) == ePadInputState::ePress ||
 		input->GetButtonInputState(XINPUT_BUTTON_DPAD_RIGHT) == ePadInputState::eHeld)
 	{
-		velocity.x = 5;;
+		velocity.x = 5;
 	}
 
 	location += velocity;
