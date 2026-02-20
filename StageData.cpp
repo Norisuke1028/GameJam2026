@@ -75,6 +75,14 @@ void StageData::Load()
 				DrawGraph((int)generate_location.x + velocity.x, (int)generate_location.y, image_snow, TRUE);
 			}
 
+			//雪だるま
+			if (*p == 'm')
+			{
+				//対象の文字があれば「２次元座標」と「画像情報」を覚える
+				int image_snowman = rm->GetImages("Resource/image/snowman.png").at(0);
+				DrawGraph((int)generate_location.x + velocity.x, (int)generate_location.y, image_snowman, TRUE);
+			}
+
 			//街並み
 			if (*p == 'c')
 			{
@@ -82,6 +90,8 @@ void StageData::Load()
 				int image_city = rm->GetImages("Resource/image/city.png").at(0);
 				DrawGraph((int)generate_location.x + velocity.x, (int)generate_location.y, image_city, TRUE);
 			}
+
+
 
 			//次の列
 			x++;
