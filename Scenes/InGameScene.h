@@ -7,7 +7,7 @@ class InGameScene : public SceneBase
 {
 private:
 	class Player* player;
-
+	class Enemy* enemy;
 	int ch_image;
 	int background_image;
 

@@ -2,6 +2,7 @@
 #include "../StageData.h"
 #include "../Utility/InputControl.h"
 #include "../Objects/Player/Player.h"
+#include"../Objects/Enemy/Enemy.h"
 #include "DxLib.h"
 
 #include <string>
@@ -22,6 +23,8 @@ void InGameScene::Initialize()
 	background_image = LoadGraph("Resource/image/sky.png");
 
 	player = CreateObject<Player>(Vector2D(100, 100));
+
+	enemy = CreateObject<Enemy>(Vector2D(1000, 588));
 
 	screen_offset = Vector2D(0, 0);
 }
