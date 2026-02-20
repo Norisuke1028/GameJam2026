@@ -19,7 +19,6 @@ InGameScene::~InGameScene()
 
 void InGameScene::Initialize()
 {
-	ch_image = LoadGraph("Resource/image/b.png");
 	background_image = LoadGraph("Resource/image/sky.png");
 
 	player = CreateObject<Player>(Vector2D(100, 100));
@@ -37,6 +36,7 @@ eSceneType InGameScene::Update(const float& delta_second)
 	// 入力情報を取得
 	InputControl* pad_input = InputControl::GetInstance();
 
+	player->SetScroll(screen_offset.x);
 	__super::Update(delta_second);
 
 	float velocity = player->GetVelocity().x;
@@ -45,10 +45,12 @@ eSceneType InGameScene::Update(const float& delta_second)
 	if (player->GetLocation().x >= 1280 / 2 ||
 		player->GetLocation().x <= 30)
 	{
+		// プレイヤーの加速度分スクロールする
 		screen_offset.x -= velocity;
 	}
 	else
 	{
+		// スクロールできなくさせる
 		velocity = 0;
 	}
 
@@ -66,7 +68,7 @@ eSceneType InGameScene::Update(const float& delta_second)
 		velocity = 0;
 	}
 
-	// 最後に一度だけ設定（重要）
+	// 最後に一度だけ設定
 	Stage->SetVelocity(velocity);
 
 	// リザルト画面に遷移する
@@ -104,10 +106,6 @@ void InGameScene::Draw() const
 	DrawFormatString(0, 40, GetColor(255, 255, 255),
 		"PlayerLocationY: %.2f", player->GetLocation().y);
 
-
-	// カーソル画像の描画
-	DrawRotaGraph(320, 240, 0.25, 0, ch_image, TRUE, FALSE);
-	DrawFormatString(120, 140, GetColor(255, 255, 0), "インゲームシーンです");
 }
 
 void InGameScene::Finalize()
@@ -118,4 +116,10 @@ void InGameScene::Finalize()
 const eSceneType InGameScene::GetNowSceneType() const
 {
 	return eSceneType::eInGame;
+}
+
+//カメラ視点の値を取得する
+const Vector2D& InGameScene::GetScreenOffset() const
+{
+	return screen_offset;
 }

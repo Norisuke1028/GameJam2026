@@ -2,13 +2,16 @@
 
 #include "../GameObject.h"
 #include "../../Utility/InputControl.h"
+#include "../../Scenes/InGameScene.h"
 #include <vector>
 
 class Player : public GameObject
 {
 private:
 	InputControl* input;  // 入力情報
+	InGameScene* ingame_s;  //ゲームメインの情報
 	float gravity;        // 重力
+	float scroll;  //スクロール値
 	bool is_on_ground;    // 地面にいるかどうか
 
 	// 画像配列 ： 今後、プレイヤーの状態に応じて画像を切り替えるために使用
@@ -40,4 +43,6 @@ public:
 	const Vector2D& GetLocation() const;
 	//位置情報取得処理
 	const Vector2D& GetVelocity() const;
+	// カメラ視点の値を受け取る
+	void SetScroll(float scrollX);
 };
