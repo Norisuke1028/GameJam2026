@@ -2,6 +2,7 @@
 #include "../StageData.h"
 #include "../Utility/InputControl.h"
 #include "../Objects/Player/Player.h"
+#include "../Objects/Item/Item.h"
 #include "DxLib.h"
 
 #include <string>
