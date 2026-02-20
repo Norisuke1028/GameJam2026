@@ -1,11 +1,13 @@
 #include "Enemy.h"
 #include "DxLib.h"
 
+int Enemy_image;
 
 Enemy::Enemy() 
 {
     location = Vector2D(0, 0);
     velocity = 0;
+    Enemy_image = LoadGraph("Resource/image/Enemy/bear.png");
 }
 
 Enemy::~Enemy()
@@ -22,7 +24,7 @@ void Enemy::Initialize() {
 void Enemy::Update(float delta_second)
 {
     location += velocity;
-    if (location.x > 1280|| location.x<700)
+    if (location.x > 1240|| location.x<700)
     {
         velocity *= -1;
     }
@@ -30,7 +32,8 @@ void Enemy::Update(float delta_second)
 
 void Enemy::Draw(const Vector2D& screen_offset) const
 {
-    DrawCircle( location.x, location.y, 15, GetColor(255,0,0), TRUE);
+    /*DrawCircle( location.x, location.y, 15, GetColor(255,0,0), TRUE);*/
+    DrawRotaGraph(location.x, location.y, 0.1, 0, Enemy_image, TRUE);
 }
 
 void Enemy::Finalize()

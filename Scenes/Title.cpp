@@ -5,10 +5,18 @@
 #include <string>
 
 int cursor_number = 0;
+int title_image;
+int start_image;
+int shuryo_image;
+int cursor_image;
 
 TitleScene::TitleScene()
 {
 	next_scene = eSceneType::eTitle;
+	title_image = LoadGraph("Resource/image/Title/title.png");
+	start_image = LoadGraph("Resource/image/Title/startmae.png");
+	shuryo_image = LoadGraph("Resource/image/Title/shuryoumae.png");
+	cursor_image = LoadGraph("Resource/image/Title/yajirusi.png");
 }
 
 TitleScene::~TitleScene()
@@ -68,12 +76,19 @@ eSceneType TitleScene::Update(const float& delta_second)
 //描画処理
 void TitleScene::Draw() const
 {
-	DrawFormatString(120, 140, GetColor(255, 255, 0), "タイトルシーンです");
-	DrawFormatString(560, 240, GetColor(255, 255, 0), "ゲーム名");
-	DrawFormatString(560, 440, GetColor(255, 255, 0), "ゲームスタート");
-	DrawFormatString(560, 460, GetColor(255, 255, 0), "ヘルプ");
-	DrawFormatString(560, 480, GetColor(255, 255, 0), "ゲーム終了");
-	DrawFormatString(540, 440, GetColor(255, 255, 0), "→");
+	/*DrawFormatString(120, 140, GetColor(255, 255, 0), "タイトルシーンです");*/
+	/*DrawFormatString(560, 240, GetColor(255, 255, 0), "ゲーム名");*/
+	/*DrawFormatString(60, 440, GetColor(255, 255, 0), "ゲームスタート");*/
+	/*DrawFormatString(60, 460, GetColor(255, 255, 0), "ヘルプ");
+	DrawFormatString(60, 480, GetColor(255, 255, 0), "終了");*/
+	DrawGraph(0, 0, title_image, TRUE);
+	DrawGraph(90, 240, start_image, TRUE);
+	DrawGraph(90, 330, shuryo_image, TRUE);
+	
+	/*DrawFormatString(540, 440, GetColor(255, 255, 0), "→");*/
+	int cursor = cursor_number * 100;
+	/*DrawString(40, 440 + cursor, "→", GetColor(255, 255, 0));*/
+	DrawGraph(0, 300 + cursor, cursor_image, TRUE);
 }
 
 void TitleScene::Finalize()

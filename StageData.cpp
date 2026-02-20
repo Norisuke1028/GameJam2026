@@ -14,7 +14,7 @@ void StageData::Load()
 {
 	//ファイルを開く(.csv)
 	FILE* fp = NULL;
-	std::string file_name = "Resource/stage/SampleMap.csv";
+	std::string file_name = "Resource/stage/StageMap.csv";
 	//指定したファイルを開く
 	errno_t result = fopen_s(&fp, file_name.c_str(), "r");
 
@@ -64,16 +64,34 @@ void StageData::Load()
 			if (*p == 't')
 			{
 				//対象の文字があれば「２次元座標」と「画像情報」を覚える
-				int image_sora = rm->GetImages("Resource/image/Block/soil.png").at(0);
-				DrawGraph((int)generate_location.x + velocity.x, (int)generate_location.y, image_sora, TRUE);
+				int image_soil = rm->GetImages("Resource/image/Block/soil.png").at(0);
+				DrawGraph((int)generate_location.x + velocity.x, (int)generate_location.y, image_soil, TRUE);
 			}
 			//雪
 			if (*p == 's')
 			{
 				//対象の文字があれば「２次元座標」と「画像情報」を覚える
-				int image_sora = rm->GetImages("Resource/image/Block/snow.png").at(0);
-				DrawGraph((int)generate_location.x + velocity.x, (int)generate_location.y, image_sora, TRUE);
+				int image_snow = rm->GetImages("Resource/image/Block/snow.png").at(0);
+				DrawGraph((int)generate_location.x + velocity.x, (int)generate_location.y, image_snow, TRUE);
 			}
+
+			//雪だるま
+			if (*p == 'm')
+			{
+				//対象の文字があれば「２次元座標」と「画像情報」を覚える
+				int image_snowman = rm->GetImages("Resource/image/snowman.png").at(0);
+				DrawGraph((int)generate_location.x + velocity.x, (int)generate_location.y, image_snowman, TRUE);
+			}
+
+			//街並み
+			if (*p == 'c')
+			{
+				//対象の文字があれば「２次元座標」と「画像情報」を覚える
+				int image_city = rm->GetImages("Resource/image/city.png").at(0);
+				DrawGraph((int)generate_location.x + velocity.x, (int)generate_location.y, image_city, TRUE);
+			}
+
+
 
 			//次の列
 			x++;
