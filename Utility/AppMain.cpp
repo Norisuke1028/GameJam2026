@@ -1,83 +1,29 @@
 #include "DxLib.h"
-#include "InputControl.h"
-#include "ResourceManager.h"
+#include "../Utility/ProjectConfig.h"
 #include "../Scenes/SceneManager.h"
-#include <string>
 
-// プログラムは WinMain から始まります
-int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int)
+int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nShowCmd)
 {
-	// ウィンドウタイトルの設定
-	SetMainWindowText("ミラクルボンバー");
-
-	ChangeWindowMode(TRUE);
-
-	//画面サイズ指定
-	SetGraphMode(1280, 720, 32);
-
-	if (DxLib_Init() == -1)
-	{
-		return -1;
-	}
-
-	SetDrawScreen(DX_SCREEN_BACK);
-
-	SceneManager* manager = nullptr;
-	int result = 0;
-
 	try
 	{
-		// SceneManagerのオブジェクト化
-		manager = new SceneManager();
+		//シーンマネージャーを生成する
+		SceneManager manager;
 
-		// SceneManagerの初期化処理
-		manager->Initialize();
+		//初期化処理
+		manager.WakeUp();
 
-		// パッド入力制御のインスタンスを取得
-		InputControl* pad_input = InputControl::GetInstance();
+		//実行処理
+		manager.Run();
 
-
-		// マウスカーソル非表示
-		SetMouseDispFlag(FALSE);
-
-		while (ProcessMessage() != -1 && manager->LoopCheck())
-		{
-
-			// 入力更新処理
-			pad_input->Update();
-
-			ClearDrawScreen();
-
-			// シーン更新処理
-			manager->Update();
-
-			ScreenFlip();
-
-			if (pad_input->GetButtonInputState(XINPUT_BUTTON_BACK) == ePadInputState::eRelease)
-			{
-				// ESCAPEキーかBACKボタンで終了
-				break;
-			}
-		}
+		//終了時処理
+		manager.Shutdown();
 	}
-	catch (std::string& error_text)
+	catch (std::string error_log)
 	{
-		OutputDebugString(error_text.c_str());
-		result = -1;
-	}
-	// パッド入力制御の終了処理
-	InputControl::DeleteInstance();
-	// リソース管理の終了処理
-	ResourceManager::DeleteInstance();
-
-	if (manager != nullptr)
-	{
-		manager->Finalize();
-		// メモリの開放
-		delete manager;
+		//エラー内容を出力する
+		return ErrorThrow(error_log);
 	}
 
-	DxLib_End();
-
-	return 0;
+	//終了状態を通知する
+	return D_SUCCESS;
 }

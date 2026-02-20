@@ -2,7 +2,8 @@
 #include "DxLib.h"
 
 GameObject::GameObject()
-	: location(0.0f)
+	: owner_scene(nullptr)
+	, location(0.0f)
 	, graphic_images(NULL)
 	, flip_flag(false)
 	, delete_flag(false)
@@ -23,7 +24,7 @@ void GameObject::Initialize()
 
 }
 
-void GameObject::Update()
+void GameObject::Update(float delta_second)
 {
 
 }
@@ -68,6 +69,11 @@ const eMobilityType GameObject::GetMobility() const
 void GameObject::SetLocation(const Vector2D& location)
 {
 	this->location = location;
+}
+
+void GameObject::SetOwnerScene(SceneBase* scene)
+{
+	this->owner_scene = scene;
 }
 
 const bool GameObject::GetDeleteFlag() const

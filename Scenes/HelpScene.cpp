@@ -19,7 +19,7 @@ void HelpScene::Initialize()
 	printf("ƒwƒ‹ƒvƒV[ƒ“");
 }
 
-eSceneType HelpScene::Update()
+eSceneType HelpScene::Update(const float& delta_second)
 {
 	// “ü—Íî•ñ‚ğæ“¾
 	InputControl* pad_input = InputControl::GetInstance();
@@ -46,7 +46,7 @@ void HelpScene::Finalize()
 
 }
 
-eSceneType HelpScene::GetNowSceneType() const
+const eSceneType HelpScene::GetNowSceneType() const
 {
 	return eSceneType::eHelp;
 }

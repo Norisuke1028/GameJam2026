@@ -24,7 +24,7 @@ void Item::Initialize()
 	input = InputControl::GetInstance();
 }
 
-void Item::Update()
+void Item::Update(float delta_second)
 {
 	
 }

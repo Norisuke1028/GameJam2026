@@ -13,12 +13,11 @@ public:
 	virtual ~ResultScene();
 
 	virtual void Initialize() override;
-	virtual eSceneType Update() override;
+	virtual eSceneType Update(const float& delta_second) override;
 	virtual void Draw() const override;
 	virtual void Finalize() override;
 
 	// 現在のシーンタイプ情報を取得する
-	virtual eSceneType GetNowSceneType() const override;
-
+	virtual const eSceneType GetNowSceneType() const override;
 };
 

@@ -19,7 +19,7 @@ InGameScene::~InGameScene()
 
 void InGameScene::Initialize()
 {
-	ch_image = LoadGraph("Resource/b.png");
+	ch_image = LoadGraph("Resource/image/b.png");
 	background_image = LoadGraph("Resource/image/sky.png");
 
 	player = CreateObject<Player>(Vector2D(100, 100));
@@ -29,15 +29,15 @@ void InGameScene::Initialize()
 	screen_offset = Vector2D(0, 0);
 }
 
-eSceneType InGameScene::Update()
+eSceneType InGameScene::Update(const float& delta_second)
 {
 	StageData* Stage = StageData::GetInstance();
-	Stage->Update();
+	Stage->Update(delta_second);
 
 	// 入力情報を取得
 	InputControl* pad_input = InputControl::GetInstance();
 
-	__super::Update();
+	__super::Update(delta_second);
 
 	float velocity = player->GetVelocity().x;
 
@@ -72,12 +72,13 @@ eSceneType InGameScene::Update()
 	// リザルト画面に遷移する
 	if (pad_input->GetButtonInputState(XINPUT_BUTTON_B) == ePadInputState::ePress)
 	{
-		return eSceneType::eResult;
+		return eSceneType::eHelp;
 	}
 
 	Draw();
+
 	// 親クラスの更新処理を呼び出す
-	return __super::Update();
+	return __super::Update(delta_second);
 }
 
 //描画処理
@@ -114,7 +115,7 @@ void InGameScene::Finalize()
 
 }
 
-eSceneType InGameScene::GetNowSceneType() const
+const eSceneType InGameScene::GetNowSceneType() const
 {
 	return eSceneType::eInGame;
 }
