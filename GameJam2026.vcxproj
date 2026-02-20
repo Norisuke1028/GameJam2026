@@ -109,6 +109,7 @@
       <Optimization>Custom</Optimization>
       <WholeProgramOptimization>false</WholeProgramOptimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -124,6 +125,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -133,14 +135,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Objects\Item\Item.cpp" />
     <ClCompile Include="Scenes\HelpScene.cpp" />
     <ClCompile Include="Objects\Enemy\Enemy.cpp" />
     <ClCompile Include="Scenes\ResultScene.cpp" />
     <ClCompile Include="Scenes\EndScene.cpp" />
-    <ClCompile Include="Objects\Item.cpp" />
     <ClCompile Include="Objects\GameObject.cpp" />
     <ClCompile Include="Objects\Player\Player.cpp" />
     <ClCompile Include="StageData.cpp" />
+    <ClCompile Include="Utility\Collision.cpp" />
     <ClCompile Include="Utility\ProjectConfig.cpp" />
     <ClCompile Include="Scenes\InGameScene.cpp" />
     <ClCompile Include="Scenes\SceneBase.cpp" />
@@ -152,14 +155,15 @@
     <ClCompile Include="Utility\Vector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Objects\Item\Item.h" />
     <ClInclude Include="Scenes\HelpScene.h" />
     <ClInclude Include="Objects\Enemy\Enemy.h" />
     <ClInclude Include="Scenes\ResultScene.h" />
     <ClInclude Include="Scenes\EndScene.h" />
-    <ClInclude Include="Objects\Item.h" />
     <ClInclude Include="Objects\GameObject.h" />
     <ClInclude Include="Objects\Player\Player.h" />
     <ClInclude Include="StageData.h" />
+    <ClInclude Include="Utility\Collision.h" />
     <ClInclude Include="Utility\ProjectConfig.h" />
     <ClInclude Include="Scenes\InGameScene.h" />
     <ClInclude Include="Scenes\SceneBase.h" />

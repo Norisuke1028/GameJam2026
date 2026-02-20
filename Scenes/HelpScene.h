@@ -1,8 +1,4 @@
 #pragma once
-class HelpScene
-{
-};
-
 
 #include "SceneBase.h"
 #include <vector>
