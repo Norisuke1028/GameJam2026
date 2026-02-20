@@ -1,5 +1,6 @@
 #include "Vector2D.h"
 #include "UserTemplate.h"
+#include <math.h>
 
 // コンストラクタ
 Vector2D::Vector2D() : x(0.0f), y(0.0f)
@@ -160,6 +161,47 @@ Vector2D& Vector2D::operator/=(const Vector2D& location)
 		this->y /= location.y;
 	}
 	return *this;
+}
+
+// ベクトルの2乗の長さを出す
+float Vector2D::SqrLength() const
+{
+	return Vector2D::Dot(*this);
+}
+
+// ベクトルの長さ（平方根）
+float Vector2D::Length() const
+{
+	return sqrtf(SqrLength());
+}
+
+// 正規化
+Vector2D Vector2D::Normalize() const
+{
+	return *this / Length();
+}
+
+float Vector2D::Dot(const Vector2D& a)
+{
+	return ((a.x * a.x) + (a.y * a.y));
+}
+
+// 二つのベクトルの向きの関係
+float Vector2D::Dot(const Vector2D& a, const Vector2D& b)
+{
+	return ((a.x * b.x) + (a.y * b.y));
+}
+
+// 外積（対象のオブジェクトが左右のどちらにいるか判定）
+float Vector2D::Cross(const Vector2D& a, const Vector2D& b)
+{
+	return (a.x * b.y - a.y * b.x);
+}
+
+// 対象に向かって追従する
+Vector2D Vector2D::Lerp(const Vector2D& a, const Vector2D& b, const float t)
+{
+	return a + ((b - a) * t);
 }
 
 // int型に変換
