@@ -135,7 +135,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Objects\Player\StateMachine\State\Idling.cpp" />
     <ClCompile Include="Objects\Item\Item.cpp" />
+    <ClCompile Include="Objects\Player\StateMachine\Factory\PlayerStateFactory.cpp" />
     <ClCompile Include="Scenes\HelpScene.cpp" />
     <ClCompile Include="Objects\Enemy\Enemy.cpp" />
     <ClCompile Include="Scenes\ResultScene.cpp" />
@@ -155,7 +157,11 @@
     <ClCompile Include="Utility\Vector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Objects\Player\StateMachine\State\Idling.h" />
     <ClInclude Include="Objects\Item\Item.h" />
+    <ClInclude Include="Objects\Player\StateMachine\Enum\PlayerState.h" />
+    <ClInclude Include="Objects\Player\StateMachine\Factory\PlayerStateFactory.h" />
+    <ClInclude Include="Objects\Player\StateMachine\PlayerStateBase.h" />
     <ClInclude Include="Scenes\HelpScene.h" />
     <ClInclude Include="Objects\Enemy\Enemy.h" />
     <ClInclude Include="Scenes\ResultScene.h" />

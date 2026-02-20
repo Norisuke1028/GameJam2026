@@ -7,17 +7,34 @@
 class Player : public GameObject
 {
 private:
-	InputControl* input;
+	InputControl* input;  // 入力情報
+	float gravity;        // 重力
+	bool is_on_ground;    // 地面にいるかどうか
 
+	// 画像配列 ： 今後、プレイヤーの状態に応じて画像を切り替えるために使用
+	
+	std::vector<int> player_normal_img;  // 通常時
+	std::vector<int> player_jump_img;    // ジャンプ状態
+	std::vector<int> player_rolling_img; // ローリング状態
+	std::vector<int> player_knight_img;  // 騎士状態
 
 public:
+	// コンストラクタ
 	Player();
+	// デストラクタ
 	virtual ~Player();
 
+	// 初期化
 	void Initialize() override;
+	// 更新
 	void Update(float delta_second) override;
+	// 描画
 	void Draw(const Vector2D& screen_offset) const override;
+	// 終了処理
 	void Finalize() override;
+
+	// 当たり判定通知処理
+	void OnHitCollision(const GameObject& hit_object) override;
 
 	//位置情報取得処理
 	const Vector2D& GetLocation() const;

@@ -19,6 +19,8 @@
     <ClCompile Include="Scenes\HelpScene.cpp" />
     <ClCompile Include="Objects\Item\Item.cpp" />
     <ClCompile Include="Utility\Collision.cpp" />
+    <ClCompile Include="Objects\Player\StateMachine\Factory\PlayerStateFactory.cpp" />
+    <ClCompile Include="Objects\Player\StateMachine\State\Idling.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Resource">
@@ -53,5 +55,9 @@
     <ClInclude Include="Scenes\HelpScene.h" />
     <ClInclude Include="Objects\Item\Item.h" />
     <ClInclude Include="Utility\Collision.h" />
+    <ClInclude Include="Objects\Player\StateMachine\Enum\PlayerState.h" />
+    <ClInclude Include="Objects\Player\StateMachine\Factory\PlayerStateFactory.h" />
+    <ClInclude Include="Objects\Player\StateMachine\PlayerStateBase.h" />
+    <ClInclude Include="Objects\Player\StateMachine\State\Idling.h" />
   </ItemGroup>
 </Project>

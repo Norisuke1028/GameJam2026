@@ -59,6 +59,10 @@ void Player::Finalize()
 {
 }
 
+void Player::OnHitCollision(const GameObject& hit_object)
+{
+}
+
 const Vector2D& Player::GetLocation() const
 {
 	return location;
