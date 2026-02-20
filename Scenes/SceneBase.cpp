@@ -53,16 +53,6 @@ void SceneBase::Draw() const
 		obj->Draw(screen_offset);
 	}
 
-	// テストボックス
-	DrawBox(
-		1000 + screen_offset.x,
-		300 + screen_offset.y,
-		900 + screen_offset.x,
-		400 + screen_offset.y,
-		GetColor(255, 0, 0),
-		TRUE
-	);
-
 }
 
 void SceneBase::Finalize()

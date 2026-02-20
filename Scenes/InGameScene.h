@@ -8,8 +8,8 @@ class InGameScene : public SceneBase
 private:
 	class Player* player;
 
-
 	int ch_image;
+	int background_image;
 
 private:
 	eSceneType next_scene; // ‘JˆÚæ‚ÌƒV[ƒ“

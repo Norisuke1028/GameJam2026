@@ -19,6 +19,7 @@ InGameScene::~InGameScene()
 void InGameScene::Initialize()
 {
 	ch_image = LoadGraph("Resource/b.png");
+	background_image = LoadGraph("Resource/image/sky.png");
 
 	player = CreateObject<Player>(Vector2D(100, 100));
 
@@ -35,11 +36,28 @@ eSceneType InGameScene::Update()
 
 	__super::Update();
 
-	if (player->GetLocation().x >= 1280 / 2)
+	float velocity = player->GetVelocity().x;
+
+	// スクロール条件
+	if (player->GetLocation().x >= 1280 / 2 ||
+		player->GetLocation().x <= 30)
 	{
-		screen_offset.x -= player->GetVelocity().x;
+		screen_offset.x -= velocity;
+	}
+	else
+	{
+		velocity = 0;
 	}
 
+	// 左端制限
+	if (screen_offset.x > 0)
+	{
+		screen_offset.x = 0;
+		velocity = 0;
+	}
+
+	// 最後に一度だけ設定（重要）
+	Stage->SetVelocity(velocity);
 
 	// リザルト画面に遷移する
 	if (pad_input->GetButtonInputState(XINPUT_BUTTON_B) == ePadInputState::ePress)
@@ -55,9 +73,11 @@ eSceneType InGameScene::Update()
 //描画処理
 void InGameScene::Draw() const
 {
+	DrawGraph(0,0,background_image,true);
 	__super::Draw();
 
 	StageData* stage = StageData::GetInstance();
+	stage->Load();
 	float s_location = stage->GetLocation();
 
 	//デバッグ用
@@ -69,6 +89,9 @@ void InGameScene::Draw() const
 
 	DrawFormatString(0, 20, GetColor(255, 255, 255),
 		"PlayerVelocityX: %.2f", player->GetVelocity().x);
+
+	DrawFormatString(0, 40, GetColor(255, 255, 255),
+		"PlayerLocationY: %.2f", player->GetLocation().y);
 
 
 	// カーソル画像の描画

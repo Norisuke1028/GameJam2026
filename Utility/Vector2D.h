@@ -45,6 +45,23 @@ public:
 	Vector2D& operator /= (const Vector2D& location);
 
 public:
+
+	// ベクトルの長さ
+	float SqrLength() const;
+	float Length() const;
+
+	// 正規化
+	Vector2D Normalize() const;
+
+	// 内積
+	static float Dot(const Vector2D& a);
+	static float Dot(const Vector2D& a, const Vector2D& b);
+
+	// 外積
+	static float Cross(const Vector2D& a, const Vector2D& b);
+	// 線形補間
+	static Vector2D Lerp(const Vector2D& a, const Vector2D& b, const float t);
+
 	// int型に変換
 	void ToInt(int* x, int* y);
 };
