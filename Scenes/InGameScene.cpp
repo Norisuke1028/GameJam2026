@@ -59,6 +59,13 @@ eSceneType InGameScene::Update(const float& delta_second)
 		velocity = 0;
 	}
 
+	// 右端制限
+	if (screen_offset.x < -4540)
+	{
+		screen_offset.x = -4540;
+		velocity = 0;
+	}
+
 	// 最後に一度だけ設定（重要）
 	Stage->SetVelocity(velocity);
 
