@@ -10,13 +10,14 @@
     <ClCompile Include="Utility\ResourceManager.cpp" />
     <ClCompile Include="Utility\Vector2D.cpp" />
     <ClCompile Include="Objects\GameObject.cpp" />
-    <ClCompile Include="Objects\Item\Item.cpp" />
+    <ClCompile Include="Objects\Item.cpp" />
     <ClCompile Include="Utility\ProjectConfig.cpp" />
     <ClCompile Include="Scenes\EndScene.cpp" />
     <ClCompile Include="Scenes\ResultScene.cpp" />
     <ClCompile Include="Objects\Player\Player.cpp" />
     <ClCompile Include="StageData.cpp" />
-    <ClCompile Include="Utility\Collision.cpp" />
+    <ClCompile Include="Objects\Enemy\Enemy.cpp" />
+    <ClCompile Include="Scenes\HelpScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Resource">
@@ -42,12 +43,13 @@
     <ClInclude Include="Utility\UserTemplate.h" />
     <ClInclude Include="Utility\Vector2D.h" />
     <ClInclude Include="Objects\GameObject.h" />
-    <ClInclude Include="Objects\Item\Item.h" />
+    <ClInclude Include="Objects\Item.h" />
     <ClInclude Include="Utility\ProjectConfig.h" />
     <ClInclude Include="Scenes\EndScene.h" />
     <ClInclude Include="Scenes\ResultScene.h" />
     <ClInclude Include="Objects\Player\Player.h" />
     <ClInclude Include="StageData.h" />
-    <ClInclude Include="Utility\Collision.h" />
+    <ClInclude Include="Objects\Enemy\Enemy.h" />
+    <ClInclude Include="Scenes\HelpScene.h" />
   </ItemGroup>
 </Project>
