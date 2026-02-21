@@ -15,9 +15,15 @@ private:
 	int animation_count;
 	float animation_time;
 
-	int image;
+	int image;  //エネミーの画像
+
+	float speed;           // 移動速度
+	float move_range;      // 移動範囲（片側）
+	float start_x;         // 初期位置
+	int direction;         // 移動方向（1 or -1）
 
 public:
+	Enemy(Vector2D pos);
 	Enemy();
 	virtual ~Enemy();
 
