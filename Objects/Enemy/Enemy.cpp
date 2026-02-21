@@ -1,5 +1,6 @@
 #include "Enemy.h"
 #include "../../Utility/ResourceManager.h"
+#include "../../Utility/Vector2D.h"
 
 #include "DxLib.h"
 
@@ -7,7 +8,8 @@ int Enemy_image;
 
 Enemy::Enemy() : move_animation()
 {
-    location = Vector2D(0, 0);
+    //location = Vector2D(0, 0);
+    start_x = 0;
     velocity = 0;
     //アニメーション画像の読み込み
     ResourceManager* rm = ResourceManager::GetInstance();
@@ -20,6 +22,15 @@ Enemy::Enemy() : move_animation()
     {
         throw("エネミーの画像がありません\n");
     }
+
+}
+
+
+Enemy::Enemy(Vector2D pos)
+{
+    location = 0;
+    location = pos;
+    start_x = pos.x;
 }
 
 Enemy::~Enemy()
@@ -28,9 +39,14 @@ Enemy::~Enemy()
 }
 
 void Enemy::Initialize() {
-    // 登場位置を右側にセット
-    this->location = Vector2D(1000, 400);
     velocity = Vector2D(0.5, 0);
+
+    speed = 50.0f;       // 1秒で進む距離
+    move_range = 200.0f;  // 左右200px移動
+
+    start_x = location.x;
+
+    direction = 1;        // 最初は左へ
 }
 
 void Enemy::Update(float delta_second)
@@ -38,16 +54,29 @@ void Enemy::Update(float delta_second)
     // アニメーション制御
     AnimeCount(delta_second);
 
-    location += velocity;
-    if (location.x > 1240|| location.x<700)
+    // 移動
+    //location.x += direction * speed * delta_second;
+
+    // 右端
+    if (location.x > start_x + move_range)
     {
-        velocity *= -1;
+        location.x = start_x + move_range;
+        direction = -1;
+    }
+
+    // 左端
+    if (location.x < start_x - move_range)
+    {
+        location.x = start_x - move_range;
+        direction = 1;
     }
 }
 
 void Enemy::Draw(const Vector2D& screen_offset) const
 {
     DrawGraph((int)(location.x + screen_offset.x),(int)(location.y + screen_offset.y),image,TRUE);
+    DrawFormatString(10, 200, GetColor(255, 255, 255),
+        "location = %.2f", location);
 }
 
 void Enemy::Finalize()
