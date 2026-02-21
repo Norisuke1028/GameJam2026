@@ -3,6 +3,10 @@
 #include "../GameObject.h"
 #include "../../Utility/InputControl.h"
 #include "../../Scenes/InGameScene.h"
+#include "StateMachine/PlayerStateBase.h"
+#include "StateMachine/Enum/PlayerState.h"
+#include "../../Utility/ResourceManager.h"
+#include "StateMachine/Factory/PlayerStateFactory.h"
 #include <vector>
 
 class Player : public GameObject
@@ -13,11 +17,13 @@ private:
 	float gravity;        // 重力
 	float scroll;  //スクロール値
 	bool is_on_ground;    // 地面にいるかどうか
+	class PlayerStateBase* state;
+	ePlayerState next_state;  // 次の状態
+	
 
 	// 画像配列 ： 今後、プレイヤーの状態に応じて画像を切り替えるために使用
 	
 	std::vector<int> player_normal_img;  // 通常時
-	std::vector<int> player_jump_img;    // ジャンプ状態
 	std::vector<int> player_rolling_img; // ローリング状態
 	std::vector<int> player_knight_img;  // 騎士状態
 

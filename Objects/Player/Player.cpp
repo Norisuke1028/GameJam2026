@@ -2,7 +2,13 @@
 #include "DxLib.h"
 
 Player::Player() :
-	input(nullptr)
+	input(nullptr),
+	ingame_s(nullptr),
+	gravity(0.0f),
+	scroll(0.0f),
+	is_on_ground(false),
+	state(nullptr),
+	next_state(ePlayerState::NONE)
 {
 	
 }
@@ -15,11 +21,23 @@ Player::~Player()
 void Player::Initialize()
 {
 	input = InputControl::GetInstance();
+	ResourceManager* rm = ResourceManager::GetInstance();
+
+	z_layer = 5;
+
+	mobility = eMobilityType::Movable;
+	state = PlayerStateFactory::Get(*this, ePlayerState::IDLE);
+	next_state = ePlayerState::NONE;
+
+	velocity = Vector2D(0.0f, 0.0f);
+
+
+	box_size = Vector2D(32.0f, 32.0f);
 }
 
 void Player::Update(float delta_second)
 {
-	//カメラ視点の値
+	// ----- カメラ視点の値 ----- //
 	SetScroll(scroll);
 
 	velocity.x = 0;
@@ -66,6 +84,10 @@ void Player::Draw(const Vector2D& screen_offset) const
 	DrawBox(location.x + 10, location.y + 10,
 		location.x - 10, location.y - 10,
 		GetColor(255, 255, 255), TRUE);
+
+	DrawBox(location.x + box_size.x / 2, location.y + box_size.y / 2,
+		location.x - box_size.x / 2, location.y - box_size.y / 2,
+		GetColor(255, 0, 0), FALSE);
 	
 	DrawFormatString(400, 50, GetColor(255, 255, 255), "PlayerLocationY: %f", location.y);
 	DrawFormatString(0, 100, GetColor(255, 255, 255), "scroll = %f", scroll);
