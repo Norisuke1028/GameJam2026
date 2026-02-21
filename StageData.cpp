@@ -96,8 +96,15 @@ void StageData::Load()
 			if (*p == 'e')
 			{
 				//対象の文字があれば「２次元座標」と「画像情報」を覚える
-				int image_city = rm->GetImages("Resource/image/Enemy/bear.png").at(0);
-				DrawGraph((int)generate_location.x + velocity.x, (int)generate_location.y, image_city, TRUE);
+				int image_enemy = rm->GetImages("Resource/image/Enemy/bear.png").at(0);
+				DrawGraph((int)generate_location.x + velocity.x, (int)generate_location.y, image_enemy, TRUE);
+			}
+			//枯れ木
+			if (*p == 'k')
+			{
+				//対象の文字があれば「２次元座標」と「画像情報」を覚える
+				int image_tree = rm->GetImages("Resource/image/tree1.png").at(0);
+				DrawGraph((int)generate_location.x + velocity.x, (int)generate_location.y, image_tree, TRUE);
 			}
 			//次の列
 			x++;
