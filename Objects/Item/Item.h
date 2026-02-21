@@ -8,6 +8,10 @@ class Item : public GameObject
 {
 private:
 	InputControl* input;
+private:
+	int Animation;
+	//アニメーション用
+	const int animation_num[2] = { 0,1 };
 
 public:
 	Item();
