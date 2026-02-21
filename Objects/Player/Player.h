@@ -41,9 +41,11 @@ public:
 	void Draw(const Vector2D& screen_offset) const override;
 	// I—¹ˆ—
 	void Finalize() override;
+	// ˆÚ“®ˆ—
+	void Movement(float delta_second);
 
 	// “–‚½‚è”»’è’Ê’mˆ—
-	void OnHitCollision(const GameObject& hit_object) override;
+	void OnHitCollision(const GameObject* hit_object) override;
 
 	//ˆÊ’uî•ñæ“¾ˆ—
 	const Vector2D& GetLocation() const;

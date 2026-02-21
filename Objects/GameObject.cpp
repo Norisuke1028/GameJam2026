@@ -41,7 +41,7 @@ void GameObject::Finalize()
 
 }
 
-void GameObject::OnHitCollision(const GameObject& hit_object)
+void GameObject::OnHitCollision(const GameObject* hit_object)
 {
 }
 

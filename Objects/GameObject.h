@@ -3,6 +3,8 @@
 #include "../Utility/Vector2D.h"
 #include "../Utility/Collision.h"
 
+#define D_OBJECT_SIZE (32.0f) // オブジェクトの大きさ
+#define GRAVITY (1000.0f) // 重力
 
 enum eMobilityType
 {
@@ -40,7 +42,7 @@ public:
 
 public:
 	// 当たり判定通知処理
-	virtual void OnHitCollision(const GameObject& hit_object);
+	virtual void OnHitCollision(const GameObject* hit_object);
 
 	// 座標を取得
 	const Vector2D& GetLocation();

@@ -135,6 +135,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Objects\Block\Block.cpp" />
     <ClCompile Include="Objects\Player\StateMachine\State\ClearState.cpp" />
     <ClCompile Include="Objects\Player\StateMachine\State\DyingState.cpp" />
     <ClCompile Include="Objects\Player\StateMachine\State\JumpingState.cpp" />
@@ -161,6 +162,7 @@
     <ClCompile Include="Utility\Vector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Objects\Block\Block.h" />
     <ClInclude Include="Objects\Player\StateMachine\State\ClearState.h" />
     <ClInclude Include="Objects\Player\StateMachine\State\DyingState.h" />
     <ClInclude Include="Objects\Player\StateMachine\State\JumpingState.h" />

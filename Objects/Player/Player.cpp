@@ -23,6 +23,15 @@ void Player::Initialize()
 	input = InputControl::GetInstance();
 	ResourceManager* rm = ResourceManager::GetInstance();
 
+	collision.is_blocking = true;
+	collision.object_type = eObjectType::player;
+	collision.hit_object_type = { eObjectType::enemy,
+								  eObjectType::block,
+								  eObjectType::item,
+								  eObjectType::gool };
+	
+	collision.radius = D_OBJECT_SIZE / 2.0f;
+
 	z_layer = 5;
 
 	mobility = eMobilityType::Movable;
@@ -53,8 +62,6 @@ void Player::Update(float delta_second)
 		velocity.x = 0.5;
 	}
 
-	location += velocity;
-
 	// 左端制限
 	if (location.x <= 20.0f)
 	{
@@ -77,6 +84,21 @@ void Player::Update(float delta_second)
 			location.x = 1280.0f / 2;
 		}
 	}
+
+	// 重力の適用
+	velocity.y += GRAVITY * delta_second;
+
+	location += velocity * delta_second;
+
+	if(location.y >= 600.0f)
+	{
+		location.y = 600.0f;
+		is_on_ground = true;
+	}
+	else
+	{
+		is_on_ground = false;
+	}
 }
 
 void Player::Draw(const Vector2D& screen_offset) const
@@ -97,8 +119,28 @@ void Player::Finalize()
 {
 }
 
-void Player::OnHitCollision(const GameObject& hit_object)
+void Player::Movement(float delta_second)
 {
+}
+
+void Player::OnHitCollision(const GameObject* hit_object)
+{
+	if(hit_object->GetCollision().IsCheckHitTarget(eObjectType::block))
+	{
+		// ブロックに当たったときの処理
+	}
+	else if(hit_object->GetCollision().IsCheckHitTarget(eObjectType::enemy))
+	{
+		// 敵に当たったときの処理
+	}
+	else if(hit_object->GetCollision().IsCheckHitTarget(eObjectType::item))
+	{
+		// アイテムに当たったときの処理
+	}
+	else if(hit_object->GetCollision().IsCheckHitTarget(eObjectType::gool))
+	{
+		// ゴールに当たったときの処理
+	}
 }
 
 const Vector2D& Player::GetLocation() const
