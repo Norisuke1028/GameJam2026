@@ -23,8 +23,10 @@ class StageData : public GameObject
 private:
 	static StageData* instance;
 
-
 private:
+	std::vector<Vector2D> enemy_spawn_positions;
+
+public:
 	StageData() = default;
 
 	// コピーガード
@@ -53,5 +55,8 @@ public:
 	float GetLocation() const;
 	Vector2D GetVelocity();
 	void SetVelocity(float velo);
+
+	//エネミーの出現位置取得
+	const std::vector<Vector2D>& GetEnemySpawnPositions() const;
 };
 
