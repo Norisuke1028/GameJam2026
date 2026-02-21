@@ -80,10 +80,10 @@ eSceneType InGameScene::Update(const float& delta_second)
 	// 最後に一度だけ設定
 	Stage->SetVelocity(velocity);
 
-	// リザルト画面に遷移する
-	if (pad_input->GetButtonInputState(XINPUT_BUTTON_B) == ePadInputState::ePress)
+	//// リザルト画面に遷移する
+	if (screen_offset.x > -4540 && player->GetLocation().x >850)
 	{
-		return eSceneType::eHelp;
+		return eSceneType::eResult;
 	}
 
 	Draw();

@@ -93,6 +93,14 @@ void StageData::Load()
 				DrawGraph((int)generate_location.x + velocity.x, (int)generate_location.y, image_city, TRUE);
 			}
 
+			//枯れ木
+			if (*p == 'c')
+			{
+				//対象の文字があれば「２次元座標」と「画像情報」を覚える
+				int image_tree = rm->GetImages("Resource/image/tree1.png").at(0);
+				DrawGraph((int)generate_location.x + velocity.x, (int)generate_location.y, image_tree, TRUE);
+			}
+
 			////エネミー
 			if (*p == 'e')
 			{
