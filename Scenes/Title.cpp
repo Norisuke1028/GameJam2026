@@ -136,6 +136,7 @@ const eSceneType TitleScene::GetNowSceneType() const
 	return eSceneType::eTitle;
 }
 
+// アニメーション処理
 void TitleScene::Animation()
 {
 	switch (cursor_number)

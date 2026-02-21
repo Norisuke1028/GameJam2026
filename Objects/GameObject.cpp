@@ -67,10 +67,10 @@ const eMobilityType GameObject::GetMobility() const
 	return eMobilityType();
 }
 
-void GameObject::SetLocation(const Vector2D& location)
-{
-	this->location = location;
-}
+//void GameObject::SetLocation(const Vector2D& location)
+//{
+//	this->location = location;
+//}
 
 void GameObject::SetOwnerScene(SceneBase* scene)
 {

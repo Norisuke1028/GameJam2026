@@ -15,10 +15,20 @@ private:
 	int animation_count;
 	float animation_time;
 
-	int image;
+	int image;  //エネミーの画像
+
+	float speed;           // 移動速度
+	float move_range;      // 移動範囲（片側）
+	float start_x;         // 初期位置
+	int direction;         // 移動方向（1 or -1）
 
 public:
 	Enemy();
+	Enemy(const Vector2D& spawn_pos)
+	{
+		location = spawn_pos;  
+	}
+
 	virtual ~Enemy();
 
 	void Initialize() override;
@@ -30,6 +40,8 @@ public:
 
 	//位置情報取得処理
 	const Vector2D& GetLocation() const;
+
+	void SetLocation(const Vector2D& pos) override;
 	//位置情報取得処理
 	const Vector2D& GetVelocity() const;
 
