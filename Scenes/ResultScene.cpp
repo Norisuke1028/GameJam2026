@@ -27,10 +27,9 @@ eSceneType ResultScene::Update(const float& delta_second)
 	// エンドシーンに遷移する
 	if (pad_input->GetButtonInputState(XINPUT_BUTTON_B) == ePadInputState::ePress)
 	{
-		return eSceneType::eEnd;
+		return eSceneType::eTitle;
 	}
 
-	Draw();
 	return eSceneType::eResult;
 }
 

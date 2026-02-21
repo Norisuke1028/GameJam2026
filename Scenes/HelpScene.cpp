@@ -30,7 +30,6 @@ eSceneType HelpScene::Update(const float& delta_second)
 		return eSceneType::eTitle;
 	}
 
-	Draw();
 	return eSceneType::eHelp;
 }
 
