@@ -24,7 +24,10 @@ public:
 
 	// ˆÊ’uî•ñæ“¾ˆ—
 	const Vector2D& GetLocation() const;
+	// ˆÊ’uî•ñİ’èˆ—
+	
 	// ˆÊ’uî•ñæ“¾ˆ—
 	const Vector2D& GetVelocity() const;
+
 };
 

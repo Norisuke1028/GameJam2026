@@ -24,7 +24,8 @@ private:
 	static StageData* instance;
 
 private:
-	std::vector<Vector2D> enemy_spawn_positions;
+	std::vector<Vector2D> enemy_spawn_positions;  //エネミー用
+	//アイテム用
 
 public:
 	StageData() = default;
@@ -58,5 +59,7 @@ public:
 
 	//エネミーの出現位置取得
 	const std::vector<Vector2D>& GetEnemySpawnPositions() const;
+	//アイテムの出現位置取得
+
 };
 

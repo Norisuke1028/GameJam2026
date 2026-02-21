@@ -24,10 +24,6 @@ private:
 
 public:
 	Enemy();
-	Enemy(const Vector2D& spawn_pos)
-	{
-		location = spawn_pos;  
-	}
 
 	virtual ~Enemy();
 
@@ -40,7 +36,7 @@ public:
 
 	//ˆÊ’uî•ñæ“¾ˆ—
 	const Vector2D& GetLocation() const;
-
+	//ˆÊ’uî•ñİ’èˆ—
 	void SetLocation(const Vector2D& pos) override;
 	//ˆÊ’uî•ñæ“¾ˆ—
 	const Vector2D& GetVelocity() const;

@@ -68,16 +68,6 @@ void Enemy::Draw(const Vector2D& screen_offset) const
         (int)(location.y + screen_offset.y),
         image,
         TRUE);
-    
-    //DrawGraph((int)(location.x + screen_offset.x),(int)(location.y + screen_offset.y),image,TRUE);
-    DrawFormatString(
-        10, 200,
-        GetColor(255, 255, 255),
-        "location.x, start_x, screen_offset.x = %.2f, %2f, %2f",
-        location.x,
-        start_x,
-        screen_offset.x
-    );
 }
 
 void Enemy::Finalize()
@@ -111,7 +101,7 @@ const Vector2D& Enemy::GetVelocity() const
 {
     return velocity;
 }
-
+//ˆÊ’uî•ñİ’èˆ—
 void Enemy::SetLocation(const Vector2D& pos)
 {
     GameObject::SetLocation(pos); // e‚Ìˆ—
