@@ -8,6 +8,9 @@ class TitleScene : public SceneBase
 
 private:
 	eSceneType next_scene; // 遷移先のシーン
+	bool on_button;  // ボタンが押されたかどうかのフラグ
+	float wait_time; // 待機時間
+
 public:
 	TitleScene();
 	virtual ~TitleScene();
@@ -19,5 +22,8 @@ public:
 
 	// 現在のシーンタイプ情報を取得する
 	virtual const eSceneType GetNowSceneType() const override;
+
+private:
+	void Animation();
 };
 
