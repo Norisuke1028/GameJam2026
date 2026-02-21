@@ -46,9 +46,19 @@ void Player::Initialize()
 
 void Player::Update(float delta_second)
 {
+	// ----- ó‘Ô‘JˆÚˆ— ----- //
+	if (next_state != ePlayerState::NONE)
+	{
+		state = PlayerStateFactory::Get(*this, next_state);
+		next_state = ePlayerState::NONE;
+	}
+
+	state->Update(delta_second);
+
 	// ----- ƒJƒƒ‰Ž‹“_‚Ì’l ----- //
 	SetScroll(scroll);
 
+	// ----- ˆÚ“®ˆ— ----- //
 	Movement(delta_second);
 }
 
@@ -152,9 +162,9 @@ void Player::OnHitCollision(const GameObject* hit_object)
 	}
 }
 
-const Vector2D& Player::GetLocation() const
+Vector2D& Player::GetLocation()
 {
-	return location;
+	return this->location;
 }
 
 const Vector2D& Player::GetVelocity() const

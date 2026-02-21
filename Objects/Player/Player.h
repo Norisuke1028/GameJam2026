@@ -54,7 +54,7 @@ public:
 	void OnHitCollision(const GameObject* hit_object) override;
 
 	//位置情報取得処理
-	const Vector2D& GetLocation() const;
+	Vector2D& GetLocation() override;
 	//位置情報取得処理
 	const Vector2D& GetVelocity() const;
 	// カメラ視点の値を受け取る

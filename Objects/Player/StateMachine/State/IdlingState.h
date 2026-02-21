@@ -3,9 +3,12 @@
 
 class IdlingState : public PlayerStateBase
 {
+private:
+	class InputControl* input;  // “ü—Íî•ñ
+
 public:
 	IdlingState(class Player* p);
-	~IdlingState();
+	virtual ~IdlingState();
 
 public:
 	virtual void Initialize() override;

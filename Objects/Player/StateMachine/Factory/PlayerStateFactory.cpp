@@ -8,6 +8,8 @@
 
 #include "../../Player.h"
 
+PlayerStateFactory* PlayerStateFactory::instance = nullptr;
+
 void PlayerStateFactory::Initialize(class Player& player)
 {
 	idle = new IdlingState(&player);
@@ -17,7 +19,37 @@ void PlayerStateFactory::Initialize(class Player& player)
 	die = new DyingState(&player);
 }
 
-PlayerStateBase* PlayerStateFactory::Get(Player& player, ePlayerState type)
+PlayerStateBase* PlayerStateFactory::Get(Player& player, ePlayerState state)
 {
-	return nullptr;
+	if(instance== nullptr)
+	{
+		instance = new PlayerStateFactory();
+		instance->Initialize(player);
+	}
+
+	PlayerStateBase* ret = nullptr;
+	switch (state)
+	{
+	case ePlayerState::IDLE:
+		instance->idle->Initialize();
+		ret = instance->idle;
+		break;
+	case ePlayerState::ROLL:
+		instance->roll->Initialize();
+		ret = instance->roll;
+		break;
+	case ePlayerState::JUMP:
+		instance->jump->Initialize();
+		ret = instance->jump;
+		break;
+	case ePlayerState::CLEAR:
+		instance->clear->Initialize();
+		ret = instance->clear;
+		break;
+	case ePlayerState::DIE:
+		instance->die->Initialize();
+		ret = instance->die;
+		break;
+	}
+	return ret;
 }

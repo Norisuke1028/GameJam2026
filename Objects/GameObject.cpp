@@ -45,7 +45,7 @@ void GameObject::OnHitCollision(const GameObject* hit_object)
 {
 }
 
-const Vector2D& GameObject::GetLocation()
+Vector2D& GameObject::GetLocation()
 {
 	// TODO: return ステートメントをここに挿入します
 	return location;

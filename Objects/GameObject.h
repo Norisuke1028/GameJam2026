@@ -14,7 +14,7 @@ enum eMobilityType
 
 class GameObject
 {
-protected:
+public:
 	class SceneBase* owner_scene; //所有するシーン情報
 	Vector2D location;			// 座標
 	Vector2D velocity;          // 移動量	
@@ -45,7 +45,7 @@ public:
 	virtual void OnHitCollision(const GameObject* hit_object);
 
 	// 座標を取得
-	const Vector2D& GetLocation();
+	virtual Vector2D& GetLocation();
 	// 当たり判定を取得
 	const CapsuleCollision& GetCollision() const;
 	// 描画の優先順位を取得
