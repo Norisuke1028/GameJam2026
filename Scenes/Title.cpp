@@ -5,7 +5,6 @@
 #include <string>
 
 int cursor_number = 0;
-int a , b;
 int title_image;
 int start_image;
 int shuryo_image;
@@ -14,6 +13,8 @@ int cursor_image;
 int start1_image;
 int shuryo1_image;
 int help1_image;
+int TitleBgmHandle;
+int CursorBgmHandle;
 
 TitleScene::TitleScene()
 {
@@ -31,6 +32,11 @@ TitleScene::TitleScene()
 	start1_image = LoadGraph("Resource/image/Title/startgo.png");
 	shuryo1_image = LoadGraph("Resource/image/Title/shuryougo.png");
 	help1_image = LoadGraph("Resource/image/Title/helpato.png");
+
+	// BGMの読み込み
+	TitleBgmHandle = LoadSoundMem("Resource/sounds/Title/titleBGM.mp3");
+	// カーソル音の読み込み
+	CursorBgmHandle = LoadSoundMem("Resource/sounds/cursor.mp3");
 }
 
 TitleScene::~TitleScene()
@@ -46,6 +52,7 @@ void TitleScene::Initialize()
 
 eSceneType TitleScene::Update(const float& delta_second)
 {
+	TitleBgm();
 	// 入力情報を取得
 	InputControl* pad_input = InputControl::GetInstance();
 
@@ -57,6 +64,9 @@ eSceneType TitleScene::Update(const float& delta_second)
 		{
 			cursor_number = 2;
 		}
+		// カーソル移動音を再生する処理
+		PlaySoundMem(CursorBgmHandle, DX_PLAYTYPE_BACK, TRUE);
+		CheckSoundMem(CursorBgmHandle);
 	}
 	if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_DOWN) == ePadInputState::ePress)
 	{
@@ -65,6 +75,9 @@ eSceneType TitleScene::Update(const float& delta_second)
 		{
 			cursor_number = 0;
 		}
+		// カーソル移動音を再生する処理
+		PlaySoundMem(CursorBgmHandle, DX_PLAYTYPE_BACK, TRUE);
+		CheckSoundMem(CursorBgmHandle);
 	}
 
 	// 決定する
@@ -114,7 +127,8 @@ void TitleScene::Draw() const
 
 void TitleScene::Finalize()
 {
-
+	// タイトルのBGMを停止する処理
+	StopSoundMem(TitleBgmHandle);
 }
 
 const eSceneType TitleScene::GetNowSceneType() const
@@ -146,5 +160,15 @@ void TitleScene::Animation()
 			}
 	default:
 		break;
+	}
+}
+
+void TitleScene::TitleBgm()
+{
+	// タイトルのBGMを再生する処理
+	if(CheckSoundMem(TitleBgmHandle) == 0)
+	{
+		PlaySoundMem(TitleBgmHandle, DX_PLAYTYPE_LOOP, TRUE);
+		CheckSoundMem(TitleBgmHandle);
 	}
 }

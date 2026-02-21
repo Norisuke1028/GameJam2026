@@ -25,5 +25,7 @@ public:
 
 private:
 	void Animation();
+private:
+	void TitleBgm();
 };
 
