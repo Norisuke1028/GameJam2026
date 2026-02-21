@@ -8,7 +8,11 @@ class ResultScene : public SceneBase
 
 private:
 	eSceneType next_scene; // 遷移先のシーン
+private:
+	std::vector<int> score_animation;   //スコアのアニメーション
+	
 public:
+
 	ResultScene();
 	virtual ~ResultScene();
 
@@ -19,5 +23,7 @@ public:
 
 	// 現在のシーンタイプ情報を取得する
 	virtual const eSceneType GetNowSceneType() const override;
+
+
 };
 
