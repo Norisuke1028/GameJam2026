@@ -39,81 +39,87 @@ void StageData::Load()
 
 		int x = 0;   //x座標(列番号)
 
-		//1行のデータを1文字ずつ処理したい
-		for (char* p = buffer; *p != '\0'; ++p)
-		{
-			const float block_size = 32.0f;
-			if (*p == ',')
-			{
-				continue;
-			}
-			if (*p == '\n')
-			{
-				break;
-			}
+        // 1行のデータを1文字ずつ処理
+        for (char* p = buffer; *p != '\0'; ++p)
+        {
+            if (*p == '\n')
+            {
+                break;
+            }
 
-			Vector2D generate_location = Vector2D((float)x, (float)y) * block_size;
-			//対象の文字があるか確認
-			//夜空
-			//if (*p == 'y')
-			//{
-			//	//対象の文字があれば「２次元座標」と「画像情報」を覚える
-			//	int image_sora = rm->GetImages("Resource/image/Block/sky.png").at(0);
-			//	DrawGraph((int)generate_location.x + velocity.x, (int)generate_location.y, image_sora, TRUE);
-			//}
+            // カンマは「区切り」なのでスキップするが、xは進めない
+            if (*p == ',')
+            {
+                continue;
+            }
 
-			//土
-			if (*p == 't')
-			{
-				//対象の文字があれば「２次元座標」と「画像情報」を覚える
-				int image_soil = rm->GetImages("Resource/image/Block/soil.png").at(0);
-				DrawGraph((int)generate_location.x + velocity.x, (int)generate_location.y, image_soil, TRUE);
-			}
-			//雪
-			if (*p == 's')
-			{
-				//対象の文字があれば「２次元座標」と「画像情報」を覚える
-				int image_snow = rm->GetImages("Resource/image/Block/snow.png").at(0);
-				DrawGraph((int)generate_location.x + velocity.x, (int)generate_location.y, image_snow, TRUE);
-			}
+            const float block_size = 32.0f;
+            Vector2D generate_location = Vector2D((float)x, (float)y) * block_size;
 
-			//雪だるま
-			if (*p == 'm')
-			{
-				//対象の文字があれば「２次元座標」と「画像情報」を覚える
-				int image_snowman = rm->GetImages("Resource/image/snowman.png").at(0);
-				DrawGraph((int)generate_location.x + velocity.x, (int)generate_location.y, image_snowman, TRUE);
-			}
+            // 土
+            if (*p == 't')
+            {
+                int image_soil = rm->GetImages("Resource/image/Block/soil.png").at(0);
+                DrawGraph((int)generate_location.x + velocity.x,
+                    (int)generate_location.y,
+                    image_soil,
+                    TRUE);
+            }
 
-			//街並み
-			if (*p == 'c')
-			{
-				//対象の文字があれば「２次元座標」と「画像情報」を覚える
-				int image_city = rm->GetImages("Resource/image/city.png").at(0);
-				DrawGraph((int)generate_location.x + velocity.x, (int)generate_location.y, image_city, TRUE);
-			}
+            // 雪
+            if (*p == 's')
+            {
+                int image_snow = rm->GetImages("Resource/image/Block/snow.png").at(0);
+                DrawGraph((int)generate_location.x + velocity.x,
+                    (int)generate_location.y,
+                    image_snow,
+                    TRUE);
+            }
 
-			//枯れ木
-			if (*p == 'k')
-			{
-				//対象の文字があれば「２次元座標」と「画像情報」を覚える
-				int image_tree = rm->GetImages("Resource/image/tree1.png").at(0);
-				DrawGraph((int)generate_location.x + velocity.x, (int)generate_location.y, image_tree, TRUE);
-			}
+            // 雪
+            if (*p == 'm')
+            {
+                int image_snowman = rm->GetImages("Resource/image/snowman.png").at(0);
+                DrawGraph((int)generate_location.x + velocity.x,
+                    (int)generate_location.y,
+                    image_snowman,
+                    TRUE);
+            }
 
-			////エネミー
-			if (*p == 'e')
-			{
-				Vector2D pos;
-				pos.x = x * block_size;
-				pos.y = y * block_size;
+            // 雪
+            if (*p == 'c')
+            {
+                int image_city = rm->GetImages("Resource/image/city.png").at(0);
+                DrawGraph((int)generate_location.x + velocity.x,
+                    (int)generate_location.y,
+                    image_city,
+                    TRUE);
+            }
 
-				enemy_spawn_positions.push_back(pos);
-			}
-			//次の列
-			x++;
+            // 枯れ木
+            if (*p == 'k')
+            {
+                int image_tree = rm->GetImages("Resource/image/tree1.png").at(0);
+                DrawGraph((int)generate_location.x + velocity.x,
+                    (int)generate_location.y,
+                    image_tree,
+                    TRUE);
+            }
 
-		}
+            // エネミー
+            if (*p == 'e')
+            {
+                Vector2D pos;
+                pos.x = x * block_size;
+                pos.y = y * block_size;
+
+                //printfDx("enemy pos.x = %d\n", (int)pos.x);
+                enemy_spawn_positions.push_back(pos);
+            }
+
+            // 1セル処理したら必ず次の列へ
+            x++;
+        }
 
 		//次の行
 		y++;

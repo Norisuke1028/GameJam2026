@@ -53,11 +53,15 @@ public:
 	// 可動性を取得
 	const eMobilityType GetMobility() const;
 
-	// 座標を設定
-	void SetLocation(const Vector2D& location);
+	virtual void SetLocation(const Vector2D& pos)
+	{
+		location = pos;
+	}
+
 	// 所有シーン情報設定
 	void SetOwnerScene(class SceneBase* scene);
 
 	// 削除フラグを取得
 	const bool GetDeleteFlag() const;
+
 };

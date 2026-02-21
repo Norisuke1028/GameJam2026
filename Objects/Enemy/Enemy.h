@@ -23,8 +23,12 @@ private:
 	int direction;         // 移動方向（1 or -1）
 
 public:
-	Enemy(Vector2D pos);
 	Enemy();
+	Enemy(const Vector2D& spawn_pos)
+	{
+		location = spawn_pos;  
+	}
+
 	virtual ~Enemy();
 
 	void Initialize() override;
@@ -36,6 +40,8 @@ public:
 
 	//位置情報取得処理
 	const Vector2D& GetLocation() const;
+
+	void SetLocation(const Vector2D& pos) override;
 	//位置情報取得処理
 	const Vector2D& GetVelocity() const;
 

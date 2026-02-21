@@ -26,25 +26,14 @@ Enemy::Enemy() : move_animation()
 }
 
 
-Enemy::Enemy(Vector2D pos)
-{
-    location = 0;
-    location = pos;
-    start_x = pos.x;
-}
-
 Enemy::~Enemy()
 {
 
 }
 
 void Enemy::Initialize() {
-    velocity = Vector2D(0.5, 0);
-
     speed = 50.0f;       // 1秒で進む距離
     move_range = 200.0f;  // 左右200px移動
-
-    start_x = location.x;
 
     direction = 1;        // 最初は左へ
 }
@@ -55,7 +44,7 @@ void Enemy::Update(float delta_second)
     AnimeCount(delta_second);
 
     // 移動
-    //location.x += direction * speed * delta_second;
+    location.x += direction * speed * delta_second;
 
     // 右端
     if (location.x > start_x + move_range)
@@ -74,9 +63,21 @@ void Enemy::Update(float delta_second)
 
 void Enemy::Draw(const Vector2D& screen_offset) const
 {
-    DrawGraph((int)(location.x + screen_offset.x),(int)(location.y + screen_offset.y),image,TRUE);
-    DrawFormatString(10, 200, GetColor(255, 255, 255),
-        "location = %.2f", location);
+    DrawGraph(
+        (int)(location.x + screen_offset.x),
+        (int)(location.y + screen_offset.y),
+        image,
+        TRUE);
+    
+    //DrawGraph((int)(location.x + screen_offset.x),(int)(location.y + screen_offset.y),image,TRUE);
+    DrawFormatString(
+        10, 200,
+        GetColor(255, 255, 255),
+        "location.x, start_x, screen_offset.x = %.2f, %2f, %2f",
+        location.x,
+        start_x,
+        screen_offset.x
+    );
 }
 
 void Enemy::Finalize()
@@ -109,4 +110,10 @@ const Vector2D& Enemy::GetLocation() const
 const Vector2D& Enemy::GetVelocity() const
 {
     return velocity;
+}
+
+void Enemy::SetLocation(const Vector2D& pos)
+{
+    GameObject::SetLocation(pos); // 親の処理
+    start_x = pos.x;              // Enemy固有の初期化
 }
