@@ -23,8 +23,17 @@ void InGameScene::Initialize()
 
 	player = CreateObject<Player>(Vector2D(100, 100));
 
-	enemy = CreateObject<Enemy>(Vector2D(1000, 588));
+	stage_data.Load();
 
+	const std::vector<Vector2D>& spawns =
+		stage_data.GetEnemySpawnPositions();
+
+	printfDx("spawn size = %d\n", spawns.size());
+
+	for (const Vector2D& pos : spawns)
+	{
+		CreateObject<Enemy>(pos);
+	}
 	screen_offset = Vector2D(0, 0);
 }
 
@@ -106,6 +115,7 @@ void InGameScene::Draw() const
 	DrawFormatString(0, 40, GetColor(255, 255, 255),
 		"PlayerLocationY: %.2f", player->GetLocation().y);
 
+	__super::Draw();
 }
 
 void InGameScene::Finalize()
