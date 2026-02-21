@@ -136,9 +136,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Objects\Player\StateMachine\State\ClearState.cpp" />
-    <ClCompile Include="Objects\Player\StateMachine\State\DieState.cpp" />
-    <ClCompile Include="Objects\Player\StateMachine\State\JampState.cpp" />
-    <ClCompile Include="Objects\Player\StateMachine\State\Idling.cpp" />
+    <ClCompile Include="Objects\Player\StateMachine\State\DyingState.cpp" />
+    <ClCompile Include="Objects\Player\StateMachine\State\JumpingState.cpp" />
+    <ClCompile Include="Objects\Player\StateMachine\State\IdlingState.cpp" />
     <ClCompile Include="Objects\Item\Item.cpp" />
     <ClCompile Include="Objects\Player\StateMachine\Factory\PlayerStateFactory.cpp" />
     <ClCompile Include="Objects\Player\StateMachine\State\RollingState.cpp" />
@@ -162,9 +162,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Objects\Player\StateMachine\State\ClearState.h" />
-    <ClInclude Include="Objects\Player\StateMachine\State\DieState.h" />
-    <ClInclude Include="Objects\Player\StateMachine\State\JampState.h" />
-    <ClInclude Include="Objects\Player\StateMachine\State\Idling.h" />
+    <ClInclude Include="Objects\Player\StateMachine\State\DyingState.h" />
+    <ClInclude Include="Objects\Player\StateMachine\State\JumpingState.h" />
+    <ClInclude Include="Objects\Player\StateMachine\State\IdlingState.h" />
     <ClInclude Include="Objects\Item\Item.h" />
     <ClInclude Include="Objects\Player\StateMachine\Enum\PlayerState.h" />
     <ClInclude Include="Objects\Player\StateMachine\Factory\PlayerStateFactory.h" />

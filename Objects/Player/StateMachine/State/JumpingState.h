@@ -1,11 +1,11 @@
 #pragma once
 #include "../PlayerStateBase.h"
 
-class RollingState : public PlayerStateBase
+class JumpingState : public PlayerStateBase
 {
 public:
-	RollingState(class Player* p);
-	~RollingState();
+	JumpingState(class Player* p);
+	~JumpingState();
 
 public:
 	virtual void Initialize() override;
