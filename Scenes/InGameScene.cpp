@@ -8,8 +8,11 @@
 #include <string>
 
 InGameScene::InGameScene()
+	: player(nullptr)
+	, enemy(nullptr)
+	, background_image(0)
+	, next_scene(eSceneType::eInGame)
 {
-	next_scene = eSceneType::eInGame;
 }
 
 InGameScene::~InGameScene()
@@ -48,7 +51,7 @@ eSceneType InGameScene::Update(const float& delta_second)
 	player->SetScroll(screen_offset.x);
 	__super::Update(delta_second);
 
-	float velocity = player->GetVelocity().x;
+	float velocity = player->GetVelocity().x * delta_second;
 
 	// ƒXƒNƒ[ƒ‹ðŒ
 	if (player->GetLocation().x >= 1280 / 2 ||

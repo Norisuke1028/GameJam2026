@@ -9,6 +9,8 @@
 #include "StateMachine/Factory/PlayerStateFactory.h"
 #include <vector>
 
+#define D_PLAYER_SPEED (200.0f) // プレイヤーの移動速度
+
 class Player : public GameObject
 {
 private:
@@ -43,6 +45,10 @@ public:
 	void Finalize() override;
 	// 移動処理
 	void Movement(float delta_second);
+	// アニメーション処理
+	void Animation(float delta_second);
+	// 状態遷移処理
+	void SetNextState(ePlayerState state);
 
 	// 当たり判定通知処理
 	void OnHitCollision(const GameObject* hit_object) override;
