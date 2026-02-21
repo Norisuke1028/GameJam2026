@@ -1,6 +1,7 @@
 #pragma once
 
 #include "SceneBase.h"
+#include "../StageData.h"
 #include <vector>
 
 class InGameScene : public SceneBase
@@ -9,6 +10,8 @@ class InGameScene : public SceneBase
 private:
 	class Player* player;
 	class Enemy* enemy;
+
+	StageData stage_data;
 
 	int background_image;
 

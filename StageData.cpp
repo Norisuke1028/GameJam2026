@@ -30,6 +30,7 @@ void StageData::Load()
 
 
 	int y = 0;
+	enemy_spawn_positions.clear();  //エネミーの出現位置初期化
 	ResourceManager* rm = ResourceManager::GetInstance();
 
 	//fgetsでファイルから１行抜き出す
@@ -93,12 +94,14 @@ void StageData::Load()
 			}
 
 			////エネミー
-			//if (*p == 'e')
-			//{
-			//	//対象の文字があれば「２次元座標」と「画像情報」を覚える
-			//	int image_city = rm->GetImages("Resource/image/Enemy/bear.png").at(0);
-			//	DrawGraph((int)generate_location.x + velocity.x, (int)generate_location.y, image_city, TRUE);
-			//}
+			if (*p == 'e')
+			{
+				Vector2D pos;
+				pos.x = x * block_size;
+				pos.y = y * block_size;
+
+				enemy_spawn_positions.push_back(pos);
+			}
 			//次の列
 			x++;
 
@@ -148,6 +151,12 @@ void StageData::Finalize()
 {
 
 }
+
+const std::vector<Vector2D>& StageData::GetEnemySpawnPositions() const
+{
+	return enemy_spawn_positions;
+}
+
 float StageData::GetLocation()const
 {
 	return s_location;

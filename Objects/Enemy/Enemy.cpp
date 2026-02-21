@@ -30,7 +30,7 @@ Enemy::~Enemy()
 void Enemy::Initialize() {
     // 登場位置を右側にセット
     this->location = Vector2D(1000, 400);
-    velocity = Vector2D(1, 0);
+    velocity = Vector2D(0.5, 0);
 }
 
 void Enemy::Update(float delta_second)
@@ -47,9 +47,7 @@ void Enemy::Update(float delta_second)
 
 void Enemy::Draw(const Vector2D& screen_offset) const
 {
-    /*DrawCircle( location.x, location.y, 15, GetColor(255,0,0), TRUE);*/
-    DrawRotaGraph(100, 400, 2, 0, image, TRUE);
-    __super::Draw(screen_offset);
+    DrawGraph((int)(location.x + screen_offset.x),(int)(location.y + screen_offset.y),image,TRUE);
 }
 
 void Enemy::Finalize()

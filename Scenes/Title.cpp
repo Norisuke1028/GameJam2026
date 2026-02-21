@@ -5,7 +5,7 @@
 #include <string>
 
 int cursor_number = 0;
-int a = 0;
+int a , b;
 int title_image;
 int start_image;
 int shuryo_image;
@@ -18,6 +18,8 @@ int help1_image;
 TitleScene::TitleScene()
 {
 	next_scene = eSceneType::eTitle;
+	on_button = false;
+	wait_time = 0.0f;
 	// 画像の読み込み
 	title_image = LoadGraph("Resource/image/Title/title.png");
 	start_image = LoadGraph("Resource/image/Title/startmae.png");
@@ -39,18 +41,13 @@ TitleScene::~TitleScene()
 void TitleScene::Initialize()
 {
 	printf("タイトルシーンです");
+	on_button = false;
 }
 
 eSceneType TitleScene::Update(const float& delta_second)
 {
 	// 入力情報を取得
 	InputControl* pad_input = InputControl::GetInstance();
-
-	// インゲームシーンに遷移する
-	if (pad_input->GetButtonInputState(XINPUT_BUTTON_B) == ePadInputState::ePress)
-	{
-		return eSceneType::eInGame;
-	}
 
 	// カーソルの移動
 	if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_UP) == ePadInputState::ePress)
@@ -71,21 +68,35 @@ eSceneType TitleScene::Update(const float& delta_second)
 	}
 
 	// 決定する
-	if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
+	if (pad_input->GetButtonInputState(XINPUT_BUTTON_B) == ePadInputState::ePress)
 	{
-		a += 1;
-		// カーソルの位置に応じて遷移先のシーンを変更する
-		switch (cursor_number)
+		on_button = true;
+		Animation();
+	}
+
+	// ボタンが押された場合、遷移先のシーンを返す
+	if (on_button == true)
+	{
+		// アニメーションの待機時間を加算する
+		wait_time += delta_second;
+		if (wait_time >= 1.0f) // アニメーションの待機時間が1秒以上になったら
 		{
-		case 0:
-			return eSceneType::eInGame;
-		case 1:
-			return eSceneType::eHelp;
-		case 2:
-			return eSceneType::eEnd;
+			// 待機時間をリセットする
+			wait_time = 0.0f;
+			on_button = false;
+			// 遷移先のシーンを返す
+			switch (cursor_number)
+			{
+			case 0:
+				return eSceneType::eInGame;
+			case 1:
+				return eSceneType::eHelp;
+			case 2:
+				return eSceneType::eEnd;
+			}
 		}
 	}
-	Draw();
+	// 現在のシーンを返す
 	return eSceneType::eTitle;
 }
 
@@ -93,47 +104,12 @@ eSceneType TitleScene::Update(const float& delta_second)
 void TitleScene::Draw() const
 {
 	DrawGraph(0, 0, title_image, TRUE);
+	int cursor = cursor_number * 100; // カーソルの位置を計算
+	DrawGraph(0, 300 + cursor, cursor_image, TRUE); // カーソルを描画
+	
 	DrawGraph(90, 240, start_image, TRUE);
 	DrawGraph(115, 350, help_image, TRUE);
 	DrawGraph(90, 330, shuryo_image, TRUE);
-	
-	int cursor = cursor_number * 100; // カーソルの位置を計算
-	DrawGraph(0, 300 + cursor, cursor_image, TRUE); // カーソルを描画
-
-	if (cursor_number == 0 /*&& a == 1*/)
-	{
-		DrawGraph(90, 240, start1_image, TRUE);
-		
-	}
-	if (cursor_number == 1 /*&& a == 1*/)
-	{
-		DrawGraph(115, 350, help1_image, TRUE);
-		
-	}
-	if (cursor_number == 2 /*&& a == 1*/)
-	{
-		DrawGraph(90, 330, shuryo1_image, TRUE);
-		
-	}
-	//switch (cursor_number)
-	//{
-	//case 0:
-	//	DrawGraph(90, 240, start1_image, TRUE);
-	//	break;
-	//case 1:
-	//	DrawGraph(115, 350, help1_image, TRUE);
-	//	break;
-	//case 2:
-	//	DrawGraph(90, 330, shuryo1_image, TRUE);
-	//	break;
-	//}
-
-	//if (a == 1)
-	//{
-	//	
-	//	WaitTimer(1000); // 1秒待機
-	//	a--;
-	//}
 }
 
 void TitleScene::Finalize()
@@ -144,4 +120,31 @@ void TitleScene::Finalize()
 const eSceneType TitleScene::GetNowSceneType() const
 {
 	return eSceneType::eTitle;
+}
+
+void TitleScene::Animation()
+{
+	switch (cursor_number)
+	{
+		case 0:
+			if (on_button == true)
+			{
+				start_image = start1_image;
+				break;
+			}
+		case 1:
+			if (on_button == true)
+			{
+				help_image = help1_image;
+				break;
+			}
+		case 2:
+			if (on_button == true)
+			{
+				shuryo_image = shuryo1_image;
+				break;
+			}
+	default:
+		break;
+	}
 }
