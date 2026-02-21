@@ -1,12 +1,24 @@
 #include "ResultScene.h"
 #include "../Utility/InputControl.h"
 #include "DxLib.h"
+#include "../Utility/ResourceManager.h"
 
 #include <string>
 
-ResultScene::ResultScene()
+int Result_image;
+int Result_score;
+int score = 500;
+
+ResultScene::ResultScene() : score_animation()
 {
 	next_scene = eSceneType::eResult;
+	// 画像の読み込み
+	Result_image = LoadGraph("Resource/image/Result/result.png");
+
+	ResourceManager* rm = ResourceManager::GetInstance();
+	score_animation = rm->GetImages("Resource/image/Result/Score.png", 3, 3, 1, 200, 200);
+
+	Result_score = score_animation[0];
 }
 
 ResultScene::~ResultScene()
@@ -36,7 +48,24 @@ eSceneType ResultScene::Update(const float& delta_second)
 // 描画処理
 void ResultScene::Draw() const
 {
-	DrawFormatString(120, 140, GetColor(255, 255, 0), "リザルト画面");
+	DrawGraph(0, 0, Result_image, TRUE);
+
+	//スコアの評価の判定
+	if (score > 3000)
+	{
+		Result_score = score_animation[0];
+		DrawGraph(760, 220, Result_score, TRUE);
+	}
+	else if (score > 1000)
+	{
+		Result_score = score_animation[1];
+		DrawGraph(760, 220, Result_score, TRUE);
+	}
+	else
+	{
+		Result_score = score_animation[2];
+		DrawGraph(760, 220, Result_score, TRUE);
+	}
 }
 
 void ResultScene::Finalize()
