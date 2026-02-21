@@ -20,7 +20,11 @@
     <ClCompile Include="Objects\Item\Item.cpp" />
     <ClCompile Include="Utility\Collision.cpp" />
     <ClCompile Include="Objects\Player\StateMachine\Factory\PlayerStateFactory.cpp" />
-    <ClCompile Include="Objects\Player\StateMachine\State\Idling.cpp" />
+    <ClCompile Include="Objects\Player\StateMachine\State\IdlingState.cpp" />
+    <ClCompile Include="Objects\Player\StateMachine\State\JumpingState.cpp" />
+    <ClCompile Include="Objects\Player\StateMachine\State\RollingState.cpp" />
+    <ClCompile Include="Objects\Player\StateMachine\State\DyingState.cpp" />
+    <ClCompile Include="Objects\Player\StateMachine\State\ClearState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Resource">
@@ -58,6 +62,10 @@
     <ClInclude Include="Objects\Player\StateMachine\Enum\PlayerState.h" />
     <ClInclude Include="Objects\Player\StateMachine\Factory\PlayerStateFactory.h" />
     <ClInclude Include="Objects\Player\StateMachine\PlayerStateBase.h" />
-    <ClInclude Include="Objects\Player\StateMachine\State\Idling.h" />
+    <ClInclude Include="Objects\Player\StateMachine\State\IdlingState.h" />
+    <ClInclude Include="Objects\Player\StateMachine\State\JumpingState.h" />
+    <ClInclude Include="Objects\Player\StateMachine\State\RollingState.h" />
+    <ClInclude Include="Objects\Player\StateMachine\State\DyingState.h" />
+    <ClInclude Include="Objects\Player\StateMachine\State\ClearState.h" />
   </ItemGroup>
 </Project>

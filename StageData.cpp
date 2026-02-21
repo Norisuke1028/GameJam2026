@@ -1,6 +1,7 @@
 #include "StageData.h"
 
 #include "Utility/ResourceManager.h"
+#include "Objects/Enemy/Enemy.h"
 #include "DxLib.h"
 
 #include <fstream>
@@ -91,8 +92,13 @@ void StageData::Load()
 				DrawGraph((int)generate_location.x + velocity.x, (int)generate_location.y, image_city, TRUE);
 			}
 
-
-
+			//エネミー
+			if (*p == 'e')
+			{
+				//対象の文字があれば「２次元座標」と「画像情報」を覚える
+				int image_city = rm->GetImages("Resource/image/Enemy/bear.png").at(0);
+				DrawGraph((int)generate_location.x + velocity.x, (int)generate_location.y, image_city, TRUE);
+			}
 			//次の列
 			x++;
 

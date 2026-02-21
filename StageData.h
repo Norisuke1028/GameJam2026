@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Objects/GameObject.h"
+#include "Scenes/SceneBase.h"
 #include <vector>
 #include <map>
 
@@ -21,6 +22,7 @@ class StageData : public GameObject
 {
 private:
 	static StageData* instance;
+
 
 private:
 	StageData() = default;
