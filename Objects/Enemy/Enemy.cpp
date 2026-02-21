@@ -11,7 +11,7 @@ Enemy::Enemy() : move_animation()
     velocity = 0;
     //アニメーション画像の読み込み
     ResourceManager* rm = ResourceManager::GetInstance();
-    move_animation = rm->GetImages("Resource/image/Enemy/bear.png", 5, 5, 1, 100, 100);
+    move_animation = rm->GetImages("Resource/image/Enemy/bear.png", 2, 2, 1, 200, 200);
 
     image = move_animation[0];
 
