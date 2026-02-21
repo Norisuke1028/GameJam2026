@@ -94,7 +94,7 @@ void StageData::Load()
 			}
 
 			//枯れ木
-			if (*p == 'c')
+			if (*p == 'k')
 			{
 				//対象の文字があれば「２次元座標」と「画像情報」を覚える
 				int image_tree = rm->GetImages("Resource/image/tree1.png").at(0);
