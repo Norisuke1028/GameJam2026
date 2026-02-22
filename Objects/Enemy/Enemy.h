@@ -20,7 +20,7 @@ private:
 	float speed;           // 移動速度
 	float move_range;      // 移動範囲（片側）
 	float start_x;         // 初期位置
-	int direction;         // 移動方向（1 or -1）
+	int direction = -1;         // 移動方向（1 or -1）
 
 public:
 	Enemy();
@@ -33,7 +33,8 @@ public:
 	void Finalize() override;
 
 	void AnimeCount(float delta_second);
-
+	// 当たり判定通知処理
+	void OnHitCollision(const GameObject* hit_object) override;
 	//位置情報取得処理
 	const Vector2D& GetLocation() const;
 	//位置情報設定処理
