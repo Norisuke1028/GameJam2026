@@ -43,3 +43,5 @@ const Vector2D& Item::GetVelocity() const
 {
 	return velocity;
 }
+
+// ˆÊ’uî•ñİ’èˆ—

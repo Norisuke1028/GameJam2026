@@ -6,7 +6,7 @@
 
 int Enemy_image;
 
-Enemy::Enemy() : move_animation()
+Enemy::Enemy() : move_animation(), direction(-1)
 {
     //location = Vector2D(0, 0);
     start_x = 0;
@@ -35,7 +35,17 @@ void Enemy::Initialize() {
     speed = 50.0f;       // 1秒で進む距離
     move_range = 200.0f;  // 左右200px移動
 
-    direction = 1;        // 最初は左へ
+    direction = -1;        // 最初は左へ
+
+    collision.is_blocking = true;
+    collision.object_type = eObjectType::enemy;
+    collision.hit_object_type = { eObjectType::player,
+                                  eObjectType::block,};
+
+    collision.radius = D_OBJECT_SIZE / 2.0f;
+
+    z_layer = 5;
+    box_size = Vector2D(110, 130);
 }
 
 void Enemy::Update(float delta_second)
@@ -47,37 +57,50 @@ void Enemy::Update(float delta_second)
     location.x += direction * speed * delta_second;
 
     // 右端
-    if (location.x > start_x + move_range)
+    if (location.x >= start_x + move_range)
     {
         location.x = start_x + move_range;
         direction = -1;
     }
 
     // 左端
-    if (location.x < start_x - move_range)
+    if (location.x <= start_x - move_range)
     {
         location.x = start_x - move_range;
         direction = 1;
     }
+
+    collision.point[0] = location;
+    collision.point[1] = location;
 }
 
 void Enemy::Draw(const Vector2D& screen_offset) const
 {
-    DrawGraph(
-        (int)(location.x + screen_offset.x),
-        (int)(location.y + screen_offset.y),
-        image,
-        TRUE);
-    
-    //DrawGraph((int)(location.x + screen_offset.x),(int)(location.y + screen_offset.y),image,TRUE);
-    DrawFormatString(
-        10, 200,
+    float drawX = location.x + screen_offset.x;
+    float drawY = location.y + screen_offset.y;
+
+    int width, height;
+    GetGraphSize(image, &width, &height);
+
+    // エネミー画像
+    DrawRotaGraph(drawX, drawY, 1.0, 0.0, image, TRUE, direction == 1);
+
+    // 当たり判定（矩形）
+    DrawBox(
+        drawX - box_size.x / 2,
+        drawY - box_size.y / 2,
+        drawX + box_size.x / 2,
+        drawY + box_size.y / 2,
+        GetColor(255, 0, 0),
+        FALSE);
+
+    // 中心点
+    DrawCircle(drawX, drawY, 3, GetColor(0, 255, 0), TRUE);
+
+    DrawFormatString(900, 200,
         GetColor(255, 255, 255),
-        "location.x, start_x, screen_offset.x = %.2f, %2f, %2f",
-        location.x,
-        start_x,
-        screen_offset.x
-    );
+        "start_x=%.1f location=%.1f",
+        start_x, location.x);
 }
 
 void Enemy::Finalize()
@@ -102,6 +125,19 @@ void Enemy::AnimeCount(float delta_second)
     }
 }
 
+void Enemy::OnHitCollision(const GameObject* hit_object)
+{
+    if (hit_object->GetCollision().IsCheckHitTarget(eObjectType::block))
+    {
+        // ブロックに当たったときの処理
+    }
+    else if (hit_object->GetCollision().IsCheckHitTarget(eObjectType::player))
+    {
+        // プレイヤーに当たったときの処理
+        printfDx("Enemy Hit!\n");
+    }
+}
+
 const Vector2D& Enemy::GetLocation() const
 {
     return location;
@@ -111,7 +147,7 @@ const Vector2D& Enemy::GetVelocity() const
 {
     return velocity;
 }
-
+//位置情報設定処理
 void Enemy::SetLocation(const Vector2D& pos)
 {
     GameObject::SetLocation(pos); // 親の処理

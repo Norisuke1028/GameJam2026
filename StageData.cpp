@@ -113,9 +113,10 @@ void StageData::Load()
                 pos.x = x * block_size;
                 pos.y = y * block_size;
 
-                //printfDx("enemy pos.x = %d\n", (int)pos.x);
                 enemy_spawn_positions.push_back(pos);
             }
+
+            //アイテム
 
             // 1セル処理したら必ず次の列へ
             x++;

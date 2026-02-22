@@ -28,15 +28,19 @@ void InGameScene::Initialize()
 
 	stage_data.Load();
 
-	const std::vector<Vector2D>& spawns =
-		stage_data.GetEnemySpawnPositions();
+	/*const std::vector<Vector2D>& spawns =
+		stage_data.GetEnemySpawnPositions();*/
 
-	printfDx("spawn size = %d\n", spawns.size());
+	//printfDx("spawn size = %d\n", spawns.size());
 
-	for (const Vector2D& pos : spawns)
+	//エネミーの生成
+	for (const Vector2D& pos : stage_data.GetEnemySpawnPositions())
 	{
 		CreateObject<Enemy>(pos);
 	}
+
+	//アイテムの生成
+
 	screen_offset = Vector2D(0, 0);
 }
 
