@@ -14,15 +14,9 @@ Enemy::Enemy() : move_animation(), direction(-1)
     //アニメーション画像の読み込み
     ResourceManager* rm = ResourceManager::GetInstance();
     move_animation = rm->GetImages("Resource/image/Enemy/bear.png", 2, 2, 1, 200, 200);
-
     image = move_animation[0];
-
-    //エラーチェック
-    if (image == -1)
-    {
-        throw("エネミーの画像がありません\n");
-    }
-
+    die_image = LoadGraph("Resource/image/Enemy/bear_down.png");
+    //image = walk_image;
 }
 
 
@@ -36,7 +30,7 @@ void Enemy::Initialize() {
     move_range = 200.0f;  // 左右200px移動
 
     direction = -1;        // 最初は左へ
-
+    enemy_state = EnemyState::WALK;
     collision.is_blocking = true;
     collision.object_type = eObjectType::enemy;
     collision.hit_object_type = { eObjectType::player,
@@ -50,24 +44,34 @@ void Enemy::Initialize() {
 
 void Enemy::Update(float delta_second)
 {
-    // アニメーション制御
-    AnimeCount(delta_second);
-
-    // 移動
-    location.x += direction * speed * delta_second;
-
-    // 右端
-    if (location.x >= start_x + move_range)
+    switch (enemy_state)
     {
-        location.x = start_x + move_range;
-        direction = -1;
-    }
+    case WALK: 
+        // アニメーション制御
+        AnimeCount(delta_second);
 
-    // 左端
-    if (location.x <= start_x - move_range)
-    {
-        location.x = start_x - move_range;
-        direction = 1;
+        // 移動
+        location.x += direction * speed * delta_second;
+
+        // 右端
+        if (location.x >= start_x + move_range)
+        {
+            location.x = start_x + move_range;
+            direction = -1;
+        }
+
+        // 左端
+        if (location.x <= start_x - move_range)
+        {
+            location.x = start_x - move_range;
+            direction = 1;
+        }
+        break;
+    case DIE:
+        image = die_image;
+        break;
+    default:
+        break;
     }
 
     collision.point[0] = location;

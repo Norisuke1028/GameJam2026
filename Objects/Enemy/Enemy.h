@@ -3,7 +3,11 @@
 #include "../GameObject.h"
 #include <vector>
 
-
+enum EnemyState
+{
+	WALK,
+	DIE,
+};
 
 class Enemy : public GameObject
 {
@@ -11,11 +15,13 @@ private:
 	std::vector<int> move_animation;   //移動のアニメーション
 
 	//アニメーション用
-	const int animation_num[2] = { 0,1 };
+	const int animation_num[3] = { 0,1, 2 };
 	int animation_count;
 	float animation_time;
 
-	int image;  //エネミーの画像
+	int image;  
+	int walk_image;  //エネミーの画像(WALK)
+	int die_image;  //エネミーの画像(DIE)
 
 	float speed;           // 移動速度
 	float move_range;      // 移動範囲（片側）
@@ -23,6 +29,8 @@ private:
 	int direction = -1;         // 移動方向（1 or -1）
 
 public:
+	EnemyState enemy_state;
+
 	Enemy();
 
 	virtual ~Enemy();
