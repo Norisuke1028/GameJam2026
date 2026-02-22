@@ -13,7 +13,7 @@ Enemy::Enemy() : move_animation(), direction(-1)
     velocity = 0;
     //アニメーション画像の読み込み
     ResourceManager* rm = ResourceManager::GetInstance();
-    move_animation = rm->GetImages("Resource/image/Enemy/bear.png", 2, 2, 1, 200, 200);
+    move_animation = rm->GetImages("Resource/image/Enemy/bear1.png", 3, 3, 1, 200, 200);
 
     image = move_animation[0];
 
@@ -34,8 +34,8 @@ Enemy::~Enemy()
 void Enemy::Initialize() {
     speed = 50.0f;       // 1秒で進む距離
     move_range = 200.0f;  // 左右200px移動
-
-    direction = -1;        // 最初は左へ
+    direction = -1;        // エネミーの向き
+    enemy_state = EnemyState::WALK;
 
     collision.is_blocking = true;
     collision.object_type = eObjectType::enemy;
@@ -116,7 +116,7 @@ void Enemy::AnimeCount(float delta_second)
     {
         animation_time = 0.0f;
         animation_count++;
-        if (animation_count >= 2)
+        if (animation_count >= 3)
         {
             animation_count = 0;
         }
