@@ -6,7 +6,7 @@ Player::Player() :
 	ingame_s(nullptr),
 	gravity(0.0f),
 	scroll(0.0f),
-	is_on_ground(false),
+	on_ground(false),
 	state(nullptr),
 	next_state(ePlayerState::NONE)
 {
@@ -36,7 +36,7 @@ void Player::Initialize()
 
 	mobility = eMobilityType::Movable;
 	state = PlayerStateFactory::Get(*this, ePlayerState::IDLE);
-	next_state = ePlayerState::NONE;
+	next_state = ePlayerState::IDLE;
 
 	velocity = Vector2D(0.0f, 0.0f);
 
@@ -46,6 +46,11 @@ void Player::Initialize()
 
 void Player::Update(float delta_second)
 {
+	state->Update(delta_second);
+
+	// ----- 移動処理 ----- //
+	Movement(delta_second);
+
 	// ----- 状態遷移処理 ----- //
 	if (next_state != ePlayerState::NONE)
 	{
@@ -53,13 +58,8 @@ void Player::Update(float delta_second)
 		next_state = ePlayerState::NONE;
 	}
 
-	state->Update(delta_second);
-
 	// ----- カメラ視点の値 ----- //
 	SetScroll(scroll);
-
-	// ----- 移動処理 ----- //
-	Movement(delta_second);
 }
 
 void Player::Draw(const Vector2D& screen_offset) const
@@ -74,6 +74,10 @@ void Player::Draw(const Vector2D& screen_offset) const
 	
 	DrawFormatString(400, 50, GetColor(255, 255, 255), "PlayerLocationY: %f", location.y);
 	DrawFormatString(0, 100, GetColor(255, 255, 255), "scroll = %f", scroll);
+	
+	// デバッグ：プレイヤーの状態を表示
+	DrawFormatString(0, 150, GetColor(255, 255, 255), "Player State: %d", state->GetState());
+	DrawFormatString(0, 170, GetColor(255, 255, 255), "Player State: %d", input->GetButtonInputState(XINPUT_BUTTON_DPAD_RIGHT));
 }
 
 void Player::Finalize()
@@ -82,19 +86,6 @@ void Player::Finalize()
 
 void Player::Movement(float delta_second)
 {
-	velocity.x = 0;
-
-	if (input->GetButtonInputState(XINPUT_BUTTON_DPAD_LEFT) == ePadInputState::ePress ||
-		input->GetButtonInputState(XINPUT_BUTTON_DPAD_LEFT) == ePadInputState::eHeld)
-	{
-		velocity.x = -D_PLAYER_SPEED;
-	}
-	if (input->GetButtonInputState(XINPUT_BUTTON_DPAD_RIGHT) == ePadInputState::ePress ||
-		input->GetButtonInputState(XINPUT_BUTTON_DPAD_RIGHT) == ePadInputState::eHeld)
-	{
-		velocity.x = D_PLAYER_SPEED;
-	}
-
 	// 左端制限
 	if (location.x <= 20.0f)
 	{
@@ -118,19 +109,31 @@ void Player::Movement(float delta_second)
 		}
 	}
 
+	// 移動量上限
+	if (velocity.x > D_PLAYER_MAX_SPEED)
+	{
+		velocity.x = D_PLAYER_MAX_SPEED;
+	}
+	else if (velocity.x < -D_PLAYER_MAX_SPEED)
+	{
+		velocity.x = -D_PLAYER_MAX_SPEED;
+	}
+
 	// 重力の適用
 	velocity.y += GRAVITY * delta_second;
 
+	// 位置の更新
 	location += velocity * delta_second;
 
 	if (location.y >= 600.0f)
 	{
 		location.y = 600.0f;
-		is_on_ground = true;
+		velocity.y = 0.0f;
+		on_ground = true;
 	}
 	else
 	{
-		is_on_ground = false;
+		on_ground = false;
 	}
 }
 
@@ -140,6 +143,7 @@ void Player::Animation(float delta_second)
 
 void Player::SetNextState(ePlayerState state)
 {
+	this->next_state = state;
 }
 
 void Player::OnHitCollision(const GameObject* hit_object)

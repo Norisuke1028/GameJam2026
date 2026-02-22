@@ -29,21 +29,21 @@ void IdlingState::Update(float delta_second)
 	{
 		this->player->velocity.x -= D_PLAYER_SPEED * delta_second;
 	}
-	if (this->player->velocity.x < 2.0f && this->player->velocity.x > -2.0f)
+	if (this->player->velocity.x < 1.0f && this->player->velocity.x > -1.0f)
 	{
 		this->player->velocity.x = 0.0f;
 	}
 
 	if(input->GetButtonInputState(XINPUT_BUTTON_DPAD_LEFT) == ePadInputState::ePress ||
-		input->GetButtonInputState(XINPUT_BUTTON_DPAD_LEFT) == ePadInputState::eHeld ||
+		input->GetButtonInputState(XINPUT_BUTTON_DPAD_LEFT) == ePadInputState::eHold ||
 		input->GetButtonInputState(XINPUT_BUTTON_DPAD_RIGHT) == ePadInputState::ePress ||
-		input->GetButtonInputState(XINPUT_BUTTON_DPAD_RIGHT) == ePadInputState::eHeld)
+		input->GetButtonInputState(XINPUT_BUTTON_DPAD_RIGHT) == ePadInputState::eHold)
 	{
 		player->SetNextState(ePlayerState::ROLL);
 	}
 
-	if(input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress ||
-		input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::eHeld)
+	if(input->GetButtonInputState(XINPUT_BUTTON_B) == ePadInputState::ePress ||
+		input->GetButtonInputState(XINPUT_BUTTON_B) == ePadInputState::eHold)
 	{
 		player->SetNextState(ePlayerState::JUMP);
 	}

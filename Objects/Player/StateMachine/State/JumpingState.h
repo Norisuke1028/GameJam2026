@@ -3,9 +3,12 @@
 
 class JumpingState : public PlayerStateBase
 {
+private:
+	class InputControl* input;  // “ü—Íî•ñ
+
 public:
 	JumpingState(class Player* p);
-	~JumpingState();
+	virtual ~JumpingState();
 
 public:
 	virtual void Initialize() override;

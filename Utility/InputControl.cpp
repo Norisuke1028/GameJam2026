@@ -70,7 +70,7 @@ ePadInputState InputControl::GetButtonInputState(int button)
 			if (now_button[button] == TRUE)
 			{
 				// ‰Ÿ‚µ‘±‚¯‚Ä‚¢‚é
-				return ePadInputState::eHeld;
+				return ePadInputState::eHold;
 			}
 			else
 			{

@@ -9,16 +9,21 @@
 #include "StateMachine/Factory/PlayerStateFactory.h"
 #include <vector>
 
-#define D_PLAYER_SPEED (200.0f) // プレイヤーの移動速度
+#define D_PLAYER_SPEED (400.0f) // プレイヤーの移動速度
+#define D_PLAYER_MAX_SPEED (400.0f) // プレイヤーの最大移動速度
+#define D_JUMP_POWER (500.0f) // ジャンプの強さ
 
 class Player : public GameObject
 {
+public:
+	bool on_ground;    // 地面にいるかどうか
+
 private:
 	InputControl* input;  // 入力情報
 	InGameScene* ingame_s;  //ゲームメインの情報
 	float gravity;        // 重力
 	float scroll;  //スクロール値
-	bool is_on_ground;    // 地面にいるかどうか
+	
 	class PlayerStateBase* state;
 	ePlayerState next_state;  // 次の状態
 	
@@ -46,7 +51,7 @@ public:
 	// 移動処理
 	void Movement(float delta_second);
 	// アニメーション処理
-	void Animation(float delta_second);
+	virtual void Animation(float delta_second);
 	// 状態遷移処理
 	void SetNextState(ePlayerState state);
 

@@ -9,7 +9,7 @@ enum class ePadInputState : unsigned char
 	eNone,					// 入力無し
 	ePress,					// ボタンを押した瞬間
 	eRelease,				// ボタンを離した瞬間
-	eHeld,					// ボタンを押し続けている
+	eHold,					// ボタンを押し続けている
 };
 
 class InputControl

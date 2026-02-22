@@ -3,9 +3,12 @@
 
 class RollingState : public PlayerStateBase
 {
+private:
+	class InputControl* input;  // “ü—Íî•ñ
+
 public:
 	RollingState(class Player* p);
-	~RollingState();
+	virtual ~RollingState();
 
 public:
 	virtual void Initialize() override;
