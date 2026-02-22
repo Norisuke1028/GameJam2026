@@ -3,11 +3,6 @@
 #include "../GameObject.h"
 #include <vector>
 
-enum EnemyState
-{
-	WALK,
-	DIE
-};
 
 
 class Enemy : public GameObject
@@ -28,10 +23,6 @@ private:
 	int direction = -1;         // 移動方向（1 or -1）
 
 public:
-
-	// エネミーの状態
-	EnemyState enemy_state;
-
 	Enemy();
 
 	virtual ~Enemy();
