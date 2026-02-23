@@ -9,8 +9,20 @@ class ResultScene : public SceneBase
 private:
 	eSceneType next_scene; // 遷移先のシーン
 private:
+
+	//アニメーション用
+	const int rank_animation[2] = { 0,1 };
+	int animation_count;
+	float animation_time;
+
+	int image;
+	int rendeer_image;  //トナカイの画像
+
+	std::vector<int> Arank_animation;   //Aランクのアニメーション
+	std::vector<int> Brank_animation;   //Bランクのアニメーション
+	std::vector<int> Crank_animation;   //Cランクのアニメーション
 	std::vector<int> score_animation;   //スコアのアニメーション
-	
+	std::vector<int> num_image; // 数字用画像
 public:
 
 	ResultScene();
@@ -24,8 +36,10 @@ public:
 	// 現在のシーンタイプ情報を取得する
 	virtual const eSceneType GetNowSceneType() const override;
 
+	void AnimeCount(float delta_second);
+
 private:
 	void ResultBgm();
-
+	void DrawNumber(int x, int y, int number, float scale) const;        // スコアを画像で描画
 };
 
