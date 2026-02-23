@@ -26,6 +26,7 @@ private:
 private:
 	std::vector<Vector2D> enemy_spawn_positions;  //エネミー用
 	//アイテム用
+	std::vector<Vector2D> block_spawn_positions;// ブロック用（足場）
 
 public:
 	StageData() = default;
@@ -61,5 +62,7 @@ public:
 	const std::vector<Vector2D>& GetEnemySpawnPositions() const;
 	//アイテムの出現位置取得
 
+	//ブロック（足場）の出現位置取得
+	const std::vector<Vector2D>& GetBlockSpawnPositions() const;
 };
 

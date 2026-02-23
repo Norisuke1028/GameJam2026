@@ -24,6 +24,8 @@ public:
 	// 現在のシーンタイプ情報を取得する
 	virtual const eSceneType GetNowSceneType() const override;
 
+private:
+	void ResultBgm();
 
 };
 

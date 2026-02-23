@@ -3,6 +3,7 @@
 #include "../Utility/InputControl.h"
 #include "../Objects/Player/Player.h"
 #include"../Objects/Enemy/Enemy.h"
+#include "../Objects/Block/Block.h"
 #include "DxLib.h"
 
 #include <string>
@@ -40,6 +41,12 @@ void InGameScene::Initialize()
 	}
 
 	//アイテムの生成
+
+	//ブロック（足場）の生成
+	for (const Vector2D& pos : stage_data.GetBlockSpawnPositions())
+	{
+		CreateObject<Block>(pos);
+	}
 
 	screen_offset = Vector2D(0, 0);
 }

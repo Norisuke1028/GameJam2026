@@ -14,15 +14,9 @@ Enemy::Enemy() : move_animation(), direction(-1)
     //アニメーション画像の読み込み
     ResourceManager* rm = ResourceManager::GetInstance();
     move_animation = rm->GetImages("Resource/image/Enemy/bear.png", 2, 2, 1, 200, 200);
-
     image = move_animation[0];
-
-    //エラーチェック
-    if (image == -1)
-    {
-        throw("エネミーの画像がありません\n");
-    }
-
+    die_image = LoadGraph("Resource/image/Enemy/bear_down.png");
+    //image = walk_image;
 }
 
 
@@ -36,7 +30,7 @@ void Enemy::Initialize() {
     move_range = 200.0f;  // 左右200px移動
 
     direction = -1;        // 最初は左へ
-
+    enemy_state = EnemyState::WALK;
     collision.is_blocking = true;
     collision.object_type = eObjectType::enemy;
     collision.hit_object_type = { eObjectType::player,
@@ -45,33 +39,45 @@ void Enemy::Initialize() {
     collision.radius = D_OBJECT_SIZE / 2.0f;
 
     z_layer = 5;
-    box_size = Vector2D(110, 130);
+    box_size = Vector2D(100, 70);
 }
 
 void Enemy::Update(float delta_second)
 {
-    // アニメーション制御
-    AnimeCount(delta_second);
-
-    // 移動
-    location.x += direction * speed * delta_second;
-
-    // 右端
-    if (location.x >= start_x + move_range)
+    switch (enemy_state)
     {
-        location.x = start_x + move_range;
-        direction = -1;
+    case WALK: 
+        // アニメーション制御
+        AnimeCount(delta_second);
+
+        // 移動
+        location.x += direction * speed * delta_second;
+
+        // 右端
+        if (location.x >= start_x + move_range)
+        {
+            location.x = start_x + move_range;
+            direction = -1;
+        }
+
+        // 左端
+        if (location.x <= start_x - move_range)
+        {
+            location.x = start_x - move_range;
+            direction = 1;
+        }
+        break;
+    case DIE:
+        image = die_image;
+        break;
+    default:
+        break;
     }
 
-    // 左端
-    if (location.x <= start_x - move_range)
-    {
-        location.x = start_x - move_range;
-        direction = 1;
-    }
+    collision.radius = box_size.x / 2;
 
-    collision.point[0] = location;
-    collision.point[1] = location;
+    collision.point[0] = location + Vector2D(0, -box_size.y / 2 + collision.radius);
+    collision.point[1] = location + Vector2D(0, box_size.y / 2 - collision.radius);
 }
 
 void Enemy::Draw(const Vector2D& screen_offset) const
@@ -85,17 +91,15 @@ void Enemy::Draw(const Vector2D& screen_offset) const
     // エネミー画像
     DrawRotaGraph(drawX, drawY, 1.0, 0.0, image, TRUE, direction == 1);
 
-    // 当たり判定（矩形）
-    DrawBox(
-        drawX - box_size.x / 2,
-        drawY - box_size.y / 2,
-        drawX + box_size.x / 2,
-        drawY + box_size.y / 2,
-        GetColor(255, 0, 0),
-        FALSE);
+    Vector2D p0 = collision.point[0] + screen_offset;
+    Vector2D p1 = collision.point[1] + screen_offset;
 
-    // 中心点
-    DrawCircle(drawX, drawY, 3, GetColor(0, 255, 0), TRUE);
+    // 上下の円
+    DrawCircle(p0.x, p0.y, collision.radius, GetColor(0, 0, 255), FALSE);
+    DrawCircle(p1.x, p1.y, collision.radius, GetColor(0, 0, 255), FALSE);
+
+    // 中央の線
+    DrawLine(p0.x, p0.y, p1.x, p1.y, GetColor(0, 0, 255));
 
     DrawFormatString(900, 200,
         GetColor(255, 255, 255),

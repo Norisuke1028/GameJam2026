@@ -1,22 +1,29 @@
 #pragma once
 
 #include "../GameObject.h"
+#include <vector>
 
-class BlockBase : public GameObject
+class Block : public GameObject
 {
-public:
-	// ブロックの画像保存配列
-	std::vector<int> block_image;
-	int image; // ブロックの画像
+private:
+
+	int image;
+	float start_x;         // 初期位置
 
 public:
-	BlockBase();
-	virtual ~BlockBase();
+	Block();
+	 ~Block();
 
-	virtual void Initialize() override;
-	virtual void Update(float delta_second) override;
-	virtual void Draw(const Vector2D& screenoffset)const override;
-	virtual void Finalize() override;
+	void Initialize() override;
+	void Update(float delta_second) override;
+	void Draw(const Vector2D& screen_offset) const override;
+	void Finalize() override;
 
-	virtual void OnHitCollision(GameObject* hit_object) override;
+	// 当たり判定通知処理
+	void OnHitCollision(const GameObject* hit_object) override;
+	//位置情報取得処理
+	const Vector2D& GetLocation() const;
+	//位置情報設定処理
+	void SetLocation(const Vector2D& pos) override;
+
 };
