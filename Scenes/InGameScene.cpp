@@ -5,6 +5,7 @@
 #include"../Objects/Enemy/Enemy.h"
 #include "../Objects/Item/Item.h"
 #include "../Objects/Block/Block.h"
+#include "../Utility/GameDataManager.h"
 #include "DxLib.h"
 
 #include <string>
@@ -28,7 +29,7 @@ void InGameScene::Initialize()
 	background_image = LoadGraph("Resource/image/sky.png");
 
 	player = CreateObject<Player>(Vector2D(100, 100));
-
+	score = 2500;
 	stage_data.Load();
 
 	/*const std::vector<Vector2D>& spawns =
@@ -105,6 +106,7 @@ eSceneType InGameScene::Update(const float& delta_second)
 	//// リザルト画面に遷移する
 	if (screen_offset.x > -4540 && player->GetLocation().x >850)
 	{
+		GameDataManager::GetInstance().SetScore(score);  //スコア値の取得
 		return eSceneType::eResult;
 	}
 
@@ -136,6 +138,9 @@ void InGameScene::Draw() const
 
 	DrawFormatString(0, 40, GetColor(255, 255, 255),
 		"PlayerLocationY: %.2f", player->GetLocation().y);
+
+	DrawFormatString(1100, 40, GetColor(255, 255, 255),
+		"Score: %d", score);
 
 	__super::Draw();
 }

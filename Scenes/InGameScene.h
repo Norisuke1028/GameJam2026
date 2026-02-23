@@ -16,6 +16,8 @@ private:
 
 	int background_image;
 
+	int score;  // スコア
+
 private:
 	eSceneType next_scene; // 遷移先のシーン
 public:

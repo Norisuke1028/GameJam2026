@@ -17,6 +17,7 @@ private:
 
 	int image;
 	int rendeer_image;  //トナカイの画像
+	int score;
 
 	std::vector<int> Arank_animation;   //Aランクのアニメーション
 	std::vector<int> Brank_animation;   //Bランクのアニメーション

@@ -2,12 +2,13 @@
 #include "../Utility/InputControl.h"
 #include "DxLib.h"
 #include "../Utility/ResourceManager.h"
+#include "../Utility/GameDataManager.h"
 
 #include <string>
 
 int Result_image;
 int Result_score;
-int score = 1500;
+//int score = 1500;
 int ResultBgmHandle;
 int ResultBgmHandle1;
 
@@ -49,6 +50,9 @@ void ResultScene::Initialize()
 	printf("リザルト画面");
 	flag = FALSE;
 	time = 0.0;
+
+	// インゲームからスコアを取得
+	score = GameDataManager::GetInstance().GetScore();
 }
 
 eSceneType ResultScene::Update(const float& delta_second)
@@ -114,7 +118,7 @@ void ResultScene::Draw() const
 		Result_score = score_animation[(int)(rand() * (3 - 1 + 1.0) / (1.0 + RAND_MAX))];
 		DrawGraph(760, 220, Result_score, TRUE);
 	}
-
+	// スコアの描画
 	DrawNumber(680, 280, score, 1.0f);
 }
 
