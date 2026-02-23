@@ -5,6 +5,8 @@
 #include "DxLib.h"
 
 int Enemy_image;
+float drawX;
+float drawY;
 
 Enemy::Enemy() : move_animation(), direction(-1)
 {
@@ -28,9 +30,11 @@ Enemy::~Enemy()
 void Enemy::Initialize() {
     speed = 50.0f;       // 1秒で進む距離
     move_range = 200.0f;  // 左右200px移動
+    angle = 0;
+    hp = 2;  //体力設定
 
     direction = -1;        // 最初は左へ
-    enemy_state = EnemyState::WALK;
+    enemy_state = EnemyState::WALK;  // 初期ステートをWALKにする
     collision.is_blocking = true;
     collision.object_type = eObjectType::enemy;
     collision.hit_object_type = { eObjectType::player,
@@ -83,14 +87,14 @@ void Enemy::Update(float delta_second)
 
 void Enemy::Draw(const Vector2D& screen_offset) const
 {
-    float drawX = location.x + screen_offset.x;
-    float drawY = location.y + screen_offset.y;
+    drawX = location.x + screen_offset.x;
+    drawY = location.y + screen_offset.y;
 
     int width, height;
     GetGraphSize(image, &width, &height);
 
     // エネミー画像
-    DrawRotaGraph(drawX, drawY, 1.0, 0.0, image, TRUE, direction == 1);
+    DrawRotaGraph(drawX, drawY, 1.0, angle, image, TRUE, direction == 1);
 
     Vector2D p0 = collision.point[0] + screen_offset;
     Vector2D p1 = collision.point[1] + screen_offset;
@@ -140,7 +144,15 @@ void Enemy::OnHitCollision(const GameObject* hit_object)
     else if (hit_object->GetCollision().IsCheckHitTarget(eObjectType::player))
     {
         // プレイヤーに当たったときの処理
-        printfDx("Enemy Hit!\n");
+        angle = 0.4;  //エネミーの角度を少し傾けてのけぞるようにする
+
+        // ノックバック
+        location.x += direction * -50.0f;
+
+        hp--;
+        if (hp == 0) {
+            enemy_state = DIE;
+        }
     }
 }
 
