@@ -3,6 +3,7 @@
 
 Player::Player() :
 	input(nullptr),
+	image(0),
 	ingame_s(nullptr),
 	gravity(0.0f),
 	scroll(0.0f),
@@ -41,7 +42,7 @@ void Player::Initialize()
 	velocity = Vector2D(0.0f, 0.0f);
 
 
-	box_size = Vector2D(32.0f, 32.0f);
+	box_size = Vector2D(110.0f, 130.0f);
 }
 
 void Player::Update(float delta_second)
@@ -50,6 +51,7 @@ void Player::Update(float delta_second)
 
 	// ----- 移動処理 ----- //
 	Movement(delta_second);
+	Animation(delta_second);
 
 	// ----- 状態遷移処理 ----- //
 	if (next_state != ePlayerState::NONE)
@@ -64,6 +66,9 @@ void Player::Update(float delta_second)
 
 void Player::Draw(const Vector2D& screen_offset) const
 {
+	// プレイヤー画像の描画
+	DrawRotaGraphF(location.x, location.y, 0.06f, 0.0f, image, TRUE, FALSE, flip_flag);
+
 	DrawBox(location.x + 10, location.y + 10,
 		location.x - 10, location.y - 10,
 		GetColor(255, 255, 255), TRUE);
@@ -139,6 +144,7 @@ void Player::Movement(float delta_second)
 
 void Player::Animation(float delta_second)
 {
+	state->Animation(delta_second);
 }
 
 void Player::SetNextState(ePlayerState state)
@@ -146,8 +152,30 @@ void Player::SetNextState(ePlayerState state)
 	this->next_state = state;
 }
 
-void Player::OnHitCollision(const GameObject* hit_object)
+void Player::OnHitCollision(GameObject* hit_object)
 {
+	// 当たった、オブジェクトが壁だったら
+	if (hit_object->GetCollision().object_type == eObjectType::block)
+	{
+		// 当たり判定情報を取得して、カプセルがある位置を求める
+		CapsuleCollision hc = hit_object->GetCollision();
+		hc.point[0] += hit_object->GetLocation();
+		hc.point[1] += hit_object->GetLocation();
+
+		// 最近傍点を求める
+		Vector2D near_point = NearPointCheck(hc, this->location);
+
+		// Playerからnear_pointへの方向ベクトルを取得
+		Vector2D dv2 = near_point - this->location;
+		Vector2D dv = this->location - near_point;
+
+		// めり込んだ差分
+		float diff = (this->GetCollision().radius + hc.radius) - dv.Length();
+
+		// diffの分だけ戻る
+		location += dv.Normalize() * diff;
+	}
+
 	if(hit_object->GetCollision().IsCheckHitTarget(eObjectType::block))
 	{
 		// ブロックに当たったときの処理

@@ -42,7 +42,7 @@ public:
 
 public:
 	// “–‚½‚è”»’è’Ê’mˆ—
-	virtual void OnHitCollision(const GameObject* hit_object);
+	virtual void OnHitCollision(GameObject* hit_object);
 
 	// À•W‚ğæ“¾
 	virtual Vector2D& GetLocation();

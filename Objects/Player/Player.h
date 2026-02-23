@@ -17,6 +17,7 @@ class Player : public GameObject
 {
 public:
 	bool on_ground;    // 地面にいるかどうか
+	int image;          // プレイヤーの画像
 
 private:
 	InputControl* input;  // 入力情報
@@ -30,7 +31,6 @@ private:
 
 	// 画像配列 ： 今後、プレイヤーの状態に応じて画像を切り替えるために使用
 	
-	std::vector<int> player_normal_img;  // 通常時
 	std::vector<int> player_rolling_img; // ローリング状態
 	std::vector<int> player_knight_img;  // 騎士状態
 
@@ -56,7 +56,7 @@ public:
 	void SetNextState(ePlayerState state);
 
 	// 当たり判定通知処理
-	void OnHitCollision(const GameObject* hit_object) override;
+	void OnHitCollision(GameObject* hit_object) override;
 
 	//位置情報取得処理
 	Vector2D& GetLocation() override;
