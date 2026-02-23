@@ -43,9 +43,11 @@ void InGameScene::Initialize()
 	//アイテムの生成
 
 	//ブロック（足場）の生成
-	for (const Vector2D& pos : stage_data.GetBlockSpawnPositions())
+	for (const BlockSpawnData& data : stage_data.GetBlockSpawnPositions())
 	{
-		CreateObject<Block>(pos);
+		// ブロックの位置とタイプを読み取る
+		Block* block = CreateObject<Block>(data.pos);
+		block->SetBlockType(data.type);
 	}
 
 	screen_offset = Vector2D(0, 0);

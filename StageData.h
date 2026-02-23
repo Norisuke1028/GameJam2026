@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Objects/GameObject.h"
+#include "Objects/Block/Block.h"
 #include "Scenes/SceneBase.h"
 #include <vector>
 #include <map>
@@ -17,6 +18,12 @@ enum eAdjacentDirection : unsigned char
 	LEFT,
 	RIGHT
 };
+// ブロック（足場）の情報
+struct BlockSpawnData
+{
+	Vector2D pos;
+	BlockType type;
+};
 
 class StageData : public GameObject
 {
@@ -26,7 +33,7 @@ private:
 private:
 	std::vector<Vector2D> enemy_spawn_positions;  //エネミー用
 	//アイテム用
-	std::vector<Vector2D> block_spawn_positions;// ブロック用（足場）
+	std::vector<BlockSpawnData> block_spawn_positions;// ブロック用（足場）
 
 public:
 	StageData() = default;
@@ -63,6 +70,6 @@ public:
 	//アイテムの出現位置取得
 
 	//ブロック（足場）の出現位置取得
-	const std::vector<Vector2D>& GetBlockSpawnPositions() const;
+	const std::vector<BlockSpawnData>& GetBlockSpawnPositions() const;
 };
 

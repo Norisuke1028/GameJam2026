@@ -24,6 +24,7 @@ void Block::Initialize() {
 
     collision.radius = D_OBJECT_SIZE / 2.0f;
 
+    z_layer = 5;
     box_size = Vector2D(32, 32);
 }
 
@@ -84,4 +85,22 @@ void Block::SetLocation(const Vector2D& pos)
     Vector2D center = pos + Vector2D(box_size.x / 2, box_size.y / 2);  //　中心座標に変換する
     GameObject::SetLocation(center); // 親の処理
 
+}
+
+// ブロックのタイプを設定する
+void Block::SetBlockType(BlockType t)
+{
+    type = t;
+
+    ResourceManager* rm = ResourceManager::GetInstance();
+
+    // ブロックのタイプによって画像を変更する
+    if (type == BlockType::Snow)
+    {
+        image = rm->GetImages("Resource/image/Block/snow.png").at(0);
+    }
+    else if (type == BlockType::Soil)
+    {
+        image = rm->GetImages("Resource/image/Block/soil.png").at(0);
+    }
 }

@@ -3,11 +3,19 @@
 #include "../GameObject.h"
 #include <vector>
 
+// ブロックのタイプ
+enum class BlockType
+{
+	Snow,  // 雪
+	Soil   // 土
+};
+
 class Block : public GameObject
 {
 private:
 
 	int image;
+	BlockType type;
 	float start_x;         // 初期位置
 
 public:
@@ -25,5 +33,6 @@ public:
 	const Vector2D& GetLocation() const;
 	//位置情報設定処理
 	void SetLocation(const Vector2D& pos) override;
-
+	// ブロックのタイプを設定する
+	void SetBlockType(BlockType t);
 };

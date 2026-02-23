@@ -2,6 +2,7 @@
 
 #include "Utility/ResourceManager.h"
 #include "Objects/Enemy/Enemy.h"
+#include "Objects/Block/Block.h"
 #include "DxLib.h"
 
 #include <fstream>
@@ -31,6 +32,7 @@ void StageData::Load()
 
 	int y = 0;
 	enemy_spawn_positions.clear();  //エネミーの出現位置初期化
+    block_spawn_positions.clear();
 	ResourceManager* rm = ResourceManager::GetInstance();
 
 	//fgetsでファイルから１行抜き出す
@@ -59,11 +61,11 @@ void StageData::Load()
             // 土
             if (*p == 't')
             {
-                int image_soil = rm->GetImages("Resource/image/Block/soil.png").at(0);
-                DrawGraph((int)generate_location.x + velocity.x,
-                    (int)generate_location.y,
-                    image_soil,
-                    TRUE);
+                Vector2D pos;
+                pos.x = x * block_size;
+                pos.y = y * block_size;
+                // ブロックのタイプと位置を渡す
+                block_spawn_positions.push_back({ pos, BlockType::Soil });
             }
 
             // 雪
@@ -72,8 +74,8 @@ void StageData::Load()
                 Vector2D pos;
                 pos.x = x * block_size;
                 pos.y = y * block_size;
-
-                block_spawn_positions.push_back(pos);
+                // ブロックのタイプと位置を渡す
+                block_spawn_positions.push_back({ pos, BlockType::Snow });
             }
 
             // 雪だるま
@@ -112,7 +114,7 @@ void StageData::Load()
                 Vector2D pos;
                 pos.x = x * block_size;
                 pos.y = y * block_size;
-
+                // エネミーの位置を渡す
                 enemy_spawn_positions.push_back(pos);
             }
 
@@ -173,7 +175,7 @@ const std::vector<Vector2D>& StageData::GetEnemySpawnPositions() const
 }
 
 // ブロック（足場）のスポーン位置取得
-const std::vector<Vector2D>& StageData::GetBlockSpawnPositions() const
+const std::vector<BlockSpawnData>& StageData::GetBlockSpawnPositions() const
 {
     return block_spawn_positions;
 }
