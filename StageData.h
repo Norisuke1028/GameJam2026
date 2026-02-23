@@ -30,11 +30,19 @@ class StageData : public GameObject
 private:
 	static StageData* instance;
 
+	Vector2D generate_location;
+
 private:
 	std::vector<Vector2D> enemy_spawn_positions;  //エネミー用
 	std::vector<Vector2D> item_spwn_positions;//アイテム用
 	std::vector<BlockSpawnData> block_spawn_positions;// ブロック用（足場）
+	std::vector<Vector2D> snowman_positions;  // 雪だるま用
+	std::vector<Vector2D> city_positions;  // 街並み用
+	std::vector<Vector2D> tree_positions;  // 枯れ木
 
+	int snowman_image;  // 雪だるま
+	int city_image;  // 街並み
+	int tree_image;  //枯れ木
 public:
 	StageData() = default;
 

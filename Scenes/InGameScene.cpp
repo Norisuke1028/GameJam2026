@@ -26,6 +26,9 @@ InGameScene::~InGameScene()
 
 void InGameScene::Initialize()
 {
+	StageData* stage = StageData::GetInstance();
+	stage->Load();
+
 	background_image = LoadGraph("Resource/image/sky.png");
 
 	player = CreateObject<Player>(Vector2D(100, 100));
@@ -110,7 +113,7 @@ eSceneType InGameScene::Update(const float& delta_second)
 		return eSceneType::eResult;
 	}
 
-	Draw();
+	//Draw();
 
 	// 親クラスの更新処理を呼び出す
 	return __super::Update(delta_second);
@@ -123,7 +126,7 @@ void InGameScene::Draw() const
 	__super::Draw();
 
 	StageData* stage = StageData::GetInstance();
-	stage->Load();
+	stage->Draw(screen_offset);
 	float s_location = stage->GetLocation();
 
 	//デバッグ用
