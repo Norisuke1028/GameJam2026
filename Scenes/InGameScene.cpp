@@ -10,6 +10,8 @@
 
 #include <string>
 
+bool goal_flag;
+
 InGameScene::InGameScene()
 	: player(nullptr)
 	, enemy(nullptr)
@@ -28,6 +30,7 @@ void InGameScene::Initialize()
 {
 	StageData* stage = StageData::GetInstance();
 	stage->Load();
+	goal_flag = false;
 
 	background_image = LoadGraph("Resource/image/sky.png");
 
@@ -107,8 +110,10 @@ eSceneType InGameScene::Update(const float& delta_second)
 	Stage->SetVelocity(velocity);
 
 	//// リザルト画面に遷移する
-	if (screen_offset.x > -4540 && player->GetLocation().x >850)
+	if (screen_offset.x <= -4540 && player->GetLocation().x >850)
 	{
+		goal_flag = true;
+
 		GameDataManager::GetInstance().SetScore(score);  //スコア値の取得
 		return eSceneType::eResult;
 	}
@@ -116,7 +121,7 @@ eSceneType InGameScene::Update(const float& delta_second)
 	//Draw();
 
 	// 親クラスの更新処理を呼び出す
-	return __super::Update(delta_second);
+	return __super::Update(delta_second);;
 }
 
 //描画処理
