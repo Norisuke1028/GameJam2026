@@ -2,6 +2,7 @@
 
 #include "Utility/ResourceManager.h"
 #include "Objects/Enemy/Enemy.h"
+#include "Objects/Item/Item.h"
 #include "Objects/Block/Block.h"
 #include "DxLib.h"
 
@@ -32,6 +33,7 @@ void StageData::Load()
 
 	int y = 0;
 	enemy_spawn_positions.clear();  //エネミーの出現位置初期化
+	item_spwn_positions.clear();  //アイテムの出現位置初期化
     block_spawn_positions.clear();
 	ResourceManager* rm = ResourceManager::GetInstance();
 
@@ -119,7 +121,14 @@ void StageData::Load()
             }
 
             //アイテム
-
+            if (*p == 'k')
+            {
+				Vector2D pos;
+				pos.x = x * block_size;
+				pos.y = y * block_size;
+				// アイテムの位置を渡す
+				item_spwn_positions.push_back(pos);
+            }
             // 1セル処理したら必ず次の列へ
             x++;
         }
@@ -172,6 +181,12 @@ void StageData::Finalize()
 const std::vector<Vector2D>& StageData::GetEnemySpawnPositions() const
 {
 	return enemy_spawn_positions;
+}
+
+// アイテムのスポーン位置取得
+const std::vector<Vector2D>& StageData::GetItemSpawnPositions() const
+{
+    return item_spwn_positions;
 }
 
 // ブロック（足場）のスポーン位置取得

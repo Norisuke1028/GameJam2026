@@ -3,6 +3,7 @@
 #include "../Utility/InputControl.h"
 #include "../Objects/Player/Player.h"
 #include"../Objects/Enemy/Enemy.h"
+#include "../Objects/Item/Item.h"
 #include "../Objects/Block/Block.h"
 #include "DxLib.h"
 
@@ -11,6 +12,7 @@
 InGameScene::InGameScene()
 	: player(nullptr)
 	, enemy(nullptr)
+	, item(nullptr)
 	, background_image(0)
 	, next_scene(eSceneType::eInGame)
 {
@@ -41,6 +43,10 @@ void InGameScene::Initialize()
 	}
 
 	//アイテムの生成
+	for (const Vector2D& pos : stage_data.GetItemSpawnPositions())
+	{
+		CreateObject<Item>(pos);
+	}
 
 	//ブロック（足場）の生成
 	for (const BlockSpawnData& data : stage_data.GetBlockSpawnPositions())

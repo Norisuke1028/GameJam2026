@@ -10,6 +10,7 @@ class InGameScene : public SceneBase
 private:
 	class Player* player;
 	class Enemy* enemy;
+	class Item* item;
 
 	StageData stage_data;
 

@@ -32,7 +32,7 @@ private:
 
 private:
 	std::vector<Vector2D> enemy_spawn_positions;  //エネミー用
-	//アイテム用
+	std::vector<Vector2D> item_spwn_positions;//アイテム用
 	std::vector<BlockSpawnData> block_spawn_positions;// ブロック用（足場）
 
 public:
@@ -68,7 +68,7 @@ public:
 	//エネミーの出現位置取得
 	const std::vector<Vector2D>& GetEnemySpawnPositions() const;
 	//アイテムの出現位置取得
-
+	const std::vector<Vector2D>& GetItemSpawnPositions() const;
 	//ブロック（足場）の出現位置取得
 	const std::vector<BlockSpawnData>& GetBlockSpawnPositions() const;
 };
