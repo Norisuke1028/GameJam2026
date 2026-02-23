@@ -64,11 +64,12 @@ void Block::OnHitCollision(const GameObject* hit_object)
     if (hit_object->GetCollision().IsCheckHitTarget(eObjectType::enemy))
     {
         // エネミーに当たったときの処理
+        printfDx("Enemy Hit!\n");
     }
     else if (hit_object->GetCollision().IsCheckHitTarget(eObjectType::player))
     {
         // プレイヤーに当たったときの処理
-        printfDx("Enemy Hit!\n");
+        printfDx("Player Hit!\n");
     }
 }
 

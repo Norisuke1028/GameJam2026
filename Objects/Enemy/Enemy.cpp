@@ -44,6 +44,7 @@ void Enemy::Initialize() {
 
 void Enemy::Update(float delta_second)
 {
+    
     switch (enemy_state)
     {
     case WALK: 
@@ -134,6 +135,7 @@ void Enemy::OnHitCollision(const GameObject* hit_object)
     if (hit_object->GetCollision().IsCheckHitTarget(eObjectType::block))
     {
         // ƒuƒƒbƒN‚É“–‚½‚Á‚½‚Æ‚«‚Ìˆ—
+        printfDx("Block Hit!\n");
     }
     else if (hit_object->GetCollision().IsCheckHitTarget(eObjectType::player))
     {
