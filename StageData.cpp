@@ -69,14 +69,14 @@ void StageData::Load()
             // 雪
             if (*p == 's')
             {
-                int image_snow = rm->GetImages("Resource/image/Block/snow.png").at(0);
-                DrawGraph((int)generate_location.x + velocity.x,
-                    (int)generate_location.y,
-                    image_snow,
-                    TRUE);
+                Vector2D pos;
+                pos.x = x * block_size;
+                pos.y = y * block_size;
+
+                block_spawn_positions.push_back(pos);
             }
 
-            // 雪
+            // 雪だるま
             if (*p == 'm')
             {
                 int image_snowman = rm->GetImages("Resource/image/snowman.png").at(0);
@@ -86,7 +86,7 @@ void StageData::Load()
                     TRUE);
             }
 
-            // 雪
+            // 街並み
             if (*p == 'c')
             {
                 int image_city = rm->GetImages("Resource/image/city.png").at(0);
@@ -166,10 +166,16 @@ void StageData::Finalize()
 {
 
 }
-
+// エネミーのスポーン位置取得
 const std::vector<Vector2D>& StageData::GetEnemySpawnPositions() const
 {
 	return enemy_spawn_positions;
+}
+
+// ブロック（足場）のスポーン位置取得
+const std::vector<Vector2D>& StageData::GetBlockSpawnPositions() const
+{
+    return block_spawn_positions;
 }
 
 float StageData::GetLocation()const
