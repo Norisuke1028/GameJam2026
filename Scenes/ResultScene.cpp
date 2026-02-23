@@ -7,24 +7,33 @@
 
 int Result_image;
 int Result_score;
-int score = 5000;
+int score = 500;
 int ResultBgmHandle;
+int ResultBgmHandle1;
+
 bool flag;
 float time;
-
+bool isBgmPlayed = false;
+int i=0;
 ResultScene::ResultScene() : score_animation()
 {
 	next_scene = eSceneType::eResult;
 	// 画像の読み込み
 	Result_image = LoadGraph("Resource/image/Result/result.png");
 
+
 	ResourceManager* rm = ResourceManager::GetInstance();
 	score_animation = rm->GetImages("Resource/image/Result/Score.png", 3, 3, 1, 200, 200);
+	
 
 	Result_score = score_animation[0];
 
+
+
 	// BGMの読み込み
-	ResultBgmHandle = LoadSoundMem("Resource/sounds/Result/resultBGM.mp3");
+	ResultBgmHandle = LoadSoundMem("Resource/sounds/Result/resultBGM1.mp3");
+
+	ResultBgmHandle1 = LoadSoundMem("Resource/sounds/Result/drum roll.mp3");
 }
 
 ResultScene::~ResultScene()
@@ -52,13 +61,14 @@ eSceneType ResultScene::Update(const float& delta_second)
 		return eSceneType::eTitle;
 	}
 
-	if (time > 5.0)
+	if (time > 3.0)
 	{
 		flag = TRUE;
+		
 	}
 	else
 	{
-
+		
 	}
 
 	return eSceneType::eResult;
@@ -68,6 +78,7 @@ eSceneType ResultScene::Update(const float& delta_second)
 void ResultScene::Draw() const
 {
 	DrawGraph(0, 0, Result_image, TRUE);
+
 
 	//スコアの評価の判定
 	if (flag == TRUE)
@@ -108,10 +119,17 @@ const eSceneType ResultScene::GetNowSceneType() const
 
 void ResultScene::ResultBgm()
 {
-	// タイトルのBGMを再生する処理
+	// リザルトのBGMを再生する処理
 	if (CheckSoundMem(ResultBgmHandle) == 0)
 	{
 		PlaySoundMem(ResultBgmHandle, DX_PLAYTYPE_LOOP, TRUE);
 		CheckSoundMem(ResultBgmHandle);
+	}
+
+	// ドラムロールのBGMが一回流れたら停止する処理
+	if (isBgmPlayed == false)
+	{
+		PlaySoundMem(ResultBgmHandle1, DX_PLAYTYPE_BACK);
+		isBgmPlayed = true;
 	}
 }
