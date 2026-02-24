@@ -10,6 +10,7 @@ class InGameScene : public SceneBase
 private:
 	class Player* player;
 	class Enemy* enemy;
+	std::vector<class Block*> block;
 
 	StageData stage_data;
 

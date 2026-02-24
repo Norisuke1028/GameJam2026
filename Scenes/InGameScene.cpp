@@ -45,7 +45,7 @@ void InGameScene::Initialize()
 	//ブロック（足場）の生成
 	for (const Vector2D& pos : stage_data.GetBlockSpawnPositions())
 	{
-		CreateObject<Block>(pos);
+		block.push_back(CreateObject<Block>(pos));
 	}
 
 	screen_offset = Vector2D(0, 0);
@@ -60,6 +60,11 @@ eSceneType InGameScene::Update(const float& delta_second)
 	InputControl* pad_input = InputControl::GetInstance();
 
 	player->SetScroll(screen_offset.x);
+	for(Block* bl : block)
+	{
+		bl->SetScroll(screen_offset.x);
+	}
+
 	__super::Update(delta_second);
 
 	float velocity = player->GetVelocity().x * delta_second;

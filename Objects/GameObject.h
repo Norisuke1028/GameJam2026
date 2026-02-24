@@ -44,10 +44,14 @@ public:
 	// 当たり判定通知処理
 	virtual void OnHitCollision(GameObject* hit_object);
 
+	virtual void PostCollision(float delta_second);
+
 	// 座標を取得
 	virtual Vector2D& GetLocation();
 	// 当たり判定を取得
 	const CapsuleCollision& GetCollision() const;
+	// オブジェクトサイズ
+	Vector2D GetBoxSize() const;
 	// 描画の優先順位を取得
 	const int GetZLayer() const;
 	// 可動性を取得

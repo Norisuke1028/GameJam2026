@@ -4,6 +4,13 @@
 Player::Player() :
 	input(nullptr),
 	image(0),
+	prev_location(0.0f, 0.0f),
+	has_ground_candidate(false),
+	ground_top_y(0.0f),
+	has_left_wall_candidate(false),
+	left_wall_x(0.0f),
+	has_right_wall_candidate(false),
+	right_wall_x(0.0f),
 	ingame_s(nullptr),
 	gravity(0.0f),
 	scroll(0.0f),
@@ -42,7 +49,7 @@ void Player::Initialize()
 	velocity = Vector2D(0.0f, 0.0f);
 
 
-	box_size = Vector2D(110.0f, 130.0f);
+	box_size = Vector2D(110.0f, 150.0f);
 }
 
 void Player::Update(float delta_second)
@@ -51,7 +58,7 @@ void Player::Update(float delta_second)
 
 	// ----- 移動処理 ----- //
 	Movement(delta_second);
-	Animation(delta_second);
+	
 
 	// ----- 状態遷移処理 ----- //
 	if (next_state != ePlayerState::NONE)
@@ -59,6 +66,8 @@ void Player::Update(float delta_second)
 		state = PlayerStateFactory::Get(*this, next_state);
 		next_state = ePlayerState::NONE;
 	}
+
+	Animation(delta_second);
 
 	// ----- カメラ視点の値 ----- //
 	SetScroll(scroll);
@@ -79,10 +88,6 @@ void Player::Draw(const Vector2D& screen_offset) const
 	
 	DrawFormatString(400, 50, GetColor(255, 255, 255), "PlayerLocationY: %f", location.y);
 	DrawFormatString(0, 100, GetColor(255, 255, 255), "scroll = %f", scroll);
-	
-	// デバッグ：プレイヤーの状態を表示
-	DrawFormatString(0, 150, GetColor(255, 255, 255), "Player State: %d", state->GetState());
-	DrawFormatString(0, 170, GetColor(255, 255, 255), "Player State: %d", input->GetButtonInputState(XINPUT_BUTTON_DPAD_RIGHT));
 }
 
 void Player::Finalize()
@@ -91,6 +96,15 @@ void Player::Finalize()
 
 void Player::Movement(float delta_second)
 {
+	// 前フレームの位置を保存
+	prev_location = location;
+	// 地面候補のフラグをリセット
+	has_ground_candidate = false;
+	// 着地しているかのフラグをリセット
+	on_ground = false;
+	// 地面候補の上端のy座標を初期化
+	ground_top_y = 0.0f;
+
 	// 左端制限
 	if (location.x <= 20.0f)
 	{
@@ -124,21 +138,26 @@ void Player::Movement(float delta_second)
 		velocity.x = -D_PLAYER_MAX_SPEED;
 	}
 
+	// ----- 位置の更新 ----- //
 	// 重力の適用
 	velocity.y += GRAVITY * delta_second;
 
-	// 位置の更新
-	location += velocity * delta_second;
+	// y軸の移動
+	location.y += velocity.y * delta_second;
+
+	// y軸の地面との当たり判定
+
+	// x軸の移動
+	location.x += velocity.x * delta_second;
+
+	// x軸の当たり判定
+	
 
 	if (location.y >= 600.0f)
 	{
 		location.y = 600.0f;
 		velocity.y = 0.0f;
 		on_ground = true;
-	}
-	else
-	{
-		on_ground = false;
 	}
 }
 
@@ -154,31 +173,23 @@ void Player::SetNextState(ePlayerState state)
 
 void Player::OnHitCollision(GameObject* hit_object)
 {
-	// 当たった、オブジェクトが壁だったら
+	// 当たった、オブジェクトが地面だったら
 	if (hit_object->GetCollision().object_type == eObjectType::block)
 	{
-		// 当たり判定情報を取得して、カプセルがある位置を求める
-		CapsuleCollision hc = hit_object->GetCollision();
-		hc.point[0] += hit_object->GetLocation();
-		hc.point[1] += hit_object->GetLocation();
+		// --- ヒットしたブロックの上端のy座標を求める --- //
+		// ブロックの高さの半分を求める
+		const float blockHalfY = hit_object->GetBoxSize().y / 2.0f;
+		// ブロックの上端のy座標を求める
+		const float blockTop = hit_object->GetLocation().y - blockHalfY;
 
-		// 最近傍点を求める
-		Vector2D near_point = NearPointCheck(hc, this->location);
-
-		// Playerからnear_pointへの方向ベクトルを取得
-		Vector2D dv2 = near_point - this->location;
-		Vector2D dv = this->location - near_point;
-
-		// めり込んだ差分
-		float diff = (this->GetCollision().radius + hc.radius) - dv.Length();
-
-		// diffの分だけ戻る
-		location += dv.Normalize() * diff;
-	}
-
-	if(hit_object->GetCollision().IsCheckHitTarget(eObjectType::block))
-	{
-		// ブロックに当たったときの処理
+		// 床候補の上端のy座標を保存
+		if(!has_ground_candidate || blockTop < ground_top_y && velocity.y > 0.0f)
+		{
+			// 床候補の上端のy座標を保存
+			ground_top_y = blockTop;
+			// 地面候補があるフラグを立てる
+			has_ground_candidate = true;
+		}
 	}
 	else if(hit_object->GetCollision().IsCheckHitTarget(eObjectType::enemy))
 	{
@@ -191,6 +202,30 @@ void Player::OnHitCollision(GameObject* hit_object)
 	else if(hit_object->GetCollision().IsCheckHitTarget(eObjectType::gool))
 	{
 		// ゴールに当たったときの処理
+	}
+}
+
+void Player::PostCollision(float delta_second)
+{
+	// 地面候補がない場合は、地面との当たり判定を行わない
+	if (!has_ground_candidate) return;
+
+	// ----- 地面との当たり判定 ----- //
+	// プレイヤーの下端のy座標を求める
+	const float playerHalfY = box_size.y / 2.0f;
+	// 前フレームのプレイヤーの下端のy座標
+	const float prevBottom = prev_location.y + playerHalfY;
+	// 今フレームのプレイヤーの下端のy座標
+	const float nowBottom = location.y + playerHalfY;
+	// ブロックの上端のy座標
+	const float blockTop = ground_top_y;
+
+	// 上からブロックに当たったときに突き抜けた分押し戻す
+	if(velocity.y > 0.0f && prevBottom <= blockTop && nowBottom > blockTop)
+	{
+		location.y = blockTop - playerHalfY;
+		velocity.y = 0.0f;
+		on_ground = true;
 	}
 }
 

@@ -9,6 +9,9 @@ private:
 
 	int image;
 	float start_x;         // 初期位置
+	float scroll;          // スクロール値
+	int location_x;      // 現在の位置
+	int location_y;      // 現在の位置
 
 public:
 	Block();
@@ -20,10 +23,10 @@ public:
 	void Finalize() override;
 
 	// 当たり判定通知処理
-	void OnHitCollision(const GameObject* hit_object) override;
+	void OnHitCollision(GameObject* hit_object) override;
 	//位置情報取得処理
 	const Vector2D& GetLocation() const;
 	//位置情報設定処理
 	void SetLocation(const Vector2D& pos) override;
-
+	void SetScroll(float scrollX);
 };

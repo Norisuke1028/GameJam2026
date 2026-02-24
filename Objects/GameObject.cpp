@@ -45,6 +45,10 @@ void GameObject::OnHitCollision(GameObject* hit_object)
 {
 }
 
+void GameObject::PostCollision(float delta_second)
+{
+}
+
 Vector2D& GameObject::GetLocation()
 {
 	// TODO: return ステートメントをここに挿入します
@@ -55,6 +59,11 @@ const CapsuleCollision& GameObject::GetCollision() const
 {
 	// TODO: return ステートメントをここに挿入します
 	return collision;
+}
+
+Vector2D GameObject::GetBoxSize() const
+{
+	return this->box_size;
 }
 
 const int GameObject::GetZLayer() const
