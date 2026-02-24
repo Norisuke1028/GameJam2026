@@ -4,10 +4,15 @@
 #include "../../../../Utility/InputControl.h"
 #include "../../Player.h"
 
+int Idling_animation[2] = { 0,1 };
+int count = 0;
+int anime = 0;
+
 IdlingState::IdlingState(class Player* p) :
 	PlayerStateBase(p),
 	input(nullptr)
 {
+	/*LoadDivGraph("Resource/image/Player/Normal/Normal_Idle.png", 2, 2, 1, 200, 200, Idling_animation);*/
 }
 
 IdlingState::~IdlingState()
@@ -21,6 +26,16 @@ void IdlingState::Initialize()
 
 void IdlingState::Update(float delta_second)
 {
+	count++;
+	if (count % 10 == 0)
+	{
+		count = 0;
+		anime++;
+		if (anime >= 2)
+		{
+			anime = (anime + 1) % 2;
+		}
+	}
 	if(this->player->velocity.x < 0)
 	{
 		this->player->velocity.x += D_PLAYER_SPEED * delta_second;
@@ -54,6 +69,7 @@ void IdlingState::Draw() const
 	//À•Wî•ñ‚ð®”’l‚É•ÏŠ·
 	int x = 0, y = 0;
 	player->GetLocation().ToInt(&x, &y);
+	DrawRotaGraph(x, y, 1.0, 0.0, Idling_animation[anime], TRUE);
 }
 
 void IdlingState::Finalize()
