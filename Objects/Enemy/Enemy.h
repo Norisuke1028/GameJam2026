@@ -27,6 +27,8 @@ private:
 	float move_range;      // 移動範囲（片側）
 	float start_x;         // 初期位置
 	int direction = -1;         // 移動方向（1 or -1）
+	int angle;  // エネミーの角度	
+	int hp;  // エネミーの体力
 
 public:
 	EnemyState enemy_state;

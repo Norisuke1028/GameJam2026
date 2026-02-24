@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Objects/GameObject.h"
+#include "Objects/Block/Block.h"
 #include "Scenes/SceneBase.h"
 #include <vector>
 #include <map>
@@ -17,17 +18,31 @@ enum eAdjacentDirection : unsigned char
 	LEFT,
 	RIGHT
 };
+// ブロック（足場）の情報
+struct BlockSpawnData
+{
+	Vector2D pos;
+	BlockType type;
+};
 
 class StageData : public GameObject
 {
 private:
 	static StageData* instance;
 
+	Vector2D generate_location;
+
 private:
 	std::vector<Vector2D> enemy_spawn_positions;  //エネミー用
-	//アイテム用
-	std::vector<Vector2D> block_spawn_positions;// ブロック用（足場）
+	std::vector<Vector2D> item_spwn_positions;//アイテム用
+	std::vector<BlockSpawnData> block_spawn_positions;// ブロック用（足場）
+	std::vector<Vector2D> snowman_positions;  // 雪だるま用
+	std::vector<Vector2D> city_positions;  // 街並み用
+	std::vector<Vector2D> tree_positions;  // 枯れ木
 
+	int snowman_image;  // 雪だるま
+	int city_image;  // 街並み
+	int tree_image;  //枯れ木
 public:
 	StageData() = default;
 
@@ -61,8 +76,8 @@ public:
 	//エネミーの出現位置取得
 	const std::vector<Vector2D>& GetEnemySpawnPositions() const;
 	//アイテムの出現位置取得
-
+	const std::vector<Vector2D>& GetItemSpawnPositions() const;
 	//ブロック（足場）の出現位置取得
-	const std::vector<Vector2D>& GetBlockSpawnPositions() const;
+	const std::vector<BlockSpawnData>& GetBlockSpawnPositions() const;
 };
 
