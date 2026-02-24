@@ -8,14 +8,14 @@
 
 Item::Item():item_animation_move()
 {
-	location = Vector2D(400, 240);
+	location = Vector2D(0, 0);
 	velocity = 0;
 
 	start_x = 0;
 	velocity = 0;
 
 	ResourceManager* rm = ResourceManager::GetInstance();
-	item_animation_move = rm->GetImages("Resource/image/Item/Item (2).png", 3, 3, 1, 68, 100);
+	item_animation_move = rm->GetImages("Resource/image/Item/Item.png", 3, 3, 1, 100, 100);
 	item_image = item_animation_move[0];
 	/*item_image = LoadGraph("Resource/image/Item/Item.png");*/
 }
@@ -49,7 +49,7 @@ void Item::Draw(const Vector2D& screen_offset) const
 	float drawX = location.x + screen_offset.x;
 	float drawY = location.y + screen_offset.y;
 
-	DrawRotaGraph(drawX, drawY, 1.0, 0.0, item_image, TRUE);
+	DrawRotaGraph(drawX, drawY - 8, 1.0, 0.0, item_image, TRUE);
 
 	DrawFormatString(640, 40, GetColor(255, 255, 255),
 		"drawX: %.2f", drawX);
