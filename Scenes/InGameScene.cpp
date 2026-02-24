@@ -61,6 +61,7 @@ void InGameScene::Initialize()
 		block->SetBlockType(data.type);
 	}
 
+
 	screen_offset = Vector2D(0, 0);
 }
 
