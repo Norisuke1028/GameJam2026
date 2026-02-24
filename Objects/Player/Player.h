@@ -16,14 +16,28 @@
 class Player : public GameObject
 {
 public:
-	bool on_ground;    // 地面にいるかどうか
+	bool on_ground;     // 地面にいるかどうか
 	int image;          // プレイヤーの画像
 
 private:
-	InputControl* input;  // 入力情報
-	InGameScene* ingame_s;  //ゲームメインの情報
-	float gravity;        // 重力
-	float scroll;  //スクロール値
+	InputControl* input;       // 入力情報
+	InGameScene* ingame_s;     //ゲームメインの情報
+	float gravity;             // 重力
+	float scroll;              //スクロール値
+
+	// ----- 地面との当たり判定のための情報 ----- //
+	// プレイヤーの前フレームの位置を保存するための変数
+	Vector2D prev_location;    // 前フレームの位置情報
+	// -- y軸の地面との当たり判定のための情報 -- //
+	bool has_ground_candidate; // 地面候補があるかどうか
+	float ground_top_y;        // 地面候補の上端のy座標
+	// -- x軸の壁との当たり判定のための情報 -- //
+	// - 左 - //
+	bool has_left_wall_candidate = false;
+	float left_wall_x = 0.0f;
+	// - 右 - //
+	bool has_right_wall_candidate = false;
+	float right_wall_x = 0.0f;
 	
 	class PlayerStateBase* state;
 	ePlayerState next_state;  // 次の状態
@@ -57,6 +71,8 @@ public:
 
 	// 当たり判定通知処理
 	void OnHitCollision(GameObject* hit_object) override;
+
+	void PostCollision(float delta_second) override;
 
 	//位置情報取得処理
 	Vector2D& GetLocation() override;

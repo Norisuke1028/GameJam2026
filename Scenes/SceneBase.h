@@ -92,12 +92,12 @@ public:
 		//当たり判定確認処理
 		for (int i = 0; i < object_list.size(); i++)
 		{
-			if (eMobilityType::Stationary == object_list[i]->GetMobility())
+			/*if (eMobilityType::Stationary == object_list[i]->GetMobility())
 			{
 				continue;
-			}
+			}*/
 
-			for (int j = 0; j < object_list.size(); j++)
+			for (int j = i + 1; j < object_list.size(); j++)
 			{
 				if (i == j)
 				{
@@ -106,6 +106,12 @@ public:
 
 				CheckCollision(object_list[i], object_list[j]);
 			}
+		}
+
+		//当たり判定後の処理
+		for (GameObject* obj : object_list)
+		{
+			obj->PostCollision(delta_second);
 		}
 
 		//破棄リスト内が空出はない場合、リスト内のオブジェクトを破棄する
@@ -179,7 +185,19 @@ public:
 	/// <param name="partner">2つ目のゲームオブジェクト</type param>
 	virtual void CheckCollision(GameObject* target, GameObject* partner)
 	{
+		//2つのオブジェクトの距離を取得
+		Vector2D diff = target->GetLocation() - partner->GetLocation();
 
+		//2つのオブジェクトの当たり判定の大きさを取得
+		Vector2D box_size = (target->GetBoxSize() + partner->GetBoxSize()) / 2.0f;
+
+		//距離より大きさが大きい場合、Hit判定とする
+		if ((fabsf(diff.x) < box_size.x) && (fabsf(diff.y) < box_size.y))
+		{
+			//当たったことをオブジェクトに通知する
+			target->OnHitCollision(partner);
+			partner->OnHitCollision(target);
+		}
 	}
 	/// <summary>
 	/// ゲームオブジェクト生成処理
