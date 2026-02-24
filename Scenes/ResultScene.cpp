@@ -16,6 +16,9 @@ bool flag;
 float time;
 bool isBgmPlayed = false;
 int i=0;
+int santa1_image;
+int santa2_image;
+int santa3_image;
 ResultScene::ResultScene() : score_animation(), image()
 {
 	next_scene = eSceneType::eResult;
@@ -23,12 +26,15 @@ ResultScene::ResultScene() : score_animation(), image()
 	// 画像の読み込み
 	Result_image = LoadGraph("Resource/image/Result/result.png");
 	rendeer_image = LoadGraph("Resource/image/Result/rendeer.png");
+	santa1_image = LoadGraph("Resource/image/Result/santa1.png");
+	santa2_image = LoadGraph("Resource/image/Result/santa2.png");
+	santa3_image = LoadGraph("Resource/image/Result/santa3.png");
 	Arank_animation = rm->GetImages("Resource/image/Result/player_a_anim.png", 2, 2, 1, 250, 411);  // Aランク用アニメーション
 	Brank_animation = rm->GetImages("Resource/image/Result/player_b_anim.png", 2, 2, 1, 250, 397);  // Bランク用アニメーション
 	Crank_animation = rm->GetImages("Resource/image/Result/player_c_anim.png", 2, 2, 1, 250, 406);  // Cランク用アニメーション
 	score_animation = rm->GetImages("Resource/image/Result/Score.png", 3, 3, 1, 200, 200);
 	// 数字画像（0～9）の読み込み
-	num_image = rm->GetImages("Resource/image/Result/number1.png");
+	num_image = rm->GetImages("Resource/image/Result/number.png");
 
 	Result_score = score_animation[0];
 
@@ -88,6 +94,7 @@ eSceneType ResultScene::Update(const float& delta_second)
 void ResultScene::Draw() const
 {
 	DrawGraph(0, 0, Result_image, TRUE);
+	
 
 	// プレイヤー描画
 	DrawRotaGraph(640, 570, 0.8, 0, image, TRUE, 0);
@@ -95,23 +102,28 @@ void ResultScene::Draw() const
 	//スコアの評価の判定
 	if (flag == TRUE)
 	{
+		DrawRotaGraph(300, 590, 1.1, 0, rendeer_image, TRUE, 0);  // トナカイの描画
+		DrawRotaGraph(330, 590, 1.1, 0, rendeer_image, TRUE, 1);  // トナカイの描画
 		if (score > 3000)
 		{
 			Result_score = score_animation[0];
 			DrawGraph(760, 220, Result_score, TRUE);
+			DrawRotaGraph(315, 590, 0.1, 0, santa1_image, TRUE, 0);
 		}
 		else if (score > 1000)
 		{
 			Result_score = score_animation[1];
 			DrawGraph(760, 220, Result_score, TRUE);
+			DrawRotaGraph(315, 590, 0.1, 0, santa2_image, TRUE, 0);
 		}
 		else
 		{
 			Result_score = score_animation[2];
 			DrawGraph(760, 220, Result_score, TRUE);
+			DrawRotaGraph(315, 590, 0.1, 0, santa3_image, TRUE, 0);
 		}
-		DrawRotaGraph(300, 590, 1.1, 0, rendeer_image, TRUE, 0);  // トナカイの描画
-		DrawRotaGraph(330, 590, 1.1, 0, rendeer_image, TRUE, 1);  // トナカイの描画
+		
+		
 	}
 	else
 	{
@@ -172,7 +184,7 @@ void ResultScene::ResultBgm()
 	if (CheckSoundMem(ResultBgmHandle) == 0)
 	{
 		PlaySoundMem(ResultBgmHandle, DX_PLAYTYPE_LOOP, TRUE);
-		ChangeVolumeSoundMem(10, ResultBgmHandle);  // 音量調整
+		ChangeVolumeSoundMem(250, ResultBgmHandle);  // 音量調整
 		CheckSoundMem(ResultBgmHandle); 
 	}
 
@@ -180,7 +192,7 @@ void ResultScene::ResultBgm()
 	if (isBgmPlayed == false)
 	{
 		PlaySoundMem(ResultBgmHandle1, DX_PLAYTYPE_BACK);
-		ChangeVolumeSoundMem(10, ResultBgmHandle1);  // 音量調整
+		ChangeVolumeSoundMem(250, ResultBgmHandle1);  // 音量調整
 		isBgmPlayed = true;
 	}
 }

@@ -15,6 +15,8 @@ bool delay_flag;
 bool image_flag;
 bool item_spawned;
 int speed;
+int score;
+int score_animation[10];
 
 InGameScene::InGameScene()
 	: player(nullptr)
@@ -23,6 +25,8 @@ InGameScene::InGameScene()
 	, background_image(0)
 	, next_scene(eSceneType::eInGame)
 {
+	/*score = LoadGraph
+	score_animation = LoadDivGraph("Resource/image/suuji.png", 3, 3, 1, 200, 200, score_animation);*/
 }
 
 InGameScene::~InGameScene()

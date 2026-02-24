@@ -17,6 +17,10 @@ IdlingState::~IdlingState()
 void IdlingState::Initialize()
 {
 	input = InputControl::GetInstance();
+
+	ResourceManager* rm = ResourceManager::GetInstance();
+
+	player_normal_img = rm->GetImages("Resource/image/Player/Normal/Idling/Normal_Idling_1.png", 1, 1, 1, 16, 16);
 }
 
 void IdlingState::Update(float delta_second)
@@ -58,6 +62,11 @@ void IdlingState::Draw() const
 
 void IdlingState::Finalize()
 {
+}
+
+void IdlingState::Animation(float delta_second)
+{
+	player->image = player_normal_img[0];
 }
 
 ePlayerState IdlingState::GetState() const

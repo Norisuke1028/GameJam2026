@@ -4,7 +4,10 @@
 
 #include "DxLib.h"
 
-Block::Block()
+Block::Block():
+    image(),
+	start_x(0),
+	scroll(0)
 {
     image = LoadGraph("Resource/image/Block/snow.png");
 }
@@ -25,6 +28,7 @@ void Block::Initialize() {
     collision.radius = D_OBJECT_SIZE / 2.0f;
 
     z_layer = 5;
+
     box_size = Vector2D(32, 32);
 }
 
@@ -35,6 +39,11 @@ void Block::Update(float delta_second)
 
     collision.point[0] = location + Vector2D(0, -box_size.y / 2 + collision.radius);
     collision.point[1] = location + Vector2D(0, box_size.y / 2 - collision.radius);
+
+    SetScroll(scroll);
+
+	location_x = static_cast<int>(location.x);
+    location_y = static_cast<int>(location.y);
 }
 
 void Block::Draw(const Vector2D& screen_offset) const
@@ -52,6 +61,9 @@ void Block::Draw(const Vector2D& screen_offset) const
     // 上下の円
     DrawCircle(p0.x, p0.y, collision.radius, GetColor(0, 0, 255), FALSE);
     DrawCircle(p1.x, p1.y, collision.radius, GetColor(0, 0, 255), FALSE);
+
+	DrawFormatString(location.x, location.y, GetColor(255, 255, 255), "%d",location_x);
+	DrawFormatString(location.x, location.y + 15, GetColor(255, 255, 255), "%d",location_y);
 }
 
 void Block::Finalize()
@@ -60,17 +72,16 @@ void Block::Finalize()
 }
 
 
-void Block::OnHitCollision(const GameObject* hit_object)
+void Block::OnHitCollision(GameObject* hit_object)
 {
     if (hit_object->GetCollision().IsCheckHitTarget(eObjectType::enemy))
     {
         // エネミーに当たったときの処理
-        printfDx("Enemy Hit!\n");
     }
     else if (hit_object->GetCollision().IsCheckHitTarget(eObjectType::player))
     {
         // プレイヤーに当たったときの処理
-        printfDx("Player Hit!\n");
+        printfDx("Enemy Hit!\n");
     }
 }
 
@@ -87,14 +98,17 @@ void Block::SetLocation(const Vector2D& pos)
 
 }
 
-// ブロックのタイプを設定する
+void Block::SetScroll(float scrollX)
+{
+    scroll = scrollX;
+}
+
 void Block::SetBlockType(BlockType t)
 {
     type = t;
 
     ResourceManager* rm = ResourceManager::GetInstance();
 
-    // ブロックのタイプによって画像を変更する
     if (type == BlockType::Snow)
     {
         image = rm->GetImages("Resource/image/Block/snow.png").at(0);

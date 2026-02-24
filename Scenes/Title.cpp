@@ -66,6 +66,7 @@ eSceneType TitleScene::Update(const float& delta_second)
 		}
 		// カーソル移動音を再生する処理
 		PlaySoundMem(CursorBgmHandle, DX_PLAYTYPE_BACK, TRUE);
+		ChangeVolumeSoundMem(250, CursorBgmHandle);  // 音量調整
 		CheckSoundMem(CursorBgmHandle);
 	}
 	if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_DOWN) == ePadInputState::ePress)
@@ -77,6 +78,7 @@ eSceneType TitleScene::Update(const float& delta_second)
 		}
 		// カーソル移動音を再生する処理
 		PlaySoundMem(CursorBgmHandle, DX_PLAYTYPE_BACK, TRUE);
+		ChangeVolumeSoundMem(300, CursorBgmHandle);  // 音量調整
 		CheckSoundMem(CursorBgmHandle);
 	}
 
