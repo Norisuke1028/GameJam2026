@@ -10,10 +10,16 @@ class InGameScene : public SceneBase
 private:
 	class Player* player;
 	class Enemy* enemy;
+	class Item* item;
 
 	StageData stage_data;
 
 	int background_image;
+	int santa_image;
+	int present_image;
+
+	int delay;
+	int score;  // スコア
 
 private:
 	eSceneType next_scene; // 遷移先のシーン
