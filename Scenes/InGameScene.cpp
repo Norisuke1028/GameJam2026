@@ -11,6 +11,8 @@
 #include <string>
 
 bool goal_flag;
+bool delay_flag;
+int speed;
 
 InGameScene::InGameScene()
 	: player(nullptr)
@@ -31,11 +33,14 @@ void InGameScene::Initialize()
 	StageData* stage = StageData::GetInstance();
 	stage->Load();
 	goal_flag = false;
+	delay_flag = false;
 
 	background_image = LoadGraph("Resource/image/sky.png");
+	santa_image = LoadGraph("Resource/image/santa_start.png");
+	present_image = LoadGraph("Resource/image/present.png");
 
 	player = CreateObject<Player>(Vector2D(100, 100));
-	score = 2500;
+	score = 3500;
 	stage_data.Load();
 
 	/*const std::vector<Vector2D>& spawns =
@@ -73,6 +78,18 @@ eSceneType InGameScene::Update(const float& delta_second)
 
 	// 入力情報を取得
 	InputControl* pad_input = InputControl::GetInstance();
+	
+	delay++;
+	if (delay > 1100) {
+		delay_flag = true;
+	}
+	else if (delay > 500){
+		speed++;
+	}
+	if (delay_flag == true) {
+		delay = 1100;
+		speed = 520;
+	}
 
 	player->SetScroll(screen_offset.x);
 	__super::Update(delta_second);
@@ -129,11 +146,13 @@ void InGameScene::Draw() const
 {
 	DrawGraph(0,0,background_image,true);
 	__super::Draw();
+	DrawRotaGraph(200 + delay, 100, 1.0, 0.0, santa_image, TRUE);
 
 	StageData* stage = StageData::GetInstance();
 	stage->Draw(screen_offset);
 	float s_location = stage->GetLocation();
 
+	if (delay >= 800)DrawRotaGraph(640, 90 + speed, 1.0, 0.0, present_image, TRUE);
 	//デバッグ用
 	DrawFormatString(10, 50, GetColor(255, 255, 255),
 		"offset.x = %.2f", screen_offset.x);
@@ -148,7 +167,7 @@ void InGameScene::Draw() const
 		"PlayerLocationY: %.2f", player->GetLocation().y);
 
 	DrawFormatString(1100, 40, GetColor(255, 255, 255),
-		"Score: %d", score);
+		"delay: %d", speed);
 
 	__super::Draw();
 }

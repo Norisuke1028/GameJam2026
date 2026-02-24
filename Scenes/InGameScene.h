@@ -15,7 +15,10 @@ private:
 	StageData stage_data;
 
 	int background_image;
+	int santa_image;
+	int present_image;
 
+	int delay;
 	int score;  // ƒXƒRƒA
 
 private:
