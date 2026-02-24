@@ -126,7 +126,7 @@ void StageData::Load()
             }
 
             //ƒAƒCƒeƒ€
-            if (*p == 'k')
+            if (*p == 'i')
             {
 				Vector2D pos;
 				pos.x = x * block_size;
