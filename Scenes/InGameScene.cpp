@@ -13,6 +13,7 @@
 bool goal_flag;
 bool delay_flag;
 bool image_flag;
+bool item_spawned;
 int speed;
 int score;
 int score_animation[10];
@@ -40,6 +41,7 @@ void InGameScene::Initialize()
 	goal_flag = false;
 	delay_flag = false;
 	image_flag = true;
+	item_spawned = false;
 
 	background_image = LoadGraph("Resource/image/sky.png");
 	santa_image = LoadGraph("Resource/image/santa_start.png");
@@ -49,21 +51,10 @@ void InGameScene::Initialize()
 	score = 3500;
 	stage_data.Load();
 
-	/*const std::vector<Vector2D>& spawns =
-		stage_data.GetEnemySpawnPositions();*/
-
-	//printfDx("spawn size = %d\n", spawns.size());
-
 	//エネミーの生成
 	for (const Vector2D& pos : stage_data.GetEnemySpawnPositions())
 	{
 		CreateObject<Enemy>(pos);
-	}
-
-	//アイテムの生成
-	for (const Vector2D& pos : stage_data.GetItemSpawnPositions())
-	{
-		CreateObject<Item>(pos);
 	}
 
 	//ブロック（足場）の生成
@@ -86,7 +77,7 @@ eSceneType InGameScene::Update(const float& delta_second)
 	InputControl* pad_input = InputControl::GetInstance();
 	
 	delay++;
-	if (delay > 1100) {
+	if (delay >= 1100) {
 		delay_flag = true;
 	}
 	else if (delay >= 980)
@@ -97,9 +88,20 @@ eSceneType InGameScene::Update(const float& delta_second)
 		speed++;
 	}
 	if (delay_flag == true) {
-		delay = 1100;
+		delay = 1200;
 		//speed = 520;
 		image_flag = false;
+	}
+
+	// 少し遅らせてアイテムを生成する
+	if (delay_flag == true && item_spawned == false)
+	{
+		for (const Vector2D& pos : stage_data.GetItemSpawnPositions())
+		{
+			CreateObject<Item>(pos);
+		}
+
+		item_spawned = true; // 二重生成防止
 	}
 
 	player->SetScroll(screen_offset.x);
@@ -166,7 +168,7 @@ void InGameScene::Draw() const
 	if (image_flag == true)
 	{
 		// プレゼントの描画
-		if (delay >= 550)DrawRotaGraph(640, 80 + speed, 1.0, 0.0, present_image, TRUE);
+		if (delay >= 530)DrawRotaGraph(640, 80 + speed, 1.0, 0.0, present_image, TRUE);
 		DrawRotaGraph(200 + delay, 100, 1.0, 0.0, santa_image, TRUE);
 	}
 	
@@ -184,7 +186,7 @@ void InGameScene::Draw() const
 		"PlayerLocationY: %.2f", player->GetLocation().y);
 
 	DrawFormatString(1100, 40, GetColor(255, 255, 255),
-		"delay: %d", speed);
+		"delay: %d", delay);
 
 	__super::Draw();
 }
