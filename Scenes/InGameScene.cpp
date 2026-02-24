@@ -12,6 +12,7 @@
 
 bool goal_flag;
 bool delay_flag;
+bool image_flag;
 int speed;
 
 InGameScene::InGameScene()
@@ -34,6 +35,7 @@ void InGameScene::Initialize()
 	stage->Load();
 	goal_flag = false;
 	delay_flag = false;
+	image_flag = true;
 
 	background_image = LoadGraph("Resource/image/sky.png");
 	santa_image = LoadGraph("Resource/image/santa_start.png");
@@ -83,12 +85,17 @@ eSceneType InGameScene::Update(const float& delta_second)
 	if (delay > 1100) {
 		delay_flag = true;
 	}
+	else if (delay >= 980)
+	{
+		speed = 520;
+	}
 	else if (delay > 500){
 		speed++;
 	}
 	if (delay_flag == true) {
 		delay = 1100;
-		speed = 520;
+		//speed = 520;
+		image_flag = false;
 	}
 
 	player->SetScroll(screen_offset.x);
@@ -146,13 +153,19 @@ void InGameScene::Draw() const
 {
 	DrawGraph(0,0,background_image,true);
 	__super::Draw();
-	DrawRotaGraph(200 + delay, 100, 1.0, 0.0, santa_image, TRUE);
+	
 
 	StageData* stage = StageData::GetInstance();
 	stage->Draw(screen_offset);
 	float s_location = stage->GetLocation();
 
-	if (delay >= 800)DrawRotaGraph(640, 90 + speed, 1.0, 0.0, present_image, TRUE);
+	if (image_flag == true)
+	{
+		// プレゼントの描画
+		if (delay >= 550)DrawRotaGraph(640, 80 + speed, 1.0, 0.0, present_image, TRUE);
+		DrawRotaGraph(200 + delay, 100, 1.0, 0.0, santa_image, TRUE);
+	}
+	
 	//デバッグ用
 	DrawFormatString(10, 50, GetColor(255, 255, 255),
 		"offset.x = %.2f", screen_offset.x);
