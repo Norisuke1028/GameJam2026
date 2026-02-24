@@ -184,7 +184,7 @@ void ResultScene::ResultBgm()
 	if (CheckSoundMem(ResultBgmHandle) == 0)
 	{
 		PlaySoundMem(ResultBgmHandle, DX_PLAYTYPE_LOOP, TRUE);
-		ChangeVolumeSoundMem(10, ResultBgmHandle);  // Й╣Ч╩Т▓Ро
+		ChangeVolumeSoundMem(250, ResultBgmHandle);  // Й╣Ч╩Т▓Ро
 		CheckSoundMem(ResultBgmHandle); 
 	}
 
@@ -192,7 +192,7 @@ void ResultScene::ResultBgm()
 	if (isBgmPlayed == false)
 	{
 		PlaySoundMem(ResultBgmHandle1, DX_PLAYTYPE_BACK);
-		ChangeVolumeSoundMem(10, ResultBgmHandle1);  // Й╣Ч╩Т▓Ро
+		ChangeVolumeSoundMem(250, ResultBgmHandle1);  // Й╣Ч╩Т▓Ро
 		isBgmPlayed = true;
 	}
 }
