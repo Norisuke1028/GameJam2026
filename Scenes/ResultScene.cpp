@@ -23,7 +23,7 @@ ResultScene::ResultScene() : score_animation(), image()
 	// 画像の読み込み
 	Result_image = LoadGraph("Resource/image/Result/result.png");
 	rendeer_image = LoadGraph("Resource/image/Result/rendeer.png");
-	Arank_animation = rm->GetImages("Resource/image/Result/player_b_anim.png", 2, 2, 1, 250, 397);  // Aランク用アニメーション
+	Arank_animation = rm->GetImages("Resource/image/Result/player_a_anim.png", 2, 2, 1, 250, 411);  // Aランク用アニメーション
 	Brank_animation = rm->GetImages("Resource/image/Result/player_b_anim.png", 2, 2, 1, 250, 397);  // Bランク用アニメーション
 	Crank_animation = rm->GetImages("Resource/image/Result/player_c_anim.png", 2, 2, 1, 250, 406);  // Cランク用アニメーション
 	score_animation = rm->GetImages("Resource/image/Result/Score.png", 3, 3, 1, 200, 200);
