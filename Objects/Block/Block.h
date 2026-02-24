@@ -3,12 +3,19 @@
 #include "../GameObject.h"
 #include <vector>
 
+enum class BlockType
+{
+	Snow,  // 雪
+	Soil   // 土
+};
+
 class Block : public GameObject
 {
 private:
 
 	int image;
 	float start_x;         // 初期位置
+	BlockType type;
 	float scroll;          // スクロール値
 	int location_x;      // 現在の位置
 	int location_y;      // 現在の位置
@@ -29,4 +36,5 @@ public:
 	//位置情報設定処理
 	void SetLocation(const Vector2D& pos) override;
 	void SetScroll(float scrollX);
+	void SetBlockType(BlockType t);
 };

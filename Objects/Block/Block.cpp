@@ -27,6 +27,8 @@ void Block::Initialize() {
 
     collision.radius = D_OBJECT_SIZE / 2.0f;
 
+    z_layer = 5;
+
     box_size = Vector2D(32, 32);
 }
 
@@ -99,4 +101,20 @@ void Block::SetLocation(const Vector2D& pos)
 void Block::SetScroll(float scrollX)
 {
     scroll = scrollX;
+}
+
+void Block::SetBlockType(BlockType t)
+{
+    type = t;
+
+    ResourceManager* rm = ResourceManager::GetInstance();
+
+    if (type == BlockType::Snow)
+    {
+        image = rm->GetImages("Resource/image/Block/snow.png").at(0);
+    }
+    else if (type == BlockType::Soil)
+    {
+        image = rm->GetImages("Resource/image/Block/soil.png").at(0);
+    }
 }
