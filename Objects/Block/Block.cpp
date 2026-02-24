@@ -60,7 +60,7 @@ void Block::Finalize()
 }
 
 
-void Block::OnHitCollision(const GameObject* hit_object)
+void Block::OnHitCollision(GameObject* hit_object)
 {
     if (hit_object->GetCollision().IsCheckHitTarget(eObjectType::enemy))
     {
