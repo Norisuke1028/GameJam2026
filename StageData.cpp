@@ -35,12 +35,15 @@ void StageData::Load()
 	int y = 0;
 	enemy_spawn_positions.clear();  //エネミーの出現位置初期化
 	item_spwn_positions.clear();  //アイテムの出現位置初期化
+    santa_positions.clear();      //サンタの出現位置初期化
     block_spawn_positions.clear();
 	ResourceManager* rm = ResourceManager::GetInstance();
 
     snowman_image = rm->GetImages("Resource/image/snowman.png").at(0);
     city_image = rm->GetImages("Resource/image/city.png").at(0);
     tree_image = rm->GetImages("Resource/image/tree1.png").at(0);
+    house_image = rm->GetImages("Resource/image/house.png").at(0);
+    santa_image = rm->GetImages("Resource/image/santa.png").at(0);
 
 	//fgetsでファイルから１行抜き出す
 	while (fgets(buffer, sizeof(buffer), fp) != NULL)
@@ -134,6 +137,27 @@ void StageData::Load()
 				// アイテムの位置を渡す
 				item_spwn_positions.push_back(pos);
             }
+
+            // サンタの家
+            if (*p == 'h')
+            {
+                Vector2D pos;
+                pos.x = x * block_size;
+                pos.y = y * block_size;
+
+                house_positions.push_back(pos);
+            }
+
+            // サンタ
+            if (*p == 'g')
+            {
+                Vector2D pos;
+                pos.x = x * block_size;
+                pos.y = y * block_size;
+
+                santa_positions.push_back(pos);
+            }
+
             // 1セル処理したら必ず次の列へ
             x++;
         }
@@ -193,6 +217,16 @@ void StageData::Draw(const Vector2D& screen_offset) const
     {
         DrawGraph((int)(pos.x + velocity.x), (int)pos.y, tree_image, TRUE);
     }
+    // ゴール地点のハウス
+    for (const auto& pos : house_positions)
+    {
+        DrawGraph((int)(pos.x + velocity.x), (int)pos.y, house_image, TRUE);
+    }
+    // サンタ
+    for (const auto& pos : santa_positions)
+    {
+        DrawGraph((int)(pos.x + velocity.x), (int)pos.y, santa_image, TRUE);
+    }
 }
 
 void StageData::Finalize()
@@ -217,6 +251,11 @@ const std::vector<BlockSpawnData>& StageData::GetBlockSpawnPositions() const
     return block_spawn_positions;
 }
 
+const std::vector<Vector2D>& StageData::GetSantaSpawnPositions() const
+{
+    return santa_positions;
+}
+
 float StageData::GetLocation()const
 {
 	return s_location;
@@ -231,3 +270,4 @@ void StageData::SetVelocity(float velo)
 {
 	velocity.x -= velo;
 }
+
